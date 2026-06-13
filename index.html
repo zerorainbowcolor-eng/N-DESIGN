@@ -290,14 +290,12 @@
       <div class="flex-1" data-aos="fade-right">
         <div class="card p-8">
           <!-- スマホ：写真が上、プロフィールが下 / PC：横並び -->
-          <div class="flex flex-col sm:flex-row gap-6 items-start mb-8">
-            <!-- 写真（スマホで先に表示） -->
-            <div class="w-full sm:shrink-0 sm:w-auto order-first" style="sm:padding-top:1rem;">
-              <div class="rounded-xl overflow-hidden" style="height:280px;">
-                <img src="images/photo.jpg"
-                     onerror="this.src='https://placehold.co/192x300/e6f9f8/81D8D0?text=Photo'"
-                     alt="永田亮" class="w-full h-full object-cover" />
-              </div>
+          <div style="display:flex; flex-direction:column; gap:1.5rem; margin-bottom:2rem;">
+            <!-- 写真 -->
+            <div style="width:100%; border-radius:12px; overflow:hidden; height:280px;">
+              <img src="images/photo.jpg"
+                   onerror="this.src='https://placehold.co/192x300/e6f9f8/81D8D0?text=Photo'"
+                   alt="永田亮" style="width:100%; height:100%; object-fit:cover;" />
             </div>
             <!-- プロフィール -->
             <div class="flex-1">
