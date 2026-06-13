@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>制作事例 ｜ 永田 亮 Webデザイナー</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            tiffany: '#81D8D0',
+            'tiffany-dark': '#5fc4bb',
+            'tiffany-light': '#e6f9f8',
+            'tiffany-border': '#b2dcd8',
+          },
+          fontFamily: {
+            sans: ['Noto Sans JP', 'Inter', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Noto Sans JP', 'Inter', sans-serif; color: #001638; font-size: 1rem; line-height: 1.8; }
+    #navbar { background: #fff; box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
+    .btn-primary {
+      display: inline-block;
+      font-family: 'Noto Sans JP', 'Inter', sans-serif;
+      background: #e5025a;
+      color: #ffffff;
+      font-weight: 700;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      transition: background 0.25s, transform 0.2s, box-shadow 0.2s;
+      font-size: 1rem;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+    }
+    .btn-primary:hover { background: #b8014a; transform: scale(1.03); }
+    .card {
+      background: #fff;
+      border: 1px solid #b2dcd8;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(129,216,208,0.15);
+    }
+    .label { font-size: 0.875rem; font-weight: 700; color: #001638; margin-bottom: 0.25rem; }
+  </style>
+</head>
+
+<body class="bg-white">
+
+<!-- NAV -->
+<nav id="navbar" class="fixed top-0 left-0 w-full z-50">
+  <div class="max-w-6xl mx-auto px-5 sm:px-8 flex items-center justify-between h-16">
+    <a href="index.html" class="nav-logo">
+      <img src="images/logo.png" alt="N .DESIGN" style="height:36px; width:auto; object-fit:contain; filter:brightness(0);" />
+    </a>
+    <a href="index.html#portfolio" class="text-sm text-[#001638] hover:text-tiffany font-medium flex items-center gap-1 transition">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      制作事例一覧に戻る
+    </a>
+  </div>
+</nav>
+
+<!-- CONTENT -->
+<div class="pt-16 max-w-4xl mx-auto px-5 sm:px-8 py-12">
+
+  <!-- パンくず -->
+  <p class="text-xs text-[#999] mb-8">
+    <a href="index.html" class="hover:text-tiffany">トップ</a>
+    <span class="mx-2">/</span>
+    <a href="index.html#portfolio" class="hover:text-tiffany">制作事例</a>
+    <span class="mx-2">/</span>
+    <span id="breadcrumb-title">作品詳細</span>
+  </p>
+
+  <div class="flex flex-col gap-10">
+
+    <!-- 左：画像スライダー -->
+    <div class="w-full">
+      <div class="relative overflow-hidden rounded-xl" id="slider-wrap">
+        <!-- スライドトラック -->
+        <div id="slider-track" class="flex transition-transform duration-400 ease-in-out" style="transition: transform 0.4s ease;">
+          <!-- 画像はJSで挿入 -->
+        </div>
+        <!-- 前へ -->
+        <button id="slide-prev" onclick="slideMove(-1)" class="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center bg-white/80 hover:bg-white rounded-full shadow transition hidden">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#001638" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <!-- 次へ -->
+        <button id="slide-next" onclick="slideMove(1)" class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center bg-white/80 hover:bg-white rounded-full shadow transition hidden">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#001638" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+        <!-- ドット -->
+        <div id="slider-dots" class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5"></div>
+      </div>
+    </div>
+
+    <!-- 右：詳細 -->
+    <div class="flex-1">
+      <span id="detail-category" class="text-xs text-tiffany font-bold tracking-[0.15em] uppercase bg-tiffany-light px-3 py-1 rounded-full"></span>
+      <h1 id="detail-title" class="text-2xl font-bold text-[#001638] mt-3 mb-6 leading-snug"></h1>
+
+      <div class="space-y-5">
+        <div>
+          <p id="detail-intro" class="text-sm text-[#555] leading-loose mb-4" style="display:none;"></p>
+          <p class="label">コンセプト</p>
+          <p id="detail-concept" class="text-sm text-[#555] leading-loose"></p>
+          <p class="label mt-5">ターゲット</p>
+          <p id="detail-target" class="text-sm text-[#555] leading-loose"></p>
+        </div>
+        <div>
+          <p class="label">使用ツール</p>
+          <p id="detail-tools" class="text-sm text-[#555]"></p>
+        </div>
+      </div>
+
+      <div class="mt-10 flex gap-4 flex-wrap">
+        <a href="index.html#portfolio" class="btn-primary text-sm" style="padding:0.75rem 2rem;">← 一覧に戻る</a>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="bg-[#001638] text-white mt-20">
+  <div class="h-1 bg-tiffany"></div>
+  <div class="max-w-5xl mx-auto px-5 py-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <p class="text-lg font-bold text-tiffany">Ryo Nagata</p>
+    <p class="text-gray-500 text-xs">© 2026 Ryo Nagata All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+  // 各作品の追加画像（portfolio1A.jpg, portfolio1B.jpg など）
+  const extraImages = {
+    1: ['images/portfolio1A.jpg'],
+    2: ['images/portfolio2A.jpg'],
+    3: ['images/portfolio3A.jpg'],
+    10: ['images/work4A.jpg'],
+  };
+
+  let currentSlide = 0;
+  let slideImages = [];
+
+  function buildSlider(images) {
+    const track = document.getElementById('slider-track');
+    const dots  = document.getElementById('slider-dots');
+    track.innerHTML = '';
+    dots.innerHTML  = '';
+    slideImages = images;
+
+    images.forEach((src, i) => {
+      const slide = document.createElement('div');
+      slide.className = 'w-full shrink-0';
+      slide.style.minWidth = '100%';
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = '';
+      img.className = 'w-full h-auto';
+      slide.appendChild(img);
+      track.appendChild(slide);
+
+      const dot = document.createElement('button');
+      dot.className = `w-2 h-2 rounded-full transition ${i === 0 ? 'bg-tiffany' : 'bg-white/60'}`;
+      dot.onclick = () => goToSlide(i);
+      dots.appendChild(dot);
+    });
+
+    document.getElementById('slide-prev').classList.toggle('hidden', images.length <= 1);
+    document.getElementById('slide-next').classList.toggle('hidden', images.length <= 1);
+    dots.classList.toggle('hidden', images.length <= 1);
+    goToSlide(0);
+  }
+
+  function goToSlide(n) {
+    currentSlide = Math.max(0, Math.min(n, slideImages.length - 1));
+    document.getElementById('slider-track').style.transform = `translateX(-${currentSlide * 100}%)`;
+    document.querySelectorAll('#slider-dots button').forEach((d, i) => {
+      d.className = `w-2 h-2 rounded-full transition ${i === currentSlide ? 'bg-tiffany' : 'bg-white/60'}`;
+    });
+    document.getElementById('slide-prev').style.visibility = currentSlide === 0 ? 'hidden' : 'visible';
+    document.getElementById('slide-next').style.visibility = currentSlide === slideImages.length - 1 ? 'hidden' : 'visible';
+  }
+
+  function slideMove(dir) { goToSlide(currentSlide + dir); }
+
+  const portfolioData = [
+    { category: 'LP制作', title: 'LINEマーケティングコンサルタント養成講座 無料説明会LP', concept: '難しいイメージを払拭し、「自分にもできそう」というワクワク感と、在宅で自由に働ける未来のイメージを直感的に伝えるクリーンなデザイン。<br><br><span style="font-size:0.875rem; font-weight:700; color:#001638;">デザイン構成</span><br>カラー：信頼感と清潔感を与えるブルーを基調に、行動を促すオレンジをアクセントに採用。実績などの重要数字はゴールドで強調。<br>レイアウト：スマホ閲覧を意識した縦長構成。FVで実績をアピールして離脱を防ぎ、受講生の声や図解を交えてテンポよく解説。<br>CVR対策：ユーザーの熱量が高まるセクションの直後に、目立つCTAボタンを最適配置。', target: 'メイン：在宅ワークや副業、フリーランスを目指す未経験者（30代〜40代男女）\n悩み：「特別な資格やセンスがない」「何から始めていいか分からない」と一歩を踏み出せずにいる層。', tools: 'Photoshop' },
+    { category: 'LP制作', title: '酵素ドリンク LP', concept: '酵素ドリンクに対してハードルを感じている層に向け、みずみずしいフルーツのビジュアルや日常に溶け込むライフスタイル写真を使用。ストイックで苦しいイメージを一新し、「美味しく、無理なく続けられる自分へのご褒美」としての楽しさと、無添加処方の安心感を両立させたデザイン。<br><br><span style="font-size:0.875rem; font-weight:700; color:#001638;">デザイン構成</span><br>カラー：自然由来の瑞々しさを伝えるアースグリーンを基調に、購買意欲を高めるフレッシュなオレンジをアクセントに採用。お悩みセクションには一転して黒背景を使い、視覚的なコントラストを生んでいます。<br>レイアウト：スマホでのスクロールを飽きさせない緩急のある構成。ファーストビューで「30%OFF・2,940円」というオファーを印象付けた後、お悩み共感→5つの選ばれる理由から、愛用者の声へと自然に納得させるストーリー設計。<br>CVR対策：手軽に試せる「定期縛りなし」のQ&Aで最後の不安を払拭し、熱量が高まるタイミングで鮮やかなグリーンの大きめのCTAボタンへ誘導。', target: 'メイン：美容や健康への意識が高く、手軽にインナーケアを取り入れたい20代〜40代の男女（主に女性）。\n悩み：「食生活の乱れや肌荒れ・むくみが気になる」「体が重いけれど、無理なダイエットやファスティングは続かない」と悩む多忙な層。', tools: 'Photoshop' },
+    { category: 'HP制作', title: 'CCC木村事務所様　コーポレートサイト【リニューアル】', intro: 'コンタクトセンターの品質改善を行う「CCC 木村オフィス」様よりご相談をいただき、ホームページのリニューアルを担当いたしました。', concept: '「大手にはない柔軟性」と「代表自らが直接コミットする安心感（属人性の強み）」を前面に出しつつ、プロフェッショナルな風格を両立させたデザイン。<br><br><span style="font-size:0.875rem; font-weight:700; color:#001638;">デザイン構成</span><br>カラー： 知性と信頼感を象徴するディープネイビーをベースにした配色。<br><br>レイアウト： 木村様の「顔が見える安心感」と「確かな実績・ノウハウ」を掛け合わせた構成。FVで専門性を明示した後、代表のプロフィールや想いを丁寧に語りつつ、提供サービスや課題解決プロセスを論理的に整理した、納得感のあるストーリー設計。<br><br>CVR対策： 「まずは壁打ちから相談したい」という心理的ハードルを下げるため、気軽な初回相談やお問い合わせへ繋げる導線をヘッダーと各セクションに配置。', target: 'メイン： 顧客エンゲージメントの向上や、コールセンターの品質・生産性に課題を抱える中小・ベンチャー企業の経営層やカスタマーサクセス責任者。\n悩み： 「大手のコンサルは費用が高く、誰が担当になるか分からず不安」「自社の状況に寄り添って、泥臭く一緒に現場を改善してくれるプロを探している」という層。', tools: 'Photoshop' },
+    { category: 'LP制作', title: 'ランディングページ 02', concept: 'スマホファーストで設計し、スクロールに連動した演出でユーザーを自然にCTAへ誘導します。', target: 'スマートフォンユーザーの20〜40代', tools: 'Figma / Studio' },
+    { category: '名刺制作', title: 'ビジネス名刺 01', concept: 'シンプルかつ印象に残るデザイン。QRコードを活用してデジタルとリアルを繋げる設計にしました。', target: '対面営業・名刺交換の機会が多い方', tools: 'Illustrator' },
+    { category: 'サムネイル', title: 'YouTube サムネイル 01', concept: 'クリック率を高めるために、インパクトのあるビジュアルとテキスト配置を徹底的に検証しました。', target: 'YouTube視聴者・新規チャンネル登録者', tools: 'Photoshop / Canva' },
+    { category: 'チラシ制作', title: 'イベントチラシ 01', concept: 'A4両面のチラシ。日程・会場・申し込み方法を見やすく整理し、行動を促す構成にしました。', target: 'イベント参加を検討している地域住民', tools: 'Illustrator' },
+    { category: 'LINEリッチメニュー', title: 'LINEリッチメニュー 01', concept: 'ユーザーが直感的に操作できるリッチメニューを設計。タップ率向上を意識したアイコン配置です。', target: 'LINE公式アカウント登録者', tools: 'Figma / Illustrator' },
+    { category: '商品画像', title: '商品撮影・加工 01', concept: '商品の魅力が伝わる背景・アングル・レタッチを施し、EC掲載に最適化した画像に仕上げました。', target: 'ECサイト購入検討者', tools: 'Photoshop / Lightroom' },
+    { category: 'HP制作（架空サイト）', title: '株式会社ネクストブリッジ コーポレートサイト', concept: '企業の先進性と信頼感を両立させ、ビジネスの「次の架け橋（Next Bridge）」となる安心感を直感的に伝えるクリーンで洗練されたモダンデザイン。<br><br><span style="font-size:0.875rem; font-weight:700; color:#001638;">デザイン構成</span><br>カラー： 誠実さと知性を感じさせるネイビー・ブルーをベースに、洗練された印象を与えるモダンなカラーで統一。重要なキーワードやコンバージョンへ導く要素には、視認性の高いアクセントカラーを配置。<br>レイアウト： ユーザーがストレスなく情報を読み進められるよう、十分なホワイトスペース（余白）を確保したスマートなレイアウト。ファーストビュー（FV）で企業の強みやビジョンを明確に打ち出し、ストーリー性を持たせたセクション構成で直感的な理解を促す。<br>CVR対策： サービス内容や導入メリットに納得したベストなタイミングで、ユーザーがスムーズにお問い合わせやアクションに移れるよう、目を引くCTA（行動喚起）ボタンを戦略的に配置。', target: 'メイン： 信頼できるビジネスパートナーや、確かなソリューションを求めているBtoBのクライアント（経営者、事業責任者、担当者層）。\n悩み： 「既存のシステムや体制に課題があるが、どこに変革を依頼すべきか分からない」「先進的な取り組みをしたいが、信頼できる企業を選びたい」と感じている層。', tools: 'Photoshop / HTML, CSS' },
+    { category: 'バナー制作', title: '未経験歓迎 求人バナー', concept: '未経験の20代女性の転職不安を解消し、「歓迎される職場」への一歩を後押しする求人バナー。<br><br><span style="font-size:0.875rem; font-weight:700; color:#001638;">デザイン構成</span><br>青〜ピンクのグラデーションで清潔感と女性親和性を両立。大きなメインコピーで求人内容を瞬時に伝え、笑顔の人物写真で入社後のポジティブなイメージを補強。「残業月平均10時間以下」などの具体数値で不安を払拭し、黄色帯のCTAボタンでクリックへ誘導する、上から下への自然なストーリー導線が特徴。', target: '事務職未経験の20代女性。残業や即戦力要求への不安を持つ転職・就職検討層。', tools: 'Photoshop' },
+    { category: 'バナー制作', title: '資産運用セミナー バナー', concept: '投資初心者の不安を取り除き、「まずは無料で学んでみよう」と思ってもらうための資産運用セミナー告知バナー。<br><br><span style="font-size:0.875rem; font-weight:700; color:#001638;">デザイン構成</span><br>爽やかなブルーを基調とした配色で、金融分野に求められる信頼感と安心感を演出。中央に「資産運用セミナー」の大きなメインコピーを配置し、サービス内容を一目で伝えた。初心者マークや貯金箱・紙幣・コインのイラストを用いることで、投資未経験者でも気軽に参加できる印象を付与。「累計受講者5,000名突破」の実績訴求で信頼性を高め、「参加費無料」「当日参加OK」「毎週水曜20時開催」といった参加ハードルの低さを視覚的に強調。情報を優先順位ごとに整理し、視線が自然にメインコピーから参加メリットへ流れる構成とした。', target: '20〜50代の資産形成に興味がある投資未経験者。NISAや投資信託に関心はあるものの、何から始めればよいかわからず学習機会を探している層。', tools: 'Photoshop' },
+    { category: 'バナー制作', title: 'マネーリテラシー講座 バナー', concept: '将来のお金に不安を感じる若手社会人に向けて、金融知識を基礎から学べることをわかりやすく伝え、受講への心理的ハードルを下げる講座告知バナー。<br><br><span style="font-size:0.875rem; font-weight:700; color:#001638;">デザイン構成</span><br>白を基調としたシンプルなレイアウトに、ブルー・ピンク・イエローのアクセントカラーを加えることで、親しみやすさと視認性を両立。中央の「マネーリテラシー講座」を大きく配置し、講座内容を瞬時に認識できる構成とした。左右の人物イラストは受講者像を表現し、共感を促進。さらに、紙幣・コイン・貯金箱・カードなどのイラストを散りばめることで、お金に関する学びを直感的にイメージできるよう設計した。「全6回」「受講料無料」の情報を目立つ位置に配置し、参加メリットを明確に伝えながら申し込みへの導線を強化した。', target: '20代・30代の社会人。貯蓄や資産形成、家計管理に関心はあるものの、お金に関する知識に自信がなく、基礎から学びたいと考えている層。', tools: 'Photoshop' },
+    { category: 'バナー制作', title: '家庭用光脱毛器 販促バナー', concept: '自宅で手軽に本格的な脱毛ケアをしたい女性に向けて、サロン級の仕上がりとコストパフォーマンスの高さを訴求する販促バナー。<br><br><span style="font-size:0.875rem; font-weight:700; color:#001638;">デザイン構成</span><br>淡いパープルのグラデーションを基調に、清潔感と上品さを演出。右側に美しい素肌の女性モデルを大きく配置することで、商品使用後の理想的なイメージを直感的に伝えた。中央の「最短2週間でつるすべ肌に」という大きなキャッチコピーでベネフィットを明確に訴求し、「痛みレス」「サロン級」のキーワードによって安心感と期待感を高めた。また、「IPL方式」「VIO・顔対応」「敏感肌OK」の特徴をボックス形式で整理し、商品の強みを瞬時に理解できる構成とした。さらに、通常価格と期間限定価格を対比させてお得感を強調し、下部の大きなCTAボタンへ自然に視線が流れる導線設計により、購入アクションを促した。', target: '20代〜40代の女性。サロンやクリニックに通う時間が取れず、自宅で効率的にムダ毛ケアを行いたいと考えている美容意識の高い層。', tools: 'Photoshop' },
+    { category: 'バナー制作', title: '美容脱毛サロン 友だち紹介キャンペーンバナー', concept: '夏に向けて肌への意識が高まる時期に、友だち紹介キャンペーンを活用しながら脱毛をはじめる後押しをした、期間限定プロモーションバナー。<br><br><span style="font-size:0.875rem; font-weight:700; color:#001638;">デザイン構成</span><br>青空と光のエフェクトを背景に、夏らしい開放感と透明感を演出した。右側には空を見上げて微笑む女性モデルを大きく配置し、施術後の清潔感ある肌と明るい未来を視覚的に表現した。「夏前に自信の肌へ！」というメインコピーに「Summer」の手書き風フォントを添えることで、季節感と親しみやすさを加えた。また、「最大20,000円キャッシュバック」という数字を大きく強調することでお得感を一目で伝え、「友だち紹介キャンペーン」のラベルと対象期間の明示により、限定感と信頼感を高めた。「まずは無料カウンセリングから」という一文で心理的ハードルを下げ、行動を促す導線設計とした。', target: '20代〜30代の女性。夏前に肌の自信を取り戻したいと考えており、キャッシュバックなどのお得な特典をきっかけに行動に移りやすい、美容意識の高い層を想定した。', tools: 'Photoshop' },
+    { category: 'バナー制作', title: 'レストラン スペシャルコースバナー', concept: '特別な夜の体験を求める大人に向けて、シェフ厳選のコース料理と予約限定特典の魅力を訴求したレストランプロモーションバナー。<br><br><span style="font-size:0.875rem; font-weight:700; color:#001638;">デザイン構成</span><br>ネイビーとゴールドを基調に、高級感と格調のある世界観を統一して表現した。4分割されたグリッドに料理・ワイン・夜景などの写真を配置し、コースの多彩な魅力を一度に伝えた。中央にはダイヤ形のネイビーパネルを配置し、「シェフ厳選のスペシャルコース」というメインコピーをゴールドの装飾とともに際立たせることで、視線を自然に集める構造にした。四隅のアラベスク風装飾枠が全体に統一感と上品さを加え、「予約限定特典付き」のローレルエンブレムが希少性と限定感を演出した。', target: '30代〜50代の男女。記念日や接待など、非日常の特別なシーンで上質な食体験を求める、グルメ意識の高い層を想定した。', tools: 'Photoshop' },
+    { category: 'バナー制作', title: '抹茶ラテ 商品バナー', concept: '老舗茶寮の本格抹茶を使ったラテの品質と価格を訴求した、シンプルで素材の魅力が伝わる商品バナー。<br><br><span style="font-size:0.875rem; font-weight:700; color:#001638;">デザイン構成</span><br>鮮やかな抹茶グリーンを背景に、商品の色味と自然に調和させながら瑞々しさと鮮度感を表現した。中央に抹茶ラテのグラスを大きく配置し、グリーンとミルクの美しいグラデーションを視覚的に強調。左下には抹茶パウダーを盛った器を添え、素材の本物感を補強した。「老舗茶寮が贈る」というコピーをゴールドで縦組みにすることで、伝統と格式を品よく伝えた。上部と下部をグリーンと黒で二分割する構成が和モダンな雰囲気を生み出し、「600円」という価格表示を黒エリアに配置することで視認性と親しみやすさを両立させた。', target: '20代〜50代の男女。日常の中で本物志向の和スイーツ・ドリンクを楽しみたい、抹茶好き・日本茶文化に親しみのある層を想定した。', tools: 'Photoshop' },
+    { category: 'バナー制作', title: '女子旅 プロモーションバナー', concept: '仲間との旅行で生まれる特別な思い出を前面に打ち出した、グループ旅行を後押しするプロモーションバナー。<br><br><span style="font-size:0.875rem; font-weight:700; color:#001638;">デザイン構成</span><br>ミントブルーを背景に、明るく親しみやすい雰囲気を統一して表現した。「仲間と一生の思い出を作ろう！」というメインコピーを六角形のふきだし形状で中央に大きく配置し、旅への期待感を高めた。周囲には飛行機・バス・紅葉・ラーメン・ビール・浴衣姿の女性・自撮りする友人グループなど、旅の多彩なシーンをちりばめることで、グループ旅行のワクワク感を視覚的に表現した。ポラロイド風の写真素材やガーランド・きらめきのイラストを散りばめることで、SNS映えを意識したポップでかわいらしい世界観に仕上げた。', target: '20代〜30代の女性グループ。友人や同僚と一緒に旅行を計画しており、観光・グルメ・温泉など多彩な体験を楽しみたいと考えている層を想定した。', tools: 'Photoshop' },
+  ];
+
+  const params = new URLSearchParams(window.location.search);
+  const id = parseInt(params.get('id')) || 1;
+  const data = portfolioData[id - 1];
+
+  if (data) {
+    document.title = data.title + ' ｜ 永田 亮 Webデザイナー';
+    document.getElementById('breadcrumb-title').textContent = data.title;
+    document.getElementById('detail-category').textContent  = data.category;
+    document.getElementById('detail-title').textContent     = data.title;
+    document.getElementById('detail-concept').innerHTML     = data.concept;
+    if (data.intro) {
+      const introEl = document.getElementById('detail-intro');
+      introEl.textContent = data.intro;
+      introEl.style.display = 'block';
+    }
+    document.getElementById('detail-target').innerText      = data.target;
+    document.getElementById('detail-tools').textContent     = data.tools;
+
+    // スライダー構築
+    const bannerImages = {
+      10: 'images/work４.jpg',
+      11: 'images/banner/A.jpg',
+      12: 'images/banner/B.jpg',
+      13: 'images/banner/C.jpg',
+      14: 'images/banner/D.jpg',
+      15: 'images/banner/E.jpg',
+      16: 'images/banner/F.jpg',
+      17: 'images/banner/G.jpg',
+      18: 'images/banner/H.jpg',
+    };
+    const mainImg = bannerImages[id] || `images/portfolio${id}.jpg`;
+    const extras  = extraImages[id] || [];
+    buildSlider([mainImg, ...extras]);
+  }
+</script>
+
+</body>
+</html>

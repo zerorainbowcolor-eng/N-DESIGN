@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>永田 亮 ｜ Webデザイナー</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            tiffany: '#81D8D0',
+            'tiffany-dark': '#5fc4bb',
+            'tiffany-light': '#e6f9f8',
+            'tiffany-border': '#b2dcd8',
+          },
+          fontFamily: {
+            sans: ['Noto Sans JP', 'Inter', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    /* html { scroll-behavior: smooth; } */
+    body { font-family: 'Noto Sans JP', 'Inter', sans-serif; color: #001638; font-size: 1rem; line-height: 1.8; }
+
+    /* ===== NAV ===== */
+    #navbar { transition: background 0.3s, box-shadow 0.3s; }
+    #navbar.scrolled { background: #fff !important; box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
+    #navbar.scrolled .nav-logo img { filter: brightness(0); }
+    #navbar.scrolled .nav-link { color: #001638 !important; }
+    #navbar.scrolled .ham-bar { background: #001638 !important; }
+    .nav-link { position: relative; padding-bottom: 2px; }
+    .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background: #81D8D0; transition: width 0.3s; }
+    .nav-link.active::after { width: 100%; }
+    #mobile-menu { display: none; }
+    #mobile-menu.open { display: block; }
+
+    /* ===== HERO ===== */
+    .hero-overlay { background: rgba(0,0,0,0.45); }
+
+    /* ===== SECTION HEADING ===== */
+    .sec-en { font-size: 0.85rem; letter-spacing: 0.15em; color: #F5C842; text-transform: uppercase; font-family: 'Inter', sans-serif; font-weight: 600; }
+    .sec-ja { font-size: clamp(1.6rem, 3vw, 2rem); font-weight: 700; color: #001638; line-height: 1.3; }
+
+    /* ===== BUTTONS ===== */
+    .btn-primary {
+      display: inline-block;
+      font-family: 'Noto Sans JP', 'Inter', sans-serif;
+      background: #e5025a;
+      color: #ffffff;
+      font-weight: 700;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      transition: background 0.25s, transform 0.2s, box-shadow 0.2s;
+      font-size: 1rem;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+    }
+    .btn-primary:hover { background: #b8014a; transform: scale(1.03); box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3); }
+    .line-btn { box-shadow: 0 3px 8px rgba(6,199,85,0.25); }
+    .line-btn:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(6,199,85,0.3); background: #c8f0d8; }
+
+    /* ===== CARDS ===== */
+    .card {
+      background: #fff;
+      border: 1px solid #b2dcd8;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(129,216,208,0.15);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 12px 32px rgba(129,216,208,0.3); }
+
+    /* ===== GALLERY MARQUEE ===== */
+    .marquee-wrapper { overflow: hidden; }
+    .marquee-track {
+      display: flex;
+      gap: 16px;
+      width: max-content;
+      animation: marquee 30s linear infinite;
+    }
+    .marquee-track img { height: 200px; width: auto; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .marquee-wrapper:hover .marquee-track { animation-play-state: paused; }
+
+    /* ===== CHAR ANIMATION ===== */
+    @keyframes charIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== SCROLL INDICATOR ===== */
+    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+    .scroll-bounce { animation: bounce 1.6s ease-in-out infinite; }
+
+    /* ===== MODAL ===== */
+    #modal { display: none; }
+    #modal.open { display: flex; }
+
+    /* ===== PORTFOLIO CARD ===== */
+    .p-card { cursor: pointer; overflow: hidden; border-radius: 12px; box-shadow: 0 4px 16px rgba(129,216,208,0.15); aspect-ratio: 1; width: calc(25% - 12px); min-width: 140px; }
+    .p-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.35s; }
+    .p-card:hover img { transform: scale(1.07); }
+  </style>
+</head>
+
+<body class="bg-white">
+
+<!-- ===================================
+     NAVIGATION
+=================================== -->
+<nav id="navbar" class="fixed top-0 left-0 w-full z-50 bg-transparent">
+  <div class="max-w-6xl mx-auto px-5 sm:px-8 flex items-center justify-between h-16">
+    <a href="#top" class="nav-logo">
+      <img src="images/logo.png" alt="N .DESIGN" style="height:36px; width:auto; object-fit:contain;" />
+    </a>
+
+    <!-- Desktop -->
+    <ul class="hidden md:flex items-center gap-7 text-sm font-medium">
+      <li><a href="#top"       class="nav-link text-white hover:text-tiffany transition" data-section="top">トップ</a></li>
+      <li><a href="#concept"   class="nav-link text-white hover:text-tiffany transition" data-section="concept">コンセプト</a></li>
+      <li><a href="#about"     class="nav-link text-white hover:text-tiffany transition" data-section="about">自己紹介</a></li>
+      <li><a href="#strength"  class="nav-link text-white hover:text-tiffany transition" data-section="strength">強み</a></li>
+      <li><a href="#service"   class="nav-link text-white hover:text-tiffany transition" data-section="service">サービス</a></li>
+      <li><a href="#portfolio" class="nav-link text-white hover:text-tiffany transition" data-section="portfolio">制作事例</a></li>
+      <li><a href="faq.html" class="nav-link text-white hover:text-tiffany transition">Q&amp;A</a></li>
+      <li><a href="#contact" class="btn-primary text-sm py-2 px-5" style="display:inline-flex; align-items:center; gap:6px;"><img src="images/メール.png" alt="" style="height:16px; width:auto;" />無料で相談する</a></li>
+    </ul>
+
+    <!-- Hamburger -->
+    <button id="hamburger" class="md:hidden p-2 flex flex-col gap-1.5" aria-label="メニュー">
+      <span class="ham-bar w-6 h-0.5 bg-white block transition-all"></span>
+      <span class="ham-bar w-6 h-0.5 bg-white block transition-all"></span>
+      <span class="ham-bar w-6 h-0.5 bg-white block transition-all"></span>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="md:hidden bg-white border-t border-tiffany-border shadow-lg">
+    <ul class="flex flex-col text-sm font-medium text-[#001638] px-5 py-4 gap-3">
+      <li><a href="#top"       onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">トップ</a></li>
+      <li><a href="#concept"   onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">コンセプト</a></li>
+      <li><a href="#about"     onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">自己紹介</a></li>
+      <li><a href="#strength"  onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">強み</a></li>
+      <li><a href="#service"   onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">サービス</a></li>
+      <li><a href="#portfolio" onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">制作事例</a></li>
+      <li><a href="faq.html"   onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">Q&amp;A</a></li>
+      <li><a href="#contact"   onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">お問い合わせ</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ===================================
+     HERO
+=================================== -->
+<section id="top" class="relative min-h-screen flex items-center">
+  <img src="images/FV.jpg"
+       onerror="this.src='https://placehold.co/1920x1080/0f172a/81D8D0?text=Hero+Image'"
+       alt="Hero" class="absolute inset-0 w-full h-full object-cover" />
+
+  <div class="relative z-10 max-w-5xl mx-auto px-6 sm:px-10 py-32 w-full">
+    <div data-aos="fade-up" data-aos-duration="900">
+      <h1 id="main-copy" class="font-bold leading-tight mb-3"
+          style="font-size:clamp(2.4rem,6vw,4rem); height:2.8em; overflow:hidden; color:#001638; letter-spacing:0.02em; margin-top:4rem;">
+      </h1>
+      <p id="talk-to-shape" class="mb-6" style="font-size:2rem; font-weight:400; letter-spacing:0.1em; height:1.7em; overflow:hidden; color:#001638;"></p>
+      <p id="sub-copy" class="mb-10 max-w-xl leading-relaxed" style="height:1.9em; overflow:hidden; color:#001638; font-size:1.25rem;"></p>
+      <a href="#contact" class="btn-primary text-base shadow-lg" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; width:290px;">
+        <img src="images/メール.png" alt="" style="height:20px; width:auto;" />
+        無料で相談する
+      </a>
+      <a href="https://lin.ee/WxoibvU" target="_blank" rel="noopener noreferrer" class="font-bold line-btn" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; width:290px; padding:1rem 1.5rem; border-radius:50px; border:2px solid #06c755; color:#06c755; background:#fff; margin-top:1rem; transition:transform 0.2s, box-shadow 0.2s, background 0.2s; font-size:0.9rem; white-space:nowrap;">
+        <img src="images/LINE.png" alt="" style="height:20px; width:auto;" />
+        無料でLINEから相談する
+      </a>
+    </div>
+  </div>
+
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-white/60">
+    <span class="text-xs tracking-[0.2em]">SCROLL</span>
+    <svg class="w-4 h-4 scroll-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ===================================
+     お悩み（青グラデーション）
+=================================== -->
+<section class="py-20 sm:py-28 relative overflow-hidden">
+  <!-- 背景画像 -->
+  <div class="absolute inset-0" style="background: url('images/background.jpg') center/cover no-repeat;"></div>
+  <!-- オーバーレイ -->
+  <div class="absolute inset-0" style="background: rgba(0,0,0,0);"></div>
+
+  <div class="relative max-w-5xl mx-auto px-5 sm:px-8 text-center">
+    <!-- 見出し -->
+    <div data-aos="fade-up">
+      <p class="sec-en mb-2" style="color:#fff;">Your Concerns</p>
+      <h2 class="sec-ja mb-10" style="color:#fff;">こんなお悩みはありませんか？</h2>
+    </div>
+
+    <!-- 3カードグリッド -->
+    <div class="mb-10">
+      <div class="grid md:grid-cols-3 gap-5">
+
+        <div class="card p-6 text-left" data-aos="fade-up" data-aos-delay="100">
+          <img src="images/忙しい女性.png" alt="" class="w-full object-contain mb-4" style="height:160px; object-position:center;" />
+          <div class="flex items-start gap-3">
+            <span class="shrink-0 mt-0.5"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="11" fill="#81D8D0"/><path d="M6 11.5l3.5 3.5 6.5-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p class="text-[#001638] text-sm leading-relaxed font-medium">LP、HPなどを作りたいが、<br /><span class="font-bold" style="color:#3ab8d0;">時間がない</span>。</p>
+          </div>
+        </div>
+
+        <div class="card p-6 text-left" data-aos="fade-up" data-aos-delay="200">
+          <img src="images/悩む男性.png" alt="" class="w-full object-contain mb-4" style="height:160px; object-position:center;" />
+          <div class="flex items-start gap-3">
+            <span class="shrink-0 mt-0.5"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="11" fill="#81D8D0"/><path d="M6 11.5l3.5 3.5 6.5-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p class="text-[#001638] text-sm leading-relaxed font-medium"><span class="font-bold" style="color:#3ab8d0;">デザインのイメージ</span>が浮かばず、何から始めればいいかわからない。</p>
+          </div>
+        </div>
+
+        <div class="card p-6 text-left" data-aos="fade-up" data-aos-delay="300">
+          <img src="images/悩む女性.png" alt="" class="w-full object-contain mb-4" style="height:160px; object-position:center;" />
+          <div class="flex items-start gap-3">
+            <span class="shrink-0 mt-0.5"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="11" fill="#81D8D0"/><path d="M6 11.5l3.5 3.5 6.5-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p class="text-[#001638] text-sm leading-relaxed font-medium">LPなどを制作会社に頼むと、<br /><span class="font-bold" style="color:#3ab8d0;">費用が高い</span>。</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div data-aos="fade-up" data-aos-delay="200">
+      <a href="#contact" class="btn-primary">そんな方は、ぜひ一度ご相談ください！</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================
+     コンセプト（奇数：白）
+=================================== -->
+<section id="concept" class="py-20 sm:py-28 relative" style="background: url('images/bg1.jpg?v=2') center/cover no-repeat;">
+  <div class="relative z-10 max-w-3xl mx-auto px-5 sm:px-8 text-center">
+    <div data-aos="fade-up">
+      <p class="sec-en mb-2">Concept</p>
+      <h2 class="sec-ja mb-4">コンセプト</h2>
+    </div>
+
+    <div data-aos="fade-up" data-aos-delay="100">
+      <p class="text-[#001638] font-bold mb-10"
+         style="font-size:clamp(1.2rem,2.5vw,1.6rem); line-height:1.6">
+        デザインの力で、あなたのビジネスに飛躍を。
+      </p>
+    </div>
+
+    <div data-aos="fade-up" data-aos-delay="150" class="card p-8 text-left mb-8" style="border-color:#fff; background:rgba(255,255,255,0.7);">
+      <p class="text-[#555] leading-loose">
+        私のミッションは、時間をかけてじっくりとお話を伺い、お客様自身も言語化できていない「モヤモヤ」を一緒に整理しながら、ビジネスの本質的な魅力を伝わるカタチにデザインすることです。<br /><br />かつてデザインとの出会いが私に新しい世界を広げ、自分の可能性を信じさせてくれたように、今度は私がデザインの力でお客様の事業の課題を解決し、新しい可能性を切り拓きたいと考えています。<br /><br />単に見栄えを整えるだけでなく、お客様の「想い」に寄り添い、確かな結果が出るカタチにすること。そして、その先にある豊かで明るい未来まで、共に伴走していけたらと思います。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================
+     自己紹介（偶数：tiffany-light）
+=================================== -->
+<section id="about" class="py-20 sm:py-28 relative" style="background: url('images/bgA.jpg') center/cover no-repeat;">
+  <div class="absolute inset-0" style="background:rgba(255,255,255,0.8);"></div>
+  <div class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
+    <div class="text-center mb-14" data-aos="fade-up">
+      <p class="sec-en mb-2">About Me</p>
+      <h2 class="sec-ja">自己紹介</h2>
+    </div>
+
+    <div class="flex flex-col lg:flex-row gap-12 items-start">
+      <!-- Text -->
+      <div class="flex-1" data-aos="fade-right">
+        <div class="card p-8">
+          <div class="flex gap-6 items-stretch mb-8">
+            <div class="flex-1">
+              <p class="text-tiffany text-xs font-semibold tracking-[0.2em] uppercase mb-1">Ryo Nagata</p>
+              <h3 class="text-5xl font-medium mb-6">永田 亮</h3>
+              <table class="w-full text-sm border-collapse" style="margin-top:30px;">
+                <tbody>
+                  <tr><td class="py-2 pr-4 font-bold w-28 text-[#001638]">生年月日</td><td class="py-2 text-[#555]">1991年7月30日</td></tr>
+                  <tr><td class="py-2 pr-4 font-bold text-[#001638]">出身</td><td class="py-2 text-[#555]">静岡県磐田市<br />（現在：東京在住）</td></tr>
+                  <tr><td class="py-2 pr-4 font-bold text-[#001638]">血液型</td><td class="py-2 text-[#555]">B型</td></tr>
+                  <tr><td class="py-2 pr-4 font-bold text-[#001638]">MBTI</td><td class="py-2 text-[#555]">仲介者（INFP）</td></tr>
+                  <tr><td class="py-2 pr-4 font-bold text-[#001638]">動物占い</td><td class="py-2 text-[#555]">華やかな子鹿</td></tr>
+                  <tr><td class="py-2 pr-4 font-bold text-[#001638]">好きな食べ物</td><td class="py-2 text-[#555]">焼肉、茶碗蒸し</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="shrink-0 flex flex-col" style="width:500px; padding-top:1rem;">
+              <div class="rounded-xl overflow-hidden" style="height:330px; margin-top:-10px;">
+                <img src="images/photo.jpg"
+                     onerror="this.src='https://placehold.co/192x300/e6f9f8/81D8D0?text=Photo'"
+                     alt="永田亮" class="w-full h-full object-cover" />
+              </div>
+            </div>
+          </div>
+
+          <div class="border-t border-tiffany-border pt-6 mb-6">
+            <p class="text-sm font-bold text-[#001638] mb-3">経歴</p>
+            <p class="text-sm text-[#555] leading-loose">静岡と東京で計10年間、小学校教員として勤務。教育研究会の体育部研修部長や労働組合の青年部長なども経験し、人と関わりながら「傾聴力」と「伝達力」を磨いてきました。また、子どもたち・地域・保護者の方々と関わる中で、学校をよりよくするための改善を日々考え続けてきました。その経験を活かし、新たな挑戦としてWebデザイナーとして活動しています。</p>
+          </div>
+
+          <div class="border-t border-tiffany-border pt-6">
+            <p class="text-sm font-bold text-[#001638] mb-4">趣味・好きなこと</p>
+            <ul class="text-sm text-[#555] space-y-2">
+              <li class="flex items-start gap-2"><span class="text-tiffany mt-0.5 shrink-0">●</span>読書（座右の一冊：夜と霧、漫画はワンピース・キングダム）</li>
+              <li class="flex items-start gap-2"><span class="text-tiffany mt-0.5 shrink-0">●</span>フットサル（サッカーを20年ほどやっています）</li>
+              <li class="flex items-start gap-2"><span class="text-tiffany mt-0.5 shrink-0">●</span>コーヒー（酸味が少なくて、苦いコーヒーが好きです）</li>
+              <li class="flex items-start gap-2"><span class="text-tiffany mt-0.5 shrink-0">●</span>投資（クライアントさんたちに全力投球するための時間づくりのためにやっております）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- ===================================
+     USP（奇数：白）
+=================================== -->
+<section class="py-20 sm:py-28 relative" style="background: url('images/bg2.jpg?v=2') center/cover no-repeat;">
+  <div class="relative z-10 max-w-3xl mx-auto px-5 sm:px-8 text-center">
+    <div data-aos="fade-up">
+      <p class="sec-en mb-2">Why Choose Me</p>
+      <h2 class="sec-ja mb-10">私が選ばれる理由</h2>
+    </div>
+    <div data-aos="fade-up" data-aos-delay="100" class="card p-10" style="background:rgba(255,255,255,0.7); border:none;">
+      <p class="text-[#001638] font-medium text-base sm:text-xl leading-loose">
+        10年間の教員経験で培った「伴走力」で、<br />
+        言葉にならない想いや強みを「伝わる」カタチへデザインします。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================
+     3つの強み（偶数：tiffany-light）
+=================================== -->
+<section id="strength" class="py-20 sm:py-28 relative" style="background: url('images/bgA.jpg') center/cover no-repeat;">
+  <div class="absolute inset-0" style="background:rgba(255,255,255,0.8);"></div>
+  <div class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
+    <div class="text-center mb-14" data-aos="fade-up">
+      <p class="sec-en mb-2">My Strengths</p>
+      <h2 class="sec-ja">私の3つの強み</h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="card p-8" data-aos="fade-up" data-aos-delay="100">
+        <img src="images/A.png" alt="" class="w-full object-contain mb-4" style="height:160px; object-position:center;" />
+        <div class="text-xs font-bold tracking-[0.15em] uppercase mb-1" style="color:#e5025a;">Strength 01</div>
+        <h3 class="text-2xl font-bold mb-3">対話力</h3>
+        <p class="text-sm text-[#555] leading-loose">丁寧な質問とやりとりを重ねることで、曖昧だったイメージを明確に。「何をつくりたいか」が言葉にならない段階からお手伝いします。</p>
+      </div>
+
+      <div class="card p-8" data-aos="fade-up" data-aos-delay="200">
+        <img src="images/B.png" alt="" class="w-full object-contain mb-4" style="height:160px; object-position:center;" />
+        <div class="text-xs font-bold tracking-[0.15em] uppercase mb-1" style="color:#e5025a;">Strength 02</div>
+        <h3 class="text-2xl font-bold mb-3">伝達力</h3>
+        <p class="text-sm text-[#555] leading-loose">「なぜこのデザインなのか」を理由とともに説明できるのが強みです。感覚だけに頼らず、論理的な根拠をもとに、誰もが納得できる構成を提案します。</p>
+      </div>
+
+      <div class="card p-8" data-aos="fade-up" data-aos-delay="300">
+        <img src="images/C.png" alt="" class="w-full object-contain mb-4" style="height:160px; object-position:center;" />
+        <div class="text-xs font-bold tracking-[0.15em] uppercase mb-1" style="color:#e5025a;">Strength 03</div>
+        <h3 class="text-2xl font-bold mb-3">導線設計力</h3>
+        <p class="text-sm text-[#555] leading-loose">教員時代、子どもたちが自然に動きたくなる仕掛けを毎日考えてきました。その経験を活かし、ユーザーが思わずクリックしたくなる、人間心理を意識した導線を設計します。</p>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- ===================================
+     サービス（奇数：白）
+=================================== -->
+<section id="service" class="py-20 sm:py-28 relative" style="background: url('images/bg3.jpg?v=3') center/cover no-repeat;">
+  <div class="relative z-10 max-w-4xl mx-auto px-5 sm:px-8">
+    <div class="text-center mb-14" data-aos="fade-up">
+      <p class="sec-en mb-2">Services</p>
+      <h2 class="sec-ja">提供サービス</h2>
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-4" data-aos="fade-up" data-aos-delay="100">
+      <div class="card p-6 flex items-center gap-4">
+        <span class="w-2 h-10 rounded-full bg-tiffany shrink-0"></span>
+        <div>
+          <p class="font-bold text-[#001638]">LP（ランディングページ）</p>
+          <p class="text-xs text-[#555]">集客・コンバージョン特化の縦長ページ</p>
+        </div>
+      </div>
+      <div class="card p-6 flex items-center gap-4">
+        <span class="w-2 h-10 rounded-full bg-tiffany shrink-0"></span>
+        <div>
+          <p class="font-bold text-[#001638]">バナー</p>
+          <p class="text-xs text-[#555]">SNS広告・Web広告用バナー制作</p>
+        </div>
+      </div>
+      <div class="card p-6 flex items-center gap-4">
+        <span class="w-2 h-10 rounded-full bg-tiffany shrink-0"></span>
+        <div>
+          <p class="font-bold text-[#001638]">HP（ホームページ）</p>
+          <p class="text-xs text-[#555]">会社・個人事業主向けコーポレートサイト</p>
+        </div>
+      </div>
+      <div class="card p-6 flex items-center gap-4">
+        <span class="w-2 h-10 rounded-full bg-tiffany shrink-0"></span>
+        <div>
+          <p class="font-bold text-[#001638]">商品画像</p>
+          <p class="text-xs text-[#555]">EC・SNS掲載向け商品ビジュアル制作</p>
+        </div>
+      </div>
+      <div class="card p-6 flex items-center gap-4">
+        <span class="w-2 h-10 rounded-full bg-tiffany shrink-0"></span>
+        <div>
+          <p class="font-bold text-[#001638]">サムネイル画像</p>
+          <p class="text-xs text-[#555]">YouTube・ブログ用サムネイル</p>
+        </div>
+      </div>
+      <div class="card p-6 flex items-center gap-4">
+        <span class="w-2 h-10 rounded-full bg-tiffany shrink-0"></span>
+        <div>
+          <p class="font-bold text-[#001638]">名刺</p>
+          <p class="text-xs text-[#555]">印象に残るビジネス名刺デザイン</p>
+        </div>
+      </div>
+      <div class="card p-6 flex items-center gap-4">
+        <span class="w-2 h-10 rounded-full bg-tiffany shrink-0"></span>
+        <div>
+          <p class="font-bold text-[#001638]">LINEのリッチメニュー</p>
+          <p class="text-xs text-[#555]">タップ率向上を意識したメニュー設計</p>
+        </div>
+      </div>
+      <div class="card p-6 flex items-center gap-4">
+        <span class="w-2 h-10 rounded-full bg-tiffany shrink-0"></span>
+        <div>
+          <p class="font-bold text-[#001638]">チラシ</p>
+          <p class="text-xs text-[#555]">イベント・店舗向けフライヤーデザイン</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="text-center text-[#555] text-sm mt-8" data-aos="fade-up" data-aos-delay="200">
+      ※ 上記以外のご要望もお気軽にご相談ください。
+    </p>
+  </div>
+</section>
+
+<!-- ===================================
+     ポートフォリオ（偶数：tiffany-light）
+=================================== -->
+<section id="portfolio" class="py-20 sm:py-28 relative" style="background: url('images/bgA.jpg') center/cover no-repeat;">
+  <div class="absolute inset-0" style="background:rgba(255,255,255,0.8);"></div>
+  <div class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
+    <div class="text-center mb-14" data-aos="fade-up">
+      <p class="sec-en mb-2">Portfolio</p>
+      <h2 class="sec-ja">制作事例</h2>
+    </div>
+
+    <!-- LP / HP -->
+    <div class="mb-14" data-aos="fade-up">
+      <div class="flex items-center gap-4 mb-6">
+        <div class="flex-1 h-px bg-tiffany-border"></div>
+        <span class="text-sm font-bold tracking-[0.15em] uppercase" style="color:#81D8D0;">LP / HP</span>
+        <div class="flex-1 h-px bg-tiffany-border"></div>
+      </div>
+      <div class="flex flex-wrap justify-center gap-3 sm:gap-4">
+        <div class="p-card" data-aos="fade-up" data-aos-delay="50" onclick="location.href='portfolio-detail.html?id=1'">
+          <img src="images/portfolio1.jpg" onerror="this.src='https://placehold.co/480x480/e6f9f8/81D8D0?text=Work+01'" alt="制作実績1" />
+        </div>
+        <div class="p-card" data-aos="fade-up" data-aos-delay="100" onclick="location.href='portfolio-detail.html?id=2'">
+          <img src="images/portfolio2.jpg" onerror="this.src='https://placehold.co/480x480/81D8D0/ffffff?text=Work+02'" alt="制作実績2" />
+        </div>
+        <div class="p-card" data-aos="fade-up" data-aos-delay="150" onclick="location.href='portfolio-detail.html?id=3'">
+          <img src="images/portfolio3.jpg" onerror="this.src='https://placehold.co/480x480/b2dcd8/1a1a1a?text=Work+03'" alt="制作実績3" />
+        </div>
+        <div class="p-card" data-aos="fade-up" data-aos-delay="200" onclick="location.href='portfolio-detail.html?id=10'">
+          <img src="images/work４.jpg" alt="制作実績10" />
+        </div>
+      </div>
+    </div>
+
+    <!-- バナー -->
+    <div class="mb-14" data-aos="fade-up">
+      <div class="flex items-center gap-4 mb-6">
+        <div class="flex-1 h-px bg-tiffany-border"></div>
+        <span class="text-sm font-bold tracking-[0.15em] uppercase" style="color:#81D8D0;">バナー</span>
+        <div class="flex-1 h-px bg-tiffany-border"></div>
+      </div>
+      <div class="flex flex-wrap justify-center gap-3 sm:gap-4">
+        <div class="p-card" data-aos="fade-up" data-aos-delay="50" onclick="location.href='portfolio-detail.html?id=11'">
+          <img src="images/banner/A.jpg" onerror="this.src='https://placehold.co/480x480/0f172a/81D8D0?text=Banner+A'" alt="バナーA" />
+        </div>
+        <div class="p-card" data-aos="fade-up" data-aos-delay="100" onclick="location.href='portfolio-detail.html?id=12'">
+          <img src="images/banner/B.jpg" onerror="this.src='https://placehold.co/480x480/e6f9f8/81D8D0?text=Banner+B'" alt="バナーB" />
+        </div>
+        <div class="p-card" data-aos="fade-up" data-aos-delay="150" onclick="location.href='portfolio-detail.html?id=13'">
+          <img src="images/banner/C.jpg" onerror="this.src='https://placehold.co/480x480/0f172a/81D8D0?text=Banner+C'" alt="バナーC" />
+        </div>
+        <div class="p-card" data-aos="fade-up" data-aos-delay="200" onclick="location.href='portfolio-detail.html?id=14'">
+          <img src="images/banner/D.jpg?v=2" onerror="this.src='https://placehold.co/480x480/e6f9f8/81D8D0?text=Banner+D'" alt="バナーD" />
+        </div>
+        <div class="p-card" data-aos="fade-up" data-aos-delay="250" onclick="location.href='portfolio-detail.html?id=15'">
+          <img src="images/banner/E.jpg?v=2" onerror="this.src='https://placehold.co/480x480/0f172a/81D8D0?text=Banner+E'" alt="バナーE" />
+        </div>
+        <div class="p-card" data-aos="fade-up" data-aos-delay="300" onclick="location.href='portfolio-detail.html?id=16'">
+          <img src="images/banner/F.jpg" onerror="this.src='https://placehold.co/480x480/e6f9f8/81D8D0?text=Banner+F'" alt="バナーF" />
+        </div>
+        <div class="p-card" data-aos="fade-up" data-aos-delay="350" onclick="location.href='portfolio-detail.html?id=17'">
+          <img src="images/banner/G.jpg" onerror="this.src='https://placehold.co/480x480/0f172a/81D8D0?text=Banner+G'" alt="バナーG" />
+        </div>
+        <div class="p-card" data-aos="fade-up" data-aos-delay="400" onclick="location.href='portfolio-detail.html?id=18'">
+          <img src="images/banner/H.jpg?v=2" onerror="this.src='https://placehold.co/480x480/e6f9f8/81D8D0?text=Banner+H'" alt="バナーH" />
+        </div>
+      </div>
+    </div>
+
+  </div>
+  </div>
+</section>
+
+<!-- Portfolio Modal -->
+<div id="modal" class="fixed inset-0 z-50 items-center justify-center bg-black/70 p-4" onclick="closeModalOutside(event)">
+  <div id="modal-inner" class="bg-white rounded-2xl max-w-2xl w-full shadow-2xl relative overflow-hidden flex flex-col" style="max-height:90vh;">
+    <button onclick="closeModal()"
+            class="absolute top-4 right-4 z-10 w-9 h-9 flex items-center justify-center bg-gray-100 hover:bg-tiffany hover:text-white rounded-full transition text-xl font-bold">
+      ×
+    </button>
+    <!-- 上：画像 -->
+    <div class="w-full px-6 overflow-y-auto" style="height:55vh;">
+      <img id="modal-img" src="" alt="" class="w-full h-auto" />
+    </div>
+    <!-- 下：テキスト -->
+    <div class="px-6 pb-6 overflow-y-auto" style="margin-top:-20px;">
+      <span id="modal-category" class="text-xs text-tiffany font-bold tracking-[0.15em] uppercase bg-tiffany-light px-3 py-1 rounded-full"></span>
+      <h3 id="modal-title" class="text-xl font-bold text-[#001638] mt-3 mb-4"></h3>
+      <div class="space-y-3">
+        <div>
+          <p class="text-sm font-bold text-[#001638] mb-1">コンセプト</p>
+          <p id="modal-concept" class="text-sm text-[#555] leading-loose"></p>
+        </div>
+        <div>
+          <p class="text-sm font-bold text-[#001638] mb-1">ターゲット</p>
+          <p id="modal-target" class="text-sm text-[#555] leading-loose"></p>
+        </div>
+        <div>
+          <p class="text-sm font-bold text-[#001638] mb-1">使用ツール</p>
+          <p id="modal-tools" class="text-sm text-[#555]"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ===================================
+     メッセージ（奇数：白）
+=================================== -->
+<section class="py-20 sm:py-28 relative" style="background: url('images/bg1.jpg?v=2') center/cover no-repeat;">
+  <div class="relative z-10 max-w-3xl mx-auto px-5 sm:px-8 text-center">
+    <div data-aos="fade-up">
+      <p class="sec-en mb-2">Message</p>
+      <h2 class="sec-ja mb-10">このサイトを訪れてくださったあなたへ</h2>
+    </div>
+    <div data-aos="fade-up" data-aos-delay="100" class="card p-8 sm:p-12" style="background:rgba(255,255,255,0.7); border:none;">
+      <p class="text-[#001638] text-base sm:text-lg leading-loose text-left">
+        このサイトを訪れてくださり、ありがとうございます。<br />
+        事業に取り組むみなさまの魅力が、もっとお客様に届くように。そのお手伝いができればと、日々デザインに向き合っています。<br /><br />
+        「どう伝えればいいかわからない」「誰に相談すればいいかわからない」<br />
+        そんな時こそ、ぜひ声をかけてください。<br />
+        気軽に話せる伴走相手として、一緒に考えていけたら嬉しいです。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================
+     お問い合わせ（偶数：tiffany-light）
+=================================== -->
+<section id="contact" class="py-20 sm:py-28 relative" style="background: url('images/bgA.jpg') center/cover no-repeat;">
+  <div class="absolute inset-0" style="background:rgba(255,255,255,0.8);"></div>
+  <div class="relative z-10 max-w-2xl mx-auto px-5 sm:px-8">
+    <div class="text-center mb-12" data-aos="fade-up">
+      <p class="sec-en mb-2">Contact</p>
+      <h2 class="sec-ja mb-3">お気軽にご相談ください</h2>
+      <p class="text-[#555] text-sm">まずはお気軽にお問い合わせください。無料でご相談を受け付けております。</p>
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-4 mb-10" data-aos="fade-up" data-aos-delay="50">
+      <div class="flex-1 card px-5 py-4 flex items-center gap-3">
+        <svg class="w-5 h-5 text-tiffany shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+        </svg>
+        <span class="text-sm text-[#001638]">zero.rainbowcolor@gmail.com</span>
+      </div>
+      <div class="flex-1 card px-5 py-4 flex items-center gap-3">
+        <svg class="w-5 h-5 text-tiffany shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+        </svg>
+        <span class="text-sm text-[#001638]">東京都内 対面可 ／ 全国オンライン対応</span>
+      </div>
+    </div>
+
+    <form action="https://formspree.io/f/mzdqkegj" method="POST"
+          data-aos="fade-up" data-aos-delay="100"
+          class="card p-8 space-y-5">
+      <div>
+        <label class="block text-sm font-bold text-[#001638] mb-1.5">お名前 <span class="text-red-400">*</span></label>
+        <input type="text" name="name" required placeholder="例：山田 太郎"
+               class="w-full border border-tiffany-border rounded-xl px-4 py-3 text-sm outline-none focus:border-tiffany focus:ring-2 focus:ring-tiffany/20 transition" />
+      </div>
+      <div>
+        <label class="block text-sm font-bold text-[#001638] mb-1.5">メールアドレス <span class="text-red-400">*</span></label>
+        <input type="email" name="email" required placeholder="例：example@email.com"
+               class="w-full border border-tiffany-border rounded-xl px-4 py-3 text-sm outline-none focus:border-tiffany focus:ring-2 focus:ring-tiffany/20 transition" />
+      </div>
+      <div>
+        <label class="block text-sm font-bold text-[#001638] mb-1.5">お問い合わせ内容 <span class="text-red-400">*</span></label>
+        <textarea name="message" required rows="6" placeholder="お気軽にご記入ください"
+                  class="w-full border border-tiffany-border rounded-xl px-4 py-3 text-sm outline-none focus:border-tiffany focus:ring-2 focus:ring-tiffany/20 transition resize-none"></textarea>
+      </div>
+      <button type="submit" class="btn-primary w-full text-center">送信する</button>
+    </form>
+  </div>
+  </div>
+</section>
+
+<!-- ===================================
+     FOOTER
+=================================== -->
+<footer class="bg-[#001638] text-white">
+  <div class="h-1 bg-tiffany"></div>
+  <div class="max-w-5xl mx-auto px-5 py-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <p class="text-lg font-bold text-tiffany">Ryo Nagata</p>
+    <p class="text-gray-500 text-xs">© 2026 Ryo Nagata All Rights Reserved.</p>
+  </div>
+</footer>
+
+<!-- ===================================
+     SCRIPTS
+=================================== -->
+<script>
+  AOS.init({ duration: 700, once: true, offset: 50 });
+
+  // Nav scroll + active section highlight
+  const navbar  = document.getElementById('navbar');
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link[data-section]');
+
+  function updateNav() {
+    const scrolled = window.scrollY > 60;
+    navbar.classList.toggle('scrolled', scrolled);
+  }
+
+  function updateActiveLink() {
+    let current = '';
+    sections.forEach(sec => {
+      if (window.scrollY >= sec.offsetTop - 100) current = sec.id;
+    });
+    navLinks.forEach(link => {
+      link.classList.toggle('active', link.dataset.section === current);
+    });
+  }
+
+  window.addEventListener('scroll', () => { updateNav(); updateActiveLink(); });
+  updateNav();
+  updateActiveLink();
+
+  // Hamburger
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('mobile-menu').classList.toggle('open');
+  });
+  function closeMobileMenu() {
+    document.getElementById('mobile-menu').classList.remove('open');
+  }
+
+  // Portfolio modal data
+  const portfolioData = [
+    { category: 'LP制作', title: 'LINEマーケティングコンサルタント養成講座 無料説明会LP', concept: '難しいイメージを払拭し、「自分にもできそう」というワクワク感と、在宅で自由に働ける未来のイメージを直感的に伝えるクリーンなデザイン。<br><br><span style="font-size:0.875rem; font-weight:700; color:#001638;">デザイン構成</span><br>カラー：信頼感と清潔感を与えるブルーを基調に、行動を促すオレンジをアクセントに採用。実績などの重要数字はゴールドで強調。<br>レイアウト：スマホ閲覧を意識した縦長構成。FVで実績をアピールして離脱を防ぎ、受講生の声や図解を交えてテンポよく解説。<br>CVR対策：ユーザーの熱量が高まるセクションの直後に、目立つCTAボタンを最適配置。', target: 'メイン：在宅ワークや副業、フリーランスを目指す未経験者（30代〜40代男女）\n悩み：「特別な資格やセンスがない」「何から始めていいか分からない」と一歩を踏み出せずにいる層。', tools: 'Photoshop' },
+    { category: 'HP制作', title: 'コーポレートサイト 01', concept: '企業の信頼感とブランドイメージを大切にしながら、情報が整理されたナビゲーション構造を構築しました。', target: '新規取引先・採用候補者', tools: 'Figma / Wix' },
+    { category: 'バナー制作', title: 'SNS広告バナー 01', concept: '視認性と訴求力を両立したバナーデザイン。A/Bテストを意識した複数パターンを提案しました。', target: 'SNS広告経由の新規顧客', tools: 'Illustrator / Photoshop' },
+    { category: 'LP制作', title: 'ランディングページ 02', concept: 'スマホファーストで設計し、スクロールに連動した演出でユーザーを自然にCTAへ誘導します。', target: 'スマートフォンユーザーの20〜40代', tools: 'Figma / Studio' },
+    { category: '名刺制作', title: 'ビジネス名刺 01', concept: 'シンプルかつ印象に残るデザイン。QRコードを活用してデジタルとリアルを繋げる設計にしました。', target: '対面営業・名刺交換の機会が多い方', tools: 'Illustrator' },
+    { category: 'サムネイル', title: 'YouTube サムネイル 01', concept: 'クリック率を高めるために、インパクトのあるビジュアルとテキスト配置を徹底的に検証しました。', target: 'YouTube視聴者・新規チャンネル登録者', tools: 'Photoshop / Canva' },
+    { category: 'チラシ制作', title: 'イベントチラシ 01', concept: 'A4両面のチラシ。日程・会場・申し込み方法を見やすく整理し、行動を促す構成にしました。', target: 'イベント参加を検討している地域住民', tools: 'Illustrator' },
+    { category: 'LINEリッチメニュー', title: 'LINEリッチメニュー 01', concept: 'ユーザーが直感的に操作できるリッチメニューを設計。タップ率向上を意識したアイコン配置です。', target: 'LINE公式アカウント登録者', tools: 'Figma / Illustrator' },
+    { category: '商品画像', title: '商品撮影・加工 01', concept: '商品の魅力が伝わる背景・アングル・レタッチを施し、EC掲載に最適化した画像に仕上げました。', target: 'ECサイト購入検討者', tools: 'Photoshop / Lightroom' },
+  ];
+
+  const fallbacks = [
+    'https://placehold.co/800x500/e6f9f8/81D8D0?text=Work+0',
+    'https://placehold.co/800x500/81D8D0/ffffff?text=Work+0',
+    'https://placehold.co/800x500/b2dcd8/1a1a1a?text=Work+0',
+  ];
+
+  function openModal(num) {
+    const data = portfolioData[num - 1];
+    const img  = document.getElementById('modal-img');
+    img.src = `images/portfolio${num}.jpg`;
+    img.onerror = () => { img.src = fallbacks[(num - 1) % 3] + num; };
+    document.getElementById('modal-category').textContent = data.category;
+    document.getElementById('modal-title').textContent    = data.title;
+    document.getElementById('modal-concept').innerHTML    = data.concept;
+    document.getElementById('modal-target').innerText     = data.target;
+    document.getElementById('modal-tools').textContent    = data.tools;
+    document.getElementById('modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('modal')) closeModal();
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  // ヒーロー 3段階タイプライターアニメーション
+  function typeSequence(el, text, charDelay, onDone, charStyleFn) {
+    let i = 0;
+    function next() {
+      if (i < text.length) {
+        if (text[i] === '\n') {
+          el.appendChild(document.createElement('br'));
+          i++;
+          setTimeout(next, charDelay);
+          return;
+        }
+        const span = document.createElement('span');
+        span.textContent = text[i];
+        const isSpace = text[i] === ' ';
+        let extra = charStyleFn ? charStyleFn(i, text[i]) : '';
+        span.style.cssText = isSpace
+          ? 'opacity:0; display:inline; animation: charIn 0.3s forwards; white-space:pre;' + extra
+          : 'opacity:0; display:inline-block; animation: charIn 0.3s forwards;' + extra;
+        el.appendChild(span);
+        i++;
+        setTimeout(next, charDelay);
+      } else if (onDone) {
+        setTimeout(onDone, 200);
+      }
+    }
+    next();
+  }
+
+  setTimeout(function() {
+    // 1. メインコピー
+    typeSequence(document.getElementById('main-copy'), '対話から、\nデザインのその先まで。', 80, function() {
+      // 2. Talk, Design and Beyond.
+      typeSequence(document.getElementById('talk-to-shape'), 'Talk, Design and Beyond.', 60, function() {
+        // 3. 教員経験10年の…
+        typeSequence(document.getElementById('sub-copy'), '教員経験10年の伴走力で、あなたの事業課題に寄り添います！', 60, null);
+      });
+    });
+  }, 600);
+</script>
+
+</body>
+</html>
