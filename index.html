@@ -289,11 +289,21 @@
       <!-- Text -->
       <div class="flex-1" data-aos="fade-right">
         <div class="card p-8">
-          <div class="flex gap-6 items-stretch mb-8">
+          <!-- スマホ：写真が上、プロフィールが下 / PC：横並び -->
+          <div class="flex flex-col sm:flex-row gap-6 items-start mb-8">
+            <!-- 写真（スマホで先に表示） -->
+            <div class="w-full sm:shrink-0 sm:w-auto order-first" style="sm:padding-top:1rem;">
+              <div class="rounded-xl overflow-hidden" style="height:280px;">
+                <img src="images/photo.jpg"
+                     onerror="this.src='https://placehold.co/192x300/e6f9f8/81D8D0?text=Photo'"
+                     alt="永田亮" class="w-full h-full object-cover" />
+              </div>
+            </div>
+            <!-- プロフィール -->
             <div class="flex-1">
               <p class="text-tiffany text-xs font-semibold tracking-[0.2em] uppercase mb-1">Ryo Nagata</p>
-              <h3 class="text-5xl font-medium mb-6">永田 亮</h3>
-              <table class="w-full text-sm border-collapse" style="margin-top:30px;">
+              <h3 class="text-4xl font-medium mb-4">永田 亮</h3>
+              <table class="w-full text-sm border-collapse" style="margin-top:16px;">
                 <tbody>
                   <tr><td class="py-2 pr-4 font-bold w-28 text-[#001638]">生年月日</td><td class="py-2 text-[#555]">1991年7月30日</td></tr>
                   <tr><td class="py-2 pr-4 font-bold text-[#001638]">出身</td><td class="py-2 text-[#555]">静岡県磐田市<br />（現在：東京在住）</td></tr>
@@ -303,13 +313,6 @@
                   <tr><td class="py-2 pr-4 font-bold text-[#001638]">好きな食べ物</td><td class="py-2 text-[#555]">焼肉、茶碗蒸し</td></tr>
                 </tbody>
               </table>
-            </div>
-            <div class="shrink-0 flex flex-col" style="width:500px; padding-top:1rem;">
-              <div class="rounded-xl overflow-hidden" style="height:330px; margin-top:-10px;">
-                <img src="images/photo.jpg"
-                     onerror="this.src='https://placehold.co/192x300/e6f9f8/81D8D0?text=Photo'"
-                     alt="永田亮" class="w-full h-full object-cover" />
-              </div>
             </div>
           </div>
 
