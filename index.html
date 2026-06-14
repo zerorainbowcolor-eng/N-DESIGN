@@ -294,9 +294,17 @@
       <div class="flex-1" data-aos="fade-right">
         <div class="card p-8">
           <!-- スマホ：写真が上・プロフィールが下 / PC：テキスト左・写真右 -->
-          <div style="display:flex; flex-wrap:wrap; gap:1.5rem; margin-bottom:2rem;">
+
+          <!-- 写真（スマホのみ上に表示） -->
+          <div class="sm:hidden" style="width:100%; border-radius:12px; overflow:hidden; height:260px; margin-bottom:1.5rem;">
+            <img src="images/Photo2.jpg"
+                 onerror="this.src='https://placehold.co/400x260/e6f9f8/81D8D0?text=Photo'"
+                 alt="永田亮" style="width:100%; height:100%; object-fit:cover; object-position:center top;" />
+          </div>
+
+          <div style="display:flex; gap:1.5rem; margin-bottom:2rem; align-items:stretch;">
             <!-- プロフィール（左） -->
-            <div style="flex:1; min-width:200px;">
+            <div style="flex:1; min-width:0;">
               <p class="text-tiffany text-xs font-semibold tracking-[0.2em] uppercase mb-1">Ryo Nagata</p>
               <h3 class="text-4xl font-medium mb-4">永田 亮</h3>
               <table class="w-full text-sm border-collapse" style="margin-top:16px;">
@@ -310,11 +318,11 @@
                 </tbody>
               </table>
             </div>
-            <!-- 写真（右） -->
-            <div style="width:220px; flex-shrink:0; border-radius:12px; overflow:hidden; height:280px; align-self:flex-start;">
-              <img src="images/photo.jpg"
-                   onerror="this.src='https://placehold.co/192x300/e6f9f8/81D8D0?text=Photo'"
-                   alt="永田亮" style="width:100%; height:100%; object-fit:cover;" />
+            <!-- 写真（右・PCのみ表示） -->
+            <div class="hidden sm:block" style="width:260px; flex-shrink:0; border-radius:12px; overflow:hidden;">
+              <img src="images/Photo2.jpg"
+                   onerror="this.src='https://placehold.co/260x300/e6f9f8/81D8D0?text=Photo'"
+                   alt="永田亮" style="width:100%; height:100%; object-fit:cover; object-position:center top;" />
             </div>
           </div>
 
