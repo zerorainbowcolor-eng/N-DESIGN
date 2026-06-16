@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>よくあるご質問（Q&A） ｜ 永田 亮 Webデザイナー</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            tiffany: '#81D8D0',
+            'tiffany-dark': '#5fc4bb',
+            'tiffany-light': '#e6f9f8',
+            'tiffany-border': '#b2dcd8',
+          },
+          fontFamily: {
+            sans: ['Noto Sans JP', 'Inter', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Noto Sans JP', 'Inter', sans-serif; color: #001638; font-size: 1rem; line-height: 1.8; }
+
+    /* ===== NAV ===== */
+    #navbar { transition: background 0.3s, box-shadow 0.3s; }
+    #navbar.scrolled { background: #fff !important; box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
+    #navbar.scrolled .nav-logo img { filter: brightness(0); }
+    #navbar.scrolled .nav-link { color: #001638 !important; }
+    #navbar.scrolled .ham-bar { background: #001638 !important; }
+    .nav-link { position: relative; padding-bottom: 2px; }
+    .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background: #81D8D0; transition: width 0.3s; }
+    #mobile-menu { display: none; }
+    #mobile-menu.open { display: block; }
+
+    /* ===== SECTION HEADING ===== */
+    .sec-en { font-size: 0.85rem; letter-spacing: 0.15em; color: #F5C842; text-transform: uppercase; font-family: 'Inter', sans-serif; font-weight: 600; }
+    .sec-ja { font-size: clamp(1.6rem, 3vw, 2rem); font-weight: 700; color: #001638; line-height: 1.3; }
+
+    /* ===== BUTTONS ===== */
+    .btn-primary {
+      display: inline-block;
+      font-family: 'Noto Sans JP', 'Inter', sans-serif;
+      background: #e5025a;
+      color: #ffffff;
+      font-weight: 700;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      transition: background 0.25s, transform 0.2s, box-shadow 0.2s;
+      font-size: 1rem;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+    }
+    .btn-primary:hover { background: #b8014a; transform: scale(1.03); box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3); }
+
+    /* ===== CARDS ===== */
+    .card {
+      background: #fff;
+      border: 1px solid #b2dcd8;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(129,216,208,0.15);
+    }
+
+    /* ===== FAQ アコーディオン ===== */
+    .faq-item { border-bottom: 1px solid #b2dcd8; }
+    .faq-item:first-child { border-top: 1px solid #b2dcd8; }
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      cursor: pointer;
+      padding: 1.25rem 0;
+      gap: 1rem;
+      user-select: none;
+    }
+    .faq-question:hover .faq-q-text { color: #5fc4bb; }
+    .faq-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #e6f9f8;
+      border: 1px solid #b2dcd8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, transform 0.3s;
+      margin-top: 2px;
+    }
+    .faq-icon svg { transition: transform 0.3s; }
+    .faq-item.open .faq-icon { background: #81D8D0; }
+    .faq-item.open .faq-icon svg { transform: rotate(45deg); }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s;
+    }
+    .faq-item.open .faq-answer { max-height: 600px; }
+    .faq-answer-inner { padding-bottom: 1.25rem; }
+
+    /* ===== カテゴリバッジ ===== */
+    .category-badge {
+      display: block;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #001638;
+      margin-bottom: 1rem;
+      padding-left: 0.75rem;
+      border-left: 4px solid #81D8D0;
+    }
+  </style>
+</head>
+
+<body style="background: url('images/concern-bg.jpg') center/cover no-repeat fixed; background-color: #e6f9f8;">
+
+<!-- ===================================
+     NAVIGATION
+=================================== -->
+<nav id="navbar" class="fixed top-0 left-0 w-full z-50 bg-white shadow-sm">
+  <div class="max-w-6xl mx-auto px-5 sm:px-8 flex items-center justify-between h-16">
+    <a href="index.html" class="nav-logo">
+      <img src="images/logo.png" alt="N .DESIGN" style="height:36px; width:auto; object-fit:contain; filter:brightness(0);" />
+    </a>
+
+    <!-- Desktop -->
+    <ul class="hidden md:flex items-center gap-7 text-sm font-medium">
+      <li><a href="index.html#top"       class="nav-link text-[#001638] hover:text-tiffany transition">トップ</a></li>
+      <li><a href="index.html#concept"   class="nav-link text-[#001638] hover:text-tiffany transition">コンセプト</a></li>
+      <li><a href="index.html#about"     class="nav-link text-[#001638] hover:text-tiffany transition">自己紹介</a></li>
+      <li><a href="index.html#strength"  class="nav-link text-[#001638] hover:text-tiffany transition">強み</a></li>
+      <li><a href="index.html#service"   class="nav-link text-[#001638] hover:text-tiffany transition">サービス</a></li>
+      <li><a href="index.html#portfolio" class="nav-link text-[#001638] hover:text-tiffany transition">制作事例</a></li>
+      <li><a href="index.html#contact"   class="btn-primary text-sm py-2 px-5" style="display:inline-flex; align-items:center; gap:6px;"><img src="images/mail.png" alt="" style="height:16px; width:auto;" />無料で相談する</a></li>
+    </ul>
+
+    <!-- Hamburger -->
+    <button id="hamburger" class="md:hidden p-2 flex flex-col gap-1.5" aria-label="メニュー">
+      <span class="ham-bar w-6 h-0.5 bg-[#001638] block transition-all"></span>
+      <span class="ham-bar w-6 h-0.5 bg-[#001638] block transition-all"></span>
+      <span class="ham-bar w-6 h-0.5 bg-[#001638] block transition-all"></span>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="md:hidden bg-white border-t border-tiffany-border shadow-lg">
+    <ul class="flex flex-col text-sm font-medium text-[#001638] px-5 py-4 gap-3">
+      <li><a href="index.html#top"       onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">トップ</a></li>
+      <li><a href="index.html#concept"   onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">コンセプト</a></li>
+      <li><a href="index.html#about"     onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">自己紹介</a></li>
+      <li><a href="index.html#strength"  onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">強み</a></li>
+      <li><a href="index.html#service"   onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">サービス</a></li>
+      <li><a href="index.html#portfolio" onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">制作事例</a></li>
+      <li><a href="index.html#contact"   onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">お問い合わせ</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ===================================
+     HERO
+=================================== -->
+<div class="pt-16">
+  <div class="py-16 sm:py-20 text-center" data-aos="fade-up">
+    <p class="sec-en mb-2">FAQ</p>
+    <h1 class="sec-ja">よくあるご質問</h1>
+    <p class="mt-4 text-[#555] text-sm max-w-xl mx-auto">お客様からよくいただくご質問をまとめました。<br />解決しない場合はお気軽にお問い合わせください。</p>
+  </div>
+</div>
+
+<!-- ===================================
+     FAQ コンテンツ
+=================================== -->
+<div class="max-w-3xl mx-auto px-5 sm:px-8 pb-24 space-y-10">
+
+  <!-- カテゴリ 1：制作・素材について -->
+  <div class="card p-6 sm:p-8" data-aos="fade-up">
+    <div class="category-badge">制作・素材について</div>
+    <div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <p class="faq-q-text text-[#001638] text-sm sm:text-base transition-colors" style="font-weight:500;">Q. 制作期間はどのくらいですか？</p>
+          <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="#81D8D0" stroke-width="2" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner text-sm text-[#555] leading-loose">
+            制作開始から、LP（ランディングページ）で1週間〜約3週間、Webサイトは1ヶ月〜が目安となります。ボリュームによって変動するため、お打ち合わせの際にご要望をお伺いした上で明確なスケジュールをお伝えいたします。<br />
+            <span class="text-tiffany font-bold">※お急ぎの場合は柔軟に対応可能ですのでご相談ください。</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <p class="faq-q-text text-[#001638] text-sm sm:text-base transition-colors" style="font-weight:500;">Q. 写真素材などはすべて用意しないと制作できないのでしょうか？</p>
+          <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="#81D8D0" stroke-width="2" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner text-sm text-[#555] leading-loose">
+            いいえ、ご用意がなくても問題ありません。当方が契約している高品質な有料素材サイトから、デザインやターゲットに最適な素材を厳選して使用いたします。
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <p class="faq-q-text text-[#001638] text-sm sm:text-base transition-colors" style="font-weight:500;">Q. 原稿はすべて用意しないと制作できないのでしょうか？</p>
+          <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="#81D8D0" stroke-width="2" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner text-sm text-[#555] leading-loose">
+            基本的な原稿はお客様にご用意いただいておりますが、原稿作成オプションもございます。<br />
+            LP制作の場合は、事前にヒアリングシートをお渡ししますので、商品の特徴やデザインの希望をご返答ください。お伺いした内容をベースに、当方でキャッチコピーの作成やテキストの編集・ブラッシュアップを行います。
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <p class="faq-q-text text-[#001638] text-sm sm:text-base transition-colors" style="font-weight:500;">Q. 制作してほしいイメージが「ぼやっと」しているのですが……</p>
+          <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="#81D8D0" stroke-width="2" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner text-sm text-[#555] leading-loose">
+            ぜひお任せください。お打ち合わせの中で、ビジネスの目標やコンセプト、ターゲット層などを丁寧にヒアリングさせていただき、最適なデザインの方向性をご提案いたします。
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <p class="faq-q-text text-[#001638] text-sm sm:text-base transition-colors" style="font-weight:500;">Q. デザインが気に入らなかった場合はどうしたらいいでしょうか？</p>
+          <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="#81D8D0" stroke-width="2" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner text-sm text-[#555] leading-loose">
+            お客様にご満足いただけるまで修正対応いたします。ただし、大幅な文言の追加や、最初にお打ち合わせしたコンセプト・構成から大きく外れるような変更・作り直しの場合は、追加料金をいただく場合がございます。
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- カテゴリ 2：対応範囲・デザインへのこだわり -->
+  <div class="card p-6 sm:p-8" data-aos="fade-up">
+    <div class="category-badge">対応範囲・デザインへのこだわり</div>
+    <div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <p class="faq-q-text text-[#001638] text-sm sm:text-base transition-colors" style="font-weight:500;">Q. さまざまな制作を一括で依頼することは可能ですか？</p>
+          <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="#81D8D0" stroke-width="2" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner text-sm text-[#555] leading-loose">
+            もちろん可能です。実際、多くのお客様から「チラシ＋バナー＋LP」や「Webサイト＋LINEリッチメニュー＋メッセージ画像」といった形で一括ご依頼いただけます。デザインを丸ごと一括でお任せいただくことで、ユーザーの導線がスムーズになり、ブランドの統一感を高めることができます。
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <p class="faq-q-text text-[#001638] text-sm sm:text-base transition-colors" style="font-weight:500;">Q. 実装（コーディング）やWeb上へのアップロードもしてもらえますか？</p>
+          <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="#81D8D0" stroke-width="2" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner text-sm text-[#555] leading-loose">
+            はい、対応可能です。ドメインやサーバーの情報をご共有いただければ、公開（アップロード）作業まで責任を持って行います。
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- カテゴリ 3：料金・費用について -->
+  <div class="card p-6 sm:p-8" data-aos="fade-up">
+    <div class="category-badge">料金・費用について</div>
+    <div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <p class="faq-q-text text-[#001638] text-sm sm:text-base transition-colors" style="font-weight:500;">Q. お見積りは無料ですか？</p>
+          <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="#81D8D0" stroke-width="2" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner text-sm text-[#555] leading-loose">
+            はい、お見積りは完全に無料です。まずはお気軽にお問い合わせフォームよりご相談ください。
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <p class="faq-q-text text-[#001638] text-sm sm:text-base transition-colors" style="font-weight:500;">Q. 制作料金は、いつ支払いになりますか？</p>
+          <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="#81D8D0" stroke-width="2" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner text-sm text-[#555] leading-loose">
+            原則として、着手金として総額の50%を前払いいただき、残金（50%）を納品月の末締め・翌月末払いにてお願いしております。<br />
+            <span class="text-tiffany font-bold">※案件の規模やご事情によっては、柔軟に対応いたしますのでご相談ください。</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <p class="faq-q-text text-[#001638] text-sm sm:text-base transition-colors" style="font-weight:500;">Q. 追加費用が発生することはありますか？</p>
+          <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="#81D8D0" stroke-width="2" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner text-sm text-[#555] leading-loose">
+            基本的には、当初のお見積り範囲内で収まるように制作いたします。ただし、「大幅な構成・仕様の変更」「デザイン確定後の度重なる修正」「原稿作成など追加オプションの途中変更」が発生した場合は、事前にお客様にご確認・ご納得いただいた上で追加費用をいただく場合がございます。
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- カテゴリ 4：その他・ご依頼前に -->
+  <div class="card p-6 sm:p-8" data-aos="fade-up">
+    <div class="category-badge">ご依頼前に</div>
+    <div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <p class="faq-q-text text-[#001638] text-sm sm:text-base transition-colors" style="font-weight:500;">Q. 依頼前にオンラインMTG（ZOOM等）は可能ですか？</p>
+          <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="#81D8D0" stroke-width="2" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner text-sm text-[#555] leading-loose">
+            もちろん可能です。ご契約前にZOOMにてお顔を合わせ、不安な点をご相談いただけます。ご希望の日時を2〜3件ほど、お問い合わせフォームよりお知らせください。
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <p class="faq-q-text text-[#001638] text-sm sm:text-base transition-colors" style="font-weight:500;">Q. プロジェクト開始前に何を準備すればいいですか？</p>
+          <div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="#81D8D0" stroke-width="2" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner text-sm text-[#555] leading-loose">
+            お打ち合わせの後に、こちらから必要なものチェックリストをお送りします。基本的には、以下のものをご用意いただくとスムーズです。
+            <ul class="mt-3 space-y-1.5">
+              <li class="flex items-start gap-2"><span class="text-tiffany font-bold shrink-0">①</span>使用したい写真や画像素材（お手元にある場合）</li>
+              <li class="flex items-start gap-2"><span class="text-tiffany font-bold shrink-0">②</span>掲載したい原稿・テキスト（原稿作成オプションも利用可能）</li>
+              <li class="flex items-start gap-2"><span class="text-tiffany font-bold shrink-0">③</span>完成イメージに近い競合や他社のURL</li>
+              <li class="flex items-start gap-2"><span class="text-tiffany font-bold shrink-0">④</span>ドメイン、サーバーの情報（Webサイト・LP公開に必要なお客様のアカウント）</li>
+            </ul>
+            <p class="mt-3">不安な点があれば、お打ち合わせの際にご説明しますのでご安心ください。</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="text-center py-6" data-aos="fade-up">
+    <p class="text-[#555] text-sm mb-6">解決しない場合は、お気軽にお問い合わせください。</p>
+    <a href="index.html#contact" class="btn-primary" style="display:inline-flex; align-items:center; gap:8px;">
+      <img src="images/mail.png" alt="" style="height:18px; width:auto;" />
+      無料で相談する
+    </a>
+  </div>
+
+</div>
+
+<!-- ===================================
+     FOOTER
+=================================== -->
+<footer class="bg-[#001638] text-white">
+  <div class="h-1 bg-tiffany"></div>
+  <div class="max-w-5xl mx-auto px-5 py-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <p class="text-lg font-bold text-tiffany">Ryo Nagata</p>
+    <p class="text-gray-500 text-xs">© 2026 Ryo Nagata All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+  AOS.init({ duration: 700, once: true, offset: 50 });
+
+  const navbar = document.getElementById('navbar');
+  function updateNav() {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  }
+  window.addEventListener('scroll', updateNav);
+  updateNav();
+
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('mobile-menu').classList.toggle('open');
+  });
+  function closeMobileMenu() {
+    document.getElementById('mobile-menu').classList.remove('open');
+  }
+
+  function toggleFaq(questionEl) {
+    const item = questionEl.closest('.faq-item');
+    item.classList.toggle('open');
+  }
+</script>
+
+</body>
+</html>
