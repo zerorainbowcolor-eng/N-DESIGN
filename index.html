@@ -99,6 +99,7 @@
     @media (orientation: portrait) and (max-width: 767px) {
       #main-copy { font-size: clamp(1.95rem, 7.8vw, 2.6rem) !important; min-height: 2.8em !important; }
       #sub-copy { min-height: 3.2em !important; }
+      #concern .sec-ja { font-size: clamp(1.1rem, 4.5vw, 1.4rem) !important; white-space: nowrap; }
     }
 
     /* ===== MOBILE ONLY BACKGROUNDS (portrait) ===== */
@@ -260,7 +261,7 @@
 <!-- ===================================
      お悩み（青グラデーション）
 =================================== -->
-<section class="py-20 sm:py-28 relative overflow-hidden">
+<section id="concern" class="py-20 sm:py-28 relative overflow-hidden">
   <!-- 背景画像 -->
   <div class="absolute inset-0" style="background: url('images/background.jpg?v=2') center/cover no-repeat;"></div>
   <!-- オーバーレイ -->
