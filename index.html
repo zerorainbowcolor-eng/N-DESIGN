@@ -95,6 +95,15 @@
       #hero-img { display: none; }
     }
 
+    /* ===== MOBILE ONLY BACKGROUNDS ===== */
+    @media (max-width: 639px) {
+      #top { background: url('images/SP版FV.jpg') center/cover no-repeat !important; background-color: #0f172a; }
+      #hero-img { display: none; }
+      #concept { background: url('images/SP版背景.jpg') center/cover no-repeat !important; }
+      #service { background: url('images/SP版背景.jpg') center/cover no-repeat !important; }
+      .sp-bg-section { background: url('images/SP版背景.jpg') center/cover no-repeat !important; }
+    }
+
     /* ===== SECTION HEADING ===== */
     .sec-en { font-size: 0.85rem; letter-spacing: 0.15em; color: #F5C842; text-transform: uppercase; font-family: 'Inter', sans-serif; font-weight: 600; }
     .sec-ja { font-size: clamp(1.6rem, 3vw, 2rem); font-weight: 700; color: #001638; line-height: 1.3; }
@@ -616,7 +625,7 @@
 <!-- ===================================
      メッセージ（奇数：白）
 =================================== -->
-<section class="py-20 sm:py-28 relative" style="background: url('images/bg3.jpg?v=3') center/cover no-repeat;">
+<section class="py-20 sm:py-28 relative sp-bg-section" style="background: url('images/bg3.jpg?v=3') center/cover no-repeat;">
   <div class="relative z-10 max-w-3xl mx-auto px-5 sm:px-8 text-center">
     <div data-aos="fade-up">
       <p class="sec-en mb-2">Message</p>
