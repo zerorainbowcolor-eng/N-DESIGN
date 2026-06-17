@@ -95,10 +95,10 @@
       #hero-img { display: none; }
     }
 
-    /* ===== MOBILE ONLY BACKGROUNDS ===== */
-    @media (max-width: 639px) {
+    /* ===== MOBILE ONLY BACKGROUNDS (portrait) ===== */
+    @media (orientation: portrait) and (max-width: 767px) {
       #top { background: url('images/SP版FV.jpg') center/cover no-repeat !important; background-color: #0f172a; }
-      #hero-img { display: none; }
+      #hero-img { display: none !important; }
       #concept { background: url('images/SP版背景.jpg') center/cover no-repeat !important; }
       #service { background: url('images/SP版背景.jpg') center/cover no-repeat !important; }
       .sp-bg-section { background: url('images/SP版背景.jpg') center/cover no-repeat !important; }
