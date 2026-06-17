@@ -95,6 +95,11 @@
       #hero-img { display: none; }
     }
 
+    /* ===== MOBILE ONLY HERO TEXT ===== */
+    @media (orientation: portrait) and (max-width: 767px) {
+      #main-copy { font-size: clamp(2.2rem, 8vw, 3rem) !important; min-height: 3.8em !important; }
+    }
+
     /* ===== MOBILE ONLY BACKGROUNDS (portrait) ===== */
     @media (orientation: portrait) and (max-width: 767px) {
       #top { background: url('images/sp-fv.jpg') center/cover no-repeat !important; background-color: #0f172a; }
@@ -820,7 +825,8 @@
 
   setTimeout(function() {
     // 1. メインコピー
-    typeSequence(document.getElementById('main-copy'), '対話から、\nデザインのその先まで。', 80, function() {
+    var mainCopyText = window.innerWidth < 640 ? '対話から、\nデザインの\nその先まで。' : '対話から、\nデザインのその先まで。';
+    typeSequence(document.getElementById('main-copy'), mainCopyText, 80, function() {
       // 2. Talk, Design and Beyond.
       typeSequence(document.getElementById('talk-to-shape'), 'Talk, Design and Beyond.', 60, function() {
         // 3. 教員経験10年の…
