@@ -624,7 +624,24 @@
           <p id="modal-tools" class="text-sm text-[#555]"></p>
         </div>
       </div>
+      <!-- 作品全体を見るボタン（LP/HPのみ表示） -->
+      <div id="modal-fullview-wrap" class="mt-5 hidden">
+        <button onclick="openFullview()" class="w-full py-3 rounded-xl font-bold text-sm tracking-wide text-white transition" style="background:#3ab8d0;">
+          作品全体を見る ↓
+        </button>
+      </div>
     </div>
+  </div>
+</div>
+
+<!-- 全画面縦スクロールオーバーレイ -->
+<div id="fullview-overlay" class="fixed inset-0 z-[60] bg-black hidden flex-col">
+  <div class="flex items-center justify-between px-5 py-3 bg-black/90" style="flex-shrink:0;">
+    <p id="fullview-title" class="text-white text-sm font-bold truncate max-w-[80%]"></p>
+    <button onclick="closeFullview()" class="text-white text-2xl w-9 h-9 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/40 transition">×</button>
+  </div>
+  <div id="fullview-scroll" class="overflow-y-auto flex-1">
+    <!-- 画像が縦に並ぶ -->
   </div>
 </div>
 
@@ -755,7 +772,7 @@
 
   // Portfolio modal data
   const portfolioData = [
-    { category: 'LP制作', title: 'LINEマーケティングコンサルタント養成講座 無料説明会LP', concept: '難しいイメージを払拭し、「自分にもできそう」というワクワク感と、在宅で自由に働ける未来のイメージを直感的に伝えるクリーンなデザイン。<br><br><span style="font-size:0.875rem; font-weight:700; color:#001638;">デザイン構成</span><br>カラー：信頼感と清潔感を与えるブルーを基調に、行動を促すオレンジをアクセントに採用。実績などの重要数字はゴールドで強調。<br>レイアウト：スマホ閲覧を意識した縦長構成。FVで実績をアピールして離脱を防ぎ、受講生の声や図解を交えてテンポよく解説。<br>CVR対策：ユーザーの熱量が高まるセクションの直後に、目立つCTAボタンを最適配置。', target: 'メイン：在宅ワークや副業、フリーランスを目指す未経験者（30代〜40代男女）\n悩み：「特別な資格やセンスがない」「何から始めていいか分からない」と一歩を踏み出せずにいる層。', tools: 'Photoshop' },
+    { category: 'LP制作', title: 'LINEマーケティングコンサルタント養成講座 無料説明会LP', concept: '難しいイメージを払拭し、「自分にもできそう」というワクワク感と、在宅で自由に働ける未来のイメージを直感的に伝えるクリーンなデザイン。<br><br><span style="font-size:0.875rem; font-weight:700; color:#001638;">デザイン構成</span><br>カラー：信頼感と清潔感を与えるブルーを基調に、行動を促すオレンジをアクセントに採用。実績などの重要数字はゴールドで強調。<br>レイアウト：スマホ閲覧を意識した縦長構成。FVで実績をアピールして離脱を防ぎ、受講生の声や図解を交えてテンポよく解説。<br>CVR対策：ユーザーの熱量が高まるセクションの直後に、目立つCTAボタンを最適配置。', target: 'メイン：在宅ワークや副業、フリーランスを目指す未経験者（30代〜40代男女）\n悩み：「特別な資格やセンスがない」「何から始めていいか分からない」と一歩を踏み出せずにいる層。', tools: 'Photoshop', fullviewImages: ['images/work1A.jpg', 'images/work1B.jpg'] },
     { category: 'HP制作', title: 'コーポレートサイト 01', concept: '企業の信頼感とブランドイメージを大切にしながら、情報が整理されたナビゲーション構造を構築しました。', target: '新規取引先・採用候補者', tools: 'Figma / Wix' },
     { category: 'バナー制作', title: 'SNS広告バナー 01', concept: '視認性と訴求力を両立したバナーデザイン。A/Bテストを意識した複数パターンを提案しました。', target: 'SNS広告経由の新規顧客', tools: 'Illustrator / Photoshop' },
     { category: 'LP制作', title: 'ランディングページ 02', concept: 'スマホファーストで設計し、スクロールに連動した演出でユーザーを自然にCTAへ誘導します。', target: 'スマートフォンユーザーの20〜40代', tools: 'Figma / Studio' },
@@ -772,6 +789,8 @@
     'https://placehold.co/800x500/b2dcd8/1a1a1a?text=Work+0',
   ];
 
+  let currentFullviewImages = [];
+
   function openModal(num) {
     const data = portfolioData[num - 1];
     const img  = document.getElementById('modal-img');
@@ -782,8 +801,43 @@
     document.getElementById('modal-concept').innerHTML    = data.concept;
     document.getElementById('modal-target').innerText     = data.target;
     document.getElementById('modal-tools').textContent    = data.tools;
+
+    // LP/HP の場合のみ「作品全体を見る」ボタンを表示
+    const isLPHP = data.category === 'LP制作' || data.category === 'HP制作';
+    const wrap = document.getElementById('modal-fullview-wrap');
+    if (isLPHP && data.fullviewImages && data.fullviewImages.length > 0) {
+      currentFullviewImages = data.fullviewImages;
+      document.getElementById('fullview-title').textContent = data.title;
+      wrap.classList.remove('hidden');
+    } else {
+      currentFullviewImages = [];
+      wrap.classList.add('hidden');
+    }
+
     document.getElementById('modal').classList.add('open');
     document.body.style.overflow = 'hidden';
+  }
+
+  function openFullview() {
+    const scroll = document.getElementById('fullview-scroll');
+    scroll.innerHTML = '';
+    currentFullviewImages.forEach(src => {
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = '';
+      img.style.cssText = 'width:100%; display:block;';
+      scroll.appendChild(img);
+    });
+    const overlay = document.getElementById('fullview-overlay');
+    overlay.classList.remove('hidden');
+    overlay.classList.add('flex');
+    scroll.scrollTop = 0;
+  }
+
+  function closeFullview() {
+    const overlay = document.getElementById('fullview-overlay');
+    overlay.classList.add('hidden');
+    overlay.classList.remove('flex');
   }
 
   function closeModal() {
@@ -795,7 +849,13 @@
     if (e.target === document.getElementById('modal')) closeModal();
   }
 
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      const overlay = document.getElementById('fullview-overlay');
+      if (!overlay.classList.contains('hidden')) { closeFullview(); }
+      else { closeModal(); }
+    }
+  });
 
   // ヒーロー 3段階タイプライターアニメーション
   function typeSequence(el, text, charDelay, onDone, charStyleFn) {
