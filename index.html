@@ -175,6 +175,8 @@
     .p-card { cursor: pointer; overflow: hidden; border-radius: 12px; box-shadow: 0 4px 16px rgba(129,216,208,0.15); aspect-ratio: 1; width: calc(25% - 12px); min-width: 140px; }
     .p-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.35s; }
     .p-card:hover img { transform: scale(1.07); }
+    .lphp-grid .p-card { width: calc(33.333% - 11px); }
+    @media (max-width: 639px) { .lphp-grid .p-card { width: calc(50% - 8px); } }
   </style>
 </head>
 
@@ -540,7 +542,7 @@
         <span class="text-sm font-bold tracking-[0.15em] uppercase" style="color:#81D8D0;">LP / HP</span>
         <div class="flex-1 h-px bg-tiffany-border"></div>
       </div>
-      <div class="flex flex-wrap justify-center gap-3 sm:gap-4">
+      <div class="flex flex-wrap justify-center gap-3 sm:gap-4 lphp-grid">
         <div class="p-card" data-aos="fade-up" data-aos-delay="50" onclick="location.href='portfolio-detail.html?id=1'">
           <img src="images/portfolio1.jpg" onerror="this.src='https://placehold.co/480x480/e6f9f8/81D8D0?text=Work+01'" alt="制作実績1" />
         </div>
@@ -552,6 +554,9 @@
         </div>
         <div class="p-card" data-aos="fade-up" data-aos-delay="200" onclick="location.href='portfolio-detail.html?id=10'">
           <img src="images/work４.jpg" alt="制作実績10" />
+        </div>
+        <div class="p-card" data-aos="fade-up" data-aos-delay="250" onclick="location.href='portfolio-detail.html?id=5'">
+          <img src="images/work5.jpg" onerror="this.src='https://placehold.co/480x480/e6f9f8/81D8D0?text=Work+05'" alt="制作実績5" />
         </div>
       </div>
     </div>
