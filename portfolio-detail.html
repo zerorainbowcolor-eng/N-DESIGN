@@ -174,6 +174,8 @@
           const img = document.createElement('img');
           img.src = src;
           img.alt = '';
+          img.loading = 'lazy';
+          img.decoding = 'async';
           img.style.cssText = 'width:100%; display:block;';
           slide.appendChild(img);
         });
