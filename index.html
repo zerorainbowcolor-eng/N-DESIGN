@@ -83,7 +83,10 @@
     #navbar.scrolled .nav-logo img { filter: brightness(0); }
     #navbar.scrolled .nav-link { color: #001638 !important; }
     #navbar.scrolled .ham-bar { background: #001638 !important; }
-    .nav-link { position: relative; padding-bottom: 2px; }
+    .nav-link { position: relative; padding-bottom: 2px; font-weight: 700; transition: color 0.3s; }
+    .nav-link:hover,
+    #navbar .nav-link:hover,
+    #navbar.scrolled .nav-link:hover { color: #81D8D0 !important; }
     .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background: #81D8D0; transition: width 0.3s; }
     .nav-link.active::after { width: 100%; }
     #mobile-menu { display: none; }
@@ -91,23 +94,457 @@
 
     /* ===== HERO ===== */
     .hero-overlay { background: rgba(0,0,0,0.45); }
+    /* ===== バナー 正方形グリッド ===== */
+    .banner-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 8px;
+    }
+    @media (max-width: 767px) { .banner-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; } }
+    .banner-item {
+      aspect-ratio: 1 / 1;
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 8px 30px rgba(129,216,208,0.35), 0 4px 16px rgba(241,91,135,0.14);
+      background: #fff;
+    }
+    .banner-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .banner-item:hover img { transform: scale(1.04); }
+
+    /* ===== 自己紹介 装飾(黄色の帯・左→右リビール) ===== */
+    .about-line {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      pointer-events: none;
+      z-index: 0;
+      clip-path: inset(0 100% 0 0);
+    }
+    .lower-bg-wrap.about-visible .about-line {
+      animation: aboutLineGrow 0.7s cubic-bezier(.22,.61,.36,1) 0.4s forwards;
+    }
+    @keyframes aboutLineGrow {
+      to { clip-path: inset(0 0 0 0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .about-line { clip-path: none; animation: none; }
+    }
+    @media (max-width: 767px) { .about-line { display: none; } }
+
+    /* ===== 自己紹介 プロフィール2列グリッド(1.2倍) ===== */
+    .profile-grid {
+      display: grid;
+      grid-template-columns: auto 1fr; /* 左列は内容幅、右列は左に詰める */
+      column-gap: 1rem;
+      row-gap: 0.75rem;
+    }
+    @media (max-width: 639px) { .profile-grid { grid-template-columns: 1fr; } }
+    .profile-item { display: flex; align-items: baseline; gap: 0.5rem; }
+    .profile-grid .profile-item:nth-child(even) { margin-left: 12px; }
+    .profile-label {
+      flex-shrink: 0;
+      width: 6.5em;
+      white-space: nowrap;
+      font-weight: 700;
+      color: #001638;
+      font-size: 1.05rem; /* text-sm(0.875rem)の1.2倍 */
+    }
+    .profile-value { color: #555; font-size: 1.05rem; line-height: 1.6; white-space: nowrap; }
+
+    /* ===== 強み 下段2枚(中央寄せ) ===== */
+    .strength-row2 {
+      display: grid;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    @media (min-width: 768px) {
+      .strength-row2 {
+        grid-template-columns: repeat(2, calc((100% - 4rem) / 3));
+        justify-content: center;
+      }
+    }
+
+    /* ===== お悩みカード説明文(2倍サイズ) ===== */
+    .concern-desc { font-size: 1.375rem; line-height: 1.6; }
+    @media (max-width: 767px) { .concern-desc { font-size: 1.15rem; } }
+    /* チェックマークを1行目の縦中央に揃える */
+    .concern-check {
+      flex-shrink: 0;
+      /* 1行目の高さ(1.375rem×1.6=2.2rem)の中央にアイコン(26px)を合わせる */
+      margin-top: calc((1.375rem * 1.6 - 26px) / 2);
+    }
+
+    /* ===== FVボタン 遅延フェードイン ===== */
+    .fv-btns { opacity: 0; animation: fvBtnsIn 0.6s ease 2.9s forwards; }
+    @keyframes fvBtnsIn { to { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { .fv-btns { opacity: 1; animation: none; } }
+
+    /* ===== 制作の流れ ===== */
+    .flow-card {
+      background: #fff;
+      border-radius: 28px;
+      padding: 2.25rem 2.5rem;
+      max-width: 1200px;
+      margin-left: auto; margin-right: auto;
+    }
+    .flow-card + .flow-card { margin-top: 56px; position: relative; }
+    .flow-list { position: relative; }
+    .flow-band {
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 0;
+      background: linear-gradient(180deg, #F7A8C4 0%, #FBCFDF 100%);
+      border-radius: 15px;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .flow-card { position: relative; z-index: 1; }
+    .flow-head { display: flex; align-items: baseline; gap: 0.9rem; margin-bottom: 1.1rem; }
+    .flow-num {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 2rem;
+      color: #001638;
+      line-height: 1;
+    }
+    .flow-title { font-weight: 700; font-size: 1.2rem; color: #001638; }
+    .flow-desc { color: #555; line-height: 2; }
+    @media (max-width: 639px) {
+      .flow-card { padding: 1.5rem 1.25rem; border-radius: 20px; }
+      .flow-num { font-size: 1.6rem; }
+    }
+
+    /* ===== メッセージ 流れる英字+すりガラス ===== */
+    .msg-marquee {
+      position: absolute;
+      top: 50%;
+      left: 0; right: 0;
+      transform: translateY(-50%);
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .msg-marquee-track {
+      display: inline-block;
+      white-space: nowrap;
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: clamp(5rem, 13vw, 11rem);
+      line-height: 1;
+      color: #ffffff;
+      letter-spacing: 0.02em;
+      animation: msgMarquee 38s linear infinite;
+      will-change: transform;
+    }
+    @keyframes msgMarquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .msg-frost-panel {
+      backdrop-filter: blur(7px);
+      -webkit-backdrop-filter: blur(7px);
+      background: rgba(223, 236, 247, 0.25);
+      border-radius: 24px;
+      padding: 2.5rem 1.25rem;
+    }
     @media (min-width: 640px) {
-      #top { background: url('images/hero.jpg?v=3') center/100% 100% no-repeat; background-color: #0f172a; }
-      #hero-img { display: none; }
+      .msg-frost-panel { padding: 3rem 2.5rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .msg-marquee-track { animation: none; }
+    }
+
+    /* ===== セクション見出し(左揃え+背景英字) ===== */
+    .sec-head-wrap { text-align: left; }
+    .sec-ja.sec-head {
+      display: inline-block;
+      position: relative;
+      text-align: left;
+      z-index: 1;
+    }
+    .sec-head-en {
+      position: absolute;
+      top: 50%;
+      left: 72%;
+      transform: translateY(-52%);
+      z-index: -1;
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: clamp(3.4rem, 8vw, 7.5rem);
+      letter-spacing: 0.04em;
+      line-height: 1;
+      color: #ffffff;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    /* 中央揃えバリエーション(英字は見出しの真後ろ) */
+    .sec-head-center { text-align: center; }
+    .sec-head-center .sec-head-en {
+      left: 50%;
+      transform: translate(-50%, -52%);
+    }
+    /* PCは見出しを拡大 */
+    @media (min-width: 768px) {
+      .sec-ja.sec-head { font-size: clamp(2rem, 3.4vw, 3rem); }
+    }
+    /* スマホ: 見出しサイズは従来のまま、英字は見出しの真後ろに重ねる */
+    @media (max-width: 767px) {
+      .sec-head-en {
+        left: 0;
+        transform: translateY(-52%);
+        font-size: clamp(2.4rem, 13vw, 3.4rem);
+      }
+    }
+
+    /* ===== 強み 入場時フェードの色変化 ===== */
+    #strength-scrub {
+      position: absolute;
+      left: 0; right: 0;
+      top: 34%; /* 帯の中心が上段と下段の間に来る位置 */
+      width: 100%; height: 46%;
+      object-fit: cover;
+      pointer-events: none;
+      z-index: 0;
+      clip-path: inset(0 100% 0 0);
+    }
+    #strength.strength-visible #strength-scrub {
+      animation: strengthLineGrow 0.8s cubic-bezier(.22,.61,.36,1) forwards;
+    }
+    @keyframes strengthLineGrow {
+      to { clip-path: inset(0 0 0 0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #strength-scrub { clip-path: none; animation: none; }
+    }
+
+    /* ===== お悩み 装飾(六角形ブロブ) ===== */
+    .concern-deco1, .concern-deco2 {
+      position: absolute;
+      width: clamp(280px, 26vw, 480px);
+      pointer-events: none;
+      z-index: 0;
+      -webkit-mask-image: linear-gradient(to right, #000 55%, transparent 92%);
+      mask-image: linear-gradient(to right, #000 55%, transparent 92%);
+    }
+    .concern-deco1 {
+      right: -90px;
+      top: 50%;
+      transform: translateY(calc(-50% - 100px));
+    }
+    .concern-deco2 {
+      left: -90px;
+      bottom: 50%;
+      transform: translateY(calc(50% + 100px));
+    }
+    @media (max-width: 767px) { .concern-deco1, .concern-deco2 { display: none; } }
+
+    /* ===== 広幅コンテナ ===== */
+    .wide-wrap { max-width: min(1600px, 94vw); }
+
+    /* ===== 制作事例 マソンリーレイアウト ===== */
+    .works-masonry {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 44px;
+      row-gap: 52px;
+      align-items: start;
+    }
+    .works-masonry .work-item:nth-child(even) { transform: translateY(110px); }
+    .works-masonry { padding-bottom: 110px; } /* 右列のずれ分の余白 */
+    @media (max-width: 767px) {
+      .works-masonry { grid-template-columns: 1fr; padding-bottom: 0; }
+      .works-masonry .work-item:nth-child(even) { transform: none; }
+    }
+    .work-item {
+      cursor: pointer;
+    }
+    .work-thumb {
+      border-radius: 22px;
+      overflow: hidden;
+      aspect-ratio: 16 / 10;
+      box-shadow: 0 10px 42px rgba(129,216,208,0.4), 0 6px 24px rgba(241,91,135,0.18);
+      background: #fff;
+    }
+    .work-thumb img {
+      width: 100%; height: 100%;
+      object-fit: contain;
+      padding: 5%;
+      box-sizing: border-box;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .work-thumb img.thumb-cover {
+      object-fit: cover;
+      padding: 0;
+    }
+    .work-item:hover .work-thumb img { transform: scale(1.03); }
+    .work-tag {
+      color: #F15B87;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin: 16px 0 6px;
+    }
+    .work-title {
+      color: #001638;
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+
+    /* ===== コンセプト 背景エクスパンド演出 ===== */
+    .concept-bg {
+      position: absolute; inset: -30% 0;
+      background: #dfecf7;
+      clip-path: circle(0% at 50% 50%);
+      will-change: transform;
+    }
+    #concept.concept-visible .concept-bg {
+      animation: conceptBgExpand 1.5s ease-out forwards;
+    }
+    @keyframes conceptBgExpand {
+      to { clip-path: circle(150% at 50% 50%); }
+    }
+    .concept-inner {
+      opacity: 0; transform: translateY(16px);
+      transition: opacity 0.8s ease 1.4s, transform 0.8s ease 1.4s;
+    }
+    #concept.concept-visible .concept-inner { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .concept-bg { clip-path: none; animation: none; }
+      .concept-inner { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* ===== コンセプト 白い帯(左下→右上リビール) ===== */
+    .concept-line {
+      position: absolute;
+      left: -15%;
+      top: 45%;
+      width: 130%;
+      height: clamp(180px, 22vw, 360px);
+      transform: rotate(-22deg);
+      pointer-events: none;
+      z-index: 2;
+      clip-path: inset(0 100% 0 0);
+    }
+    .concept-line-shape {
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, rgba(255,255,255,0.95), rgba(255,255,255,0.55));
+      /* 左端は全高、右端は1/3の太さにすぼむくさび形 */
+      clip-path: polygon(0 0, 100% 33%, 100% 67%, 0 100%);
+    }
+    #concept.concept-line-visible .concept-line {
+      animation: conceptLineGrow 0.7s cubic-bezier(.22,.61,.36,1) forwards;
+    }
+    @keyframes conceptLineGrow {
+      to { clip-path: inset(0 0 0 0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .concept-line { clip-path: none; animation: none; }
+    }
+
+    /* ===== コンセプト 写真配置 ===== */
+    .concept-photos { opacity: 0; transition: opacity 0.8s ease 1.2s; }
+    #concept.concept-visible .concept-photos { opacity: 1; }
+    .concept-photos .cp {
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0,22,56,0.18);
+      object-fit: cover;
+      display: block;
+    }
+    /* PC(広い画面): 左に縦2枚・右に1枚を絶対配置 */
+    @media (min-width: 1440px) {
+      .concept-photos .cp { position: absolute; z-index: 5; }
+      .cp-l1 { left: 3%;  top: 20%; width: clamp(270px, 20vw, 390px); }
+      .cp-l2 { left: 5.5%; top: 58%; width: clamp(270px, 20vw, 390px); }
+      .cp-r1 { right: 3.5%; top: 50%; transform: translateY(-50%); width: clamp(300px, 22vw, 420px); }
+    }
+    /* それ以下の幅: 本文の上に3枚を横並び */
+    @media (max-width: 1439px) {
+      .concept-photos {
+        position: relative; z-index: 5;
+        display: flex; gap: 12px; justify-content: center;
+        max-width: 640px; margin: 0 auto 2.5rem;
+        padding: 0 1.25rem;
+      }
+      .concept-photos .cp { width: 32%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .concept-photos { opacity: 1; transition: none; }
+    }
+
+    /* ===== コンセプト 詩的レイアウト ===== */
+    .concept-copy {
+      font-family: 'Noto Sans JP', 'Inter', sans-serif;
+      font-weight: 400;
+      text-align: center;
+      color: #001638;
+      font-size: clamp(1rem, 1.6vw, 1.25rem);
+      letter-spacing: 0.06em;
+      line-height: 3;
+    }
+    .concept-copy p + p { margin-top: 3em; }
+    @media (max-width: 639px) {
+      .concept-copy { line-height: 2.3; }
+      .concept-copy p + p { margin-top: 2em; }
+    }
+
+    /* ===== HERO 文字リビール(左→右) ===== */
+    #main-copy, #talk-to-shape {
+      clip-path: inset(0 100% 0 0);
+    }
+    #main-copy {
+      animation: fvTextReveal 0.9s cubic-bezier(.22,.61,.36,1) 1.05s forwards;
+    }
+    #talk-to-shape {
+      animation: fvTextReveal 0.9s cubic-bezier(.22,.61,.36,1) 1.9s forwards;
+    }
+    @keyframes fvTextReveal {
+      to { clip-path: inset(0 0 0 0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #main-copy, #talk-to-shape { animation: none; clip-path: none; }
+    }
+
+    /* ===== HERO レイヤー構成 ===== */
+    #top { overflow: hidden; }
+    #fv-bg, #fv-line, #fv-person {
+      object-fit: cover;
+      object-position: center;
+      pointer-events: none;
+      will-change: transform;
+    }
+    #fv-line {
+      z-index: 1;
+      clip-path: inset(0 0 0 100%);
+      animation: fvLineGrow 0.7s cubic-bezier(.22,.61,.36,1) 0.3s forwards;
+    }
+    #fv-person { z-index: 2; }
+    @keyframes fvLineGrow {
+      to { clip-path: inset(0 0 0 0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #fv-line { animation: none; clip-path: inset(0 0 0 0); }
     }
 
     /* ===== MOBILE ONLY HERO TEXT ===== */
     @media (orientation: portrait) and (max-width: 767px) {
-      #main-copy { font-size: clamp(1.3rem, 6.2vw, 2.2rem) !important; min-height: 2.8em !important; }
-      #sub-copy { min-height: 3.2em !important; }
+      #main-copy { font-size: clamp(1.7rem, 8vw, 3rem) !important; }
       #concern .sec-ja { font-size: clamp(0.85rem, 3.8vw, 1.05rem) !important; white-space: nowrap; }
     }
 
     /* ===== MOBILE ONLY BACKGROUNDS (portrait) ===== */
     @media (orientation: portrait) and (max-width: 767px) {
       #top { background: url('images/sp-fv.jpg?v=2') center/cover no-repeat !important; background-color: #0f172a; }
-      #hero-img { display: none !important; }
-      #concept { background: url('images/sp-bg.jpg') center/cover no-repeat !important; }
+      #fv-bg, #fv-line, #fv-person { display: none !important; }
       #service { background: url('images/sp-bg.jpg') center/cover no-repeat !important; }
       .sp-bg-section { background: url('images/sp-bg.jpg') center/cover no-repeat !important; }
     }
@@ -142,6 +579,40 @@
       transition: transform 0.25s, box-shadow 0.25s;
     }
     .card:hover { transform: translateY(-5px); box-shadow: 0 12px 32px rgba(129,216,208,0.3); }
+
+    /* ===== 下部共通背景(強み〜お問い合わせ) ===== */
+    .lower-bg-wrap {
+      background: #dfecf7;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ===== 自己紹介カード ホバー演出 ===== */
+    #about .card { box-shadow: none; border: none; }
+    #about .card:hover { transform: none; box-shadow: none; }
+    .about-photo { position: relative; }
+    .about-photo::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(45deg, rgba(129,216,208,0.6) 0%, rgba(108,180,240,0.3) 25%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.45s ease;
+      pointer-events: none;
+    }
+    #about .card:hover .about-photo::after { opacity: 1; }
+    .about-photo img { filter: brightness(0.95); transition: filter 0.45s ease; }
+    #about .card:hover .about-photo img { filter: brightness(1); }
+    #about .card h3, #about .card td, #about .card p, #about .card li,
+    #about .card .profile-label, #about .card .profile-value, #about .card .hobby-dot {
+      transition: color 0.45s ease;
+    }
+    #about .card:hover h3,
+    #about .card:hover td,
+    #about .card:hover p,
+    #about .card:hover li,
+    #about .card:hover .profile-label,
+    #about .card:hover .profile-value,
+    #about .card:hover .hobby-dot { color: #4D9FE8 !important; }
 
     /* ===== GALLERY MARQUEE ===== */
     .marquee-wrapper { overflow: hidden; }
@@ -194,12 +665,12 @@
 
     <!-- Desktop -->
     <ul class="hidden md:flex items-center gap-7 text-sm font-medium">
-      <li><a href="#top"       class="nav-link text-white hover:text-tiffany transition" data-section="top">トップ</a></li>
-      <li><a href="#concept"   class="nav-link text-white hover:text-tiffany transition" data-section="concept">コンセプト</a></li>
-      <li><a href="#about"     class="nav-link text-white hover:text-tiffany transition" data-section="about">自己紹介</a></li>
-      <li><a href="#strength"  class="nav-link text-white hover:text-tiffany transition" data-section="strength">強み</a></li>
-      <li><a href="#service"   class="nav-link text-white hover:text-tiffany transition" data-section="service">サービス</a></li>
-      <li><a href="#portfolio" class="nav-link text-white hover:text-tiffany transition" data-section="portfolio">制作事例</a></li>
+      <li><a href="#top"       class="nav-link text-white hover:text-tiffany transition" data-section="top">TOP</a></li>
+      <li><a href="#concept"   class="nav-link text-white hover:text-tiffany transition" data-section="concept">CONCEPT</a></li>
+      <li><a href="#about"     class="nav-link text-white hover:text-tiffany transition" data-section="about">ABOUT</a></li>
+      <li><a href="#strength"  class="nav-link text-white hover:text-tiffany transition" data-section="strength">REASONS</a></li>
+      <li><a href="#service"   class="nav-link text-white hover:text-tiffany transition" data-section="service">SERVICE</a></li>
+      <li><a href="#portfolio" class="nav-link text-white hover:text-tiffany transition" data-section="portfolio">WORKS</a></li>
       <li><a href="faq.html" class="nav-link text-white hover:text-tiffany transition">Q&amp;A</a></li>
       <li><a href="#contact" class="btn-primary text-sm py-2 px-5" style="display:inline-flex; align-items:center; gap:6px;"><img src="images/メール.png" alt="" style="height:16px; width:auto;" />無料で相談する</a></li>
     </ul>
@@ -215,14 +686,14 @@
   <!-- Mobile menu -->
   <div id="mobile-menu" class="md:hidden bg-white border-t border-tiffany-border shadow-lg">
     <ul class="flex flex-col text-sm font-medium text-[#001638] px-5 py-4 gap-3">
-      <li><a href="#top"       onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">トップ</a></li>
-      <li><a href="#concept"   onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">コンセプト</a></li>
-      <li><a href="#about"     onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">自己紹介</a></li>
-      <li><a href="#strength"  onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">強み</a></li>
-      <li><a href="#service"   onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">サービス</a></li>
-      <li><a href="#portfolio" onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">制作事例</a></li>
+      <li><a href="#top"       onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">TOP</a></li>
+      <li><a href="#concept"   onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">CONCEPT</a></li>
+      <li><a href="#about"     onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">ABOUT</a></li>
+      <li><a href="#strength"  onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">REASONS</a></li>
+      <li><a href="#service"   onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">SERVICE</a></li>
+      <li><a href="#portfolio" onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">WORKS</a></li>
       <li><a href="faq.html"   onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">Q&amp;A</a></li>
-      <li><a href="#contact"   onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">お問い合わせ</a></li>
+      <li><a href="#contact"   onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">CONTACT</a></li>
     </ul>
   </div>
 </nav>
@@ -231,17 +702,19 @@
      HERO
 =================================== -->
 <section id="top" class="relative min-h-screen flex items-center">
-  <img src="images/hero.jpg?v=3"
-       onerror="this.src='https://placehold.co/1920x1080/0f172a/81D8D0?text=Hero+Image'"
-       alt="Hero" class="absolute inset-0 w-full h-full object-cover" id="hero-img" />
+  <img src="images/fv-bg.jpg" alt="" id="fv-bg"
+       class="absolute inset-0 w-full h-full" />
+  <img src="images/fv-line.webp" alt="" aria-hidden="true" id="fv-line"
+       class="absolute inset-0 w-full h-full" />
+  <img src="images/fv-person.webp" alt="Webデザイナー 永田亮" id="fv-person"
+       class="absolute inset-0 w-full h-full" />
 
   <div class="relative z-10 max-w-5xl mx-auto px-6 sm:px-10 py-32 w-full">
     <div data-aos="fade-up" data-aos-duration="900">
       <h1 id="main-copy" class="font-bold leading-tight mb-0"
-          style="font-size:clamp(1.8rem,6vw,4rem); min-height:2.8em; overflow:hidden; color:#001638; letter-spacing:0.02em; margin-top:4rem;">
-      </h1>
-      <p id="talk-to-shape" class="mb-6" style="font-size:clamp(1.3rem,4vw,2rem); font-weight:400; letter-spacing:0.1em; min-height:1.7em; overflow:hidden; color:#001638;"></p>
-      <p id="sub-copy" class="mb-10 max-w-xl leading-relaxed" style="min-height:1.9em; overflow:hidden; color:#001638; font-size:clamp(1rem,3vw,1.25rem);"></p>
+          style="font-size:clamp(2.2rem,7vw,4.5rem); color:#001638; letter-spacing:0.02em; margin-top:4rem;">対話から<br>デザインのその先まで</h1>
+      <p id="talk-to-shape" class="mb-6" style="font-size:clamp(1.95rem,6vw,3rem); font-weight:400; letter-spacing:0.1em; color:#001638;">Talk, Design and Beyond.</p>
+      <div class="fv-btns">
       <a href="#contact" class="btn-primary text-base shadow-lg" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; width:290px;">
         <img src="images/メール.png" alt="" style="height:20px; width:auto;" />
         無料で相談する
@@ -250,6 +723,7 @@
         <img src="images/LINE.png" alt="" style="height:20px; width:auto;" />
         無料でLINEから相談する
       </a>
+      </div>
     </div>
   </div>
 
@@ -262,21 +736,129 @@
 </section>
 
 <!-- ===================================
+     コンセプト（奇数：白）
+=================================== -->
+<section id="concept" class="py-20 sm:py-28 relative overflow-hidden" style="background:#001638;">
+  <div class="concept-bg" aria-hidden="true"></div>
+  <div class="concept-line" aria-hidden="true"><div class="concept-line-shape"></div></div>
+  <div class="concept-photos">
+    <img class="cp cp-l1" src="images/concept-ph1.jpg" alt="打ち合わせの様子" />
+    <img class="cp cp-l2" src="images/concept-ph2.jpg" alt="制作の様子" />
+    <img class="cp cp-r1" src="images/concept-ph3.jpg" alt="握手を交わすビジネスパーソン" />
+  </div>
+  <div class="relative z-10 max-w-3xl mx-auto px-5 sm:px-8 text-center concept-inner">
+    <div>
+      <p class="text-[#001638] font-bold mb-10"
+         style="font-size:clamp(2.4rem,5vw,3.2rem); line-height:1.5">
+        デザインの力で、<br>あなたのビジネスに飛躍を。
+      </p>
+    </div>
+
+    <div class="concept-copy">
+      <p>
+        私のミッションは、時間をかけてじっくりとお話を伺い、<br class="hidden sm:inline" />
+        お客様自身も言語化できていない「モヤモヤ」を一緒に整理しながら、<br class="hidden sm:inline" />
+        ビジネスの本質的な魅力を伝わるカタチにデザインすることです。
+      </p>
+      <p>
+        かつてデザインとの出会いが私に新しい世界を広げ、<br class="hidden sm:inline" />
+        自分の可能性を信じさせてくれたように、<br class="hidden sm:inline" />
+        今度は私がデザインの力でお客様の事業の課題を解決し、<br class="hidden sm:inline" />
+        新しい可能性を切り拓きたいと考えています。
+      </p>
+      <p>
+        単に見栄えを整えるだけでなく、<br class="hidden sm:inline" />
+        お客様の「想い」に寄り添い、確かな結果が出るカタチにすること。<br class="hidden sm:inline" />
+        そして、その先にある豊かで明るい未来まで、<br class="hidden sm:inline" />
+        ぜひ共に伴走させてください。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================
+     自己紹介（偶数：tiffany-light）
+=================================== -->
+<div class="lower-bg-wrap">
+  <img src="images/about-line.webp" alt="" aria-hidden="true" class="about-line" />
+
+<section id="about" class="py-20 sm:py-28 relative">
+  <div class="relative z-10 wide-wrap mx-auto px-5 sm:px-8">
+    <div class="sec-head-wrap mb-14" data-aos="fade-up">
+      <h2 class="sec-ja sec-head">自己紹介<span class="sec-head-en" aria-hidden="true">ABOUT</span></h2>
+    </div>
+
+    <div class="flex flex-col lg:flex-row gap-12 items-start">
+      <!-- Text -->
+      <div class="flex-1" data-aos="fade-right">
+        <div class="card p-8" style="border:none; background:#fff;">
+          <!-- スマホ：写真が上・プロフィールが下 / PC：テキスト左・写真右 -->
+
+          <!-- 写真（スマホのみ上に表示） -->
+          <div class="sm:hidden about-photo" style="width:100%; border-radius:12px; overflow:hidden; height:260px; margin-bottom:1.5rem;">
+            <img src="images/Photo2.jpg"
+                 onerror="this.src='https://placehold.co/400x260/e6f9f8/81D8D0?text=Photo'"
+                 alt="永田亮" style="width:100%; height:100%; object-fit:cover; object-position:center top;" />
+          </div>
+
+          <div class="about-split" style="display:flex; gap:2rem; align-items:stretch;">
+            <!-- 左: 全テキスト -->
+            <div style="flex:1; min-width:0;">
+              <p class="text-xs font-semibold tracking-[0.2em] uppercase mb-1" style="color:#e5025a;">Ryo Nagata</p>
+              <h3 class="font-medium mb-4" style="font-size:41px;">永田 亮</h3>
+              <div class="profile-grid" style="margin-top:22px;">
+                <div class="profile-item"><span class="profile-label">生年月日</span><span class="profile-value">1991年7月30日</span></div>
+                <div class="profile-item"><span class="profile-label">出身</span><span class="profile-value">静岡県磐田市（現在：東京在住）</span></div>
+                <div class="profile-item"><span class="profile-label">血液型</span><span class="profile-value">B型</span></div>
+                <div class="profile-item"><span class="profile-label">MBTI</span><span class="profile-value">仲介者（INFP）</span></div>
+                <div class="profile-item"><span class="profile-label">動物占い</span><span class="profile-value">華やかな子鹿</span></div>
+                <div class="profile-item"><span class="profile-label">好きな食べ物</span><span class="profile-value">焼肉、茶碗蒸し</span></div>
+              </div>
+
+          <div class="border-t border-tiffany-border pt-6 mb-6" style="margin-top:24px;">
+            <p class="font-bold text-[#001638] mb-3" style="font-size:1.05rem;">経歴</p>
+            <p class="text-sm text-[#555] leading-loose">静岡と東京で計10年間、小学校教員として勤務。教育研究会の体育部研修部長や労働組合の青年部長なども経験し、人と関わりながら「対話力」と「伝達力」を磨いてきました。また、子どもたち・地域・保護者の方々と関わる中で、学校をよりよくするための改善を日々考え続けてきました。その経験を活かし、新たな挑戦としてWebデザイナーとして活動しています。</p>
+          </div>
+
+          <div class="pt-2">
+            <p class="font-bold text-[#001638] mb-4" style="font-size:1.05rem;">趣味・好きなこと</p>
+            <ul class="text-sm text-[#555] space-y-2">
+              <li class="flex items-start gap-2"><span class="mt-0.5 shrink-0 hobby-dot" style="color:#e5025a;">●</span>読書（座右の一冊：夜と霧、漫画はワンピース）</li>
+              <li class="flex items-start gap-2"><span class="mt-0.5 shrink-0 hobby-dot" style="color:#e5025a;">●</span>フットサル（サッカーを小学生から大学生までやっていました）</li>
+              <li class="flex items-start gap-2"><span class="mt-0.5 shrink-0 hobby-dot" style="color:#e5025a;">●</span>コーヒー（酸味が少なくて、苦いコーヒーが好きです）</li>
+              <li class="flex items-start gap-2"><span class="mt-0.5 shrink-0 hobby-dot" style="color:#e5025a;">●</span>株式投資（個別銘柄選びが好きです）</li>
+            </ul>
+          </div>
+            </div>
+            <!-- 右: 写真(カード全高・PCのみ表示) -->
+            <div class="hidden sm:block about-photo" style="width:50%; flex-shrink:0; border-radius:12px; overflow:hidden;">
+              <img src="images/Photo2.jpg"
+                   onerror="this.src='https://placehold.co/600x900/e6f9f8/81D8D0?text=Photo'"
+                   alt="永田亮" style="width:100%; height:100%; object-fit:cover; object-position:center top;" />
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ===================================
      お悩み（青グラデーション）
 =================================== -->
 <section id="concern" class="py-20 sm:py-28 relative overflow-hidden">
-  <!-- 背景画像 -->
-  <div class="absolute inset-0" style="background: url('images/background.jpg?v=2') center/cover no-repeat;"></div>
-  <!-- オーバーレイ -->
-  <div class="absolute inset-0" style="background: rgba(0,0,0,0);"></div>
-
-  <div class="relative max-w-5xl mx-auto px-5 sm:px-8 text-center">
+  <img src="images/concern-deco-r.webp" alt="" aria-hidden="true" class="concern-deco1" />
+  <img src="images/concern-deco-l.webp" alt="" aria-hidden="true" class="concern-deco2" />
+  <div class="relative wide-wrap mx-auto px-5 sm:px-8 text-center">
     <!-- 見出し -->
     <div data-aos="fade-up">
-      <p class="sec-en mb-2" style="color:#fff;">Your Concerns</p>
-      <h2 class="sec-ja mb-10" style="color:#fff;">
-        <span style="color:#001638;">こんなお悩みはありませんか？</span>
-      </h2>
+      <div class="sec-head-wrap mb-10">
+      <h2 class="sec-ja sec-head" style="color:#001638;">こんなお悩みはありませんか？<span class="sec-head-en" aria-hidden="true">CONCERNS</span></h2>
+      </div>
     </div>
 
     <!-- 3カードグリッド -->
@@ -286,24 +868,24 @@
         <div class="card p-6 text-left" data-aos="fade-up" data-aos-delay="100" style="border:none;">
           <img src="images/忙しい女性.png" alt="" class="w-full object-contain mb-4" style="height:160px; object-position:center;" />
           <div class="flex items-start gap-3">
-            <span class="shrink-0 mt-0.5"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="11" fill="#81D8D0"/><path d="M6 11.5l3.5 3.5 6.5-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <p class="text-[#001638] text-sm leading-relaxed font-medium">LP、HPなどを作りたいが、<br /><span class="font-bold" style="color:#3ab8d0;">時間がない</span>。</p>
+            <span class="concern-check"><svg width="26" height="26" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="11" fill="#81D8D0"/><path d="M6 11.5l3.5 3.5 6.5-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p class="text-[#001638] leading-relaxed font-medium concern-desc">LP、HPなどを作りたいが、<span class="font-bold" style="color:#3ab8d0;">時間がない</span>。</p>
           </div>
         </div>
 
         <div class="card p-6 text-left" data-aos="fade-up" data-aos-delay="200" style="border:none;">
           <img src="images/悩む男性.png" alt="" class="w-full object-contain mb-4" style="height:160px; object-position:center;" />
           <div class="flex items-start gap-3">
-            <span class="shrink-0 mt-0.5"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="11" fill="#81D8D0"/><path d="M6 11.5l3.5 3.5 6.5-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <p class="text-[#001638] text-sm leading-relaxed font-medium"><span class="font-bold" style="color:#3ab8d0;">デザインのイメージ</span>が浮かばず、何から始めればいいかわからない。</p>
+            <span class="concern-check"><svg width="26" height="26" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="11" fill="#81D8D0"/><path d="M6 11.5l3.5 3.5 6.5-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p class="text-[#001638] leading-relaxed font-medium concern-desc"><span class="font-bold" style="color:#3ab8d0;">デザインのイメージ</span>が浮かばず、何から始めればいいかわからない。</p>
           </div>
         </div>
 
         <div class="card p-6 text-left" data-aos="fade-up" data-aos-delay="300" style="border:none;">
           <img src="images/悩む女性.png" alt="" class="w-full object-contain mb-4" style="height:160px; object-position:center;" />
           <div class="flex items-start gap-3">
-            <span class="shrink-0 mt-0.5"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="11" fill="#81D8D0"/><path d="M6 11.5l3.5 3.5 6.5-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <p class="text-[#001638] text-sm leading-relaxed font-medium">LPなどを制作会社に頼むと、<br /><span class="font-bold" style="color:#3ab8d0;">費用が高い</span>。</p>
+            <span class="concern-check"><svg width="26" height="26" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="11" fill="#81D8D0"/><path d="M6 11.5l3.5 3.5 6.5-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p class="text-[#001638] leading-relaxed font-medium concern-desc">LPなどを制作会社に頼むと、<br /><span class="font-bold" style="color:#3ab8d0;">費用が高い</span>。</p>
           </div>
         </div>
 
@@ -317,147 +899,59 @@
 </section>
 
 <!-- ===================================
-     コンセプト（奇数：白）
-=================================== -->
-<section id="concept" class="py-20 sm:py-28 relative" style="background: url('images/bg1.jpg?v=2') center/cover no-repeat;">
-  <div class="relative z-10 max-w-3xl mx-auto px-5 sm:px-8 text-center">
-    <div data-aos="fade-up">
-      <p class="sec-en mb-2">Concept</p>
-      <h2 class="sec-ja mb-4">コンセプト</h2>
-    </div>
-
-    <div data-aos="fade-up" data-aos-delay="100">
-      <p class="text-[#001638] font-bold mb-10"
-         style="font-size:clamp(1.2rem,2.5vw,1.6rem); line-height:1.6">
-        <span class="sm:hidden">デザインの力で、<br>あなたのビジネスに飛躍を。</span>
-        <span class="hidden sm:inline">デザインの力で、あなたのビジネスに飛躍を。</span>
-      </p>
-    </div>
-
-    <div data-aos="fade-up" data-aos-delay="150" class="card p-8 text-left mb-8" style="border-color:#fff; background:rgba(255,255,255,0.7);">
-      <p class="text-[#555] leading-loose">
-        私のミッションは、時間をかけてじっくりとお話を伺い、お客様自身も言語化できていない「モヤモヤ」を一緒に整理しながら、ビジネスの本質的な魅力を伝わるカタチにデザインすることです。<br /><br />かつてデザインとの出会いが私に新しい世界を広げ、自分の可能性を信じさせてくれたように、今度は私がデザインの力でお客様の事業の課題を解決し、新しい可能性を切り拓きたいと考えています。<br /><br />単に見栄えを整えるだけでなく、お客様の「想い」に寄り添い、確かな結果が出るカタチにすること。そして、その先にある豊かで明るい未来まで、共に伴走していけたらと思います。
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- ===================================
-     自己紹介（偶数：tiffany-light）
-=================================== -->
-<section id="about" class="py-20 sm:py-28 relative" style="background: url('images/bgA.jpg') center/cover no-repeat;">
-  <div class="absolute inset-0" style="background:rgba(255,255,255,0.8);"></div>
-  <div class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
-    <div class="text-center mb-14" data-aos="fade-up">
-      <p class="sec-en mb-2">About Me</p>
-      <h2 class="sec-ja">自己紹介</h2>
-    </div>
-
-    <div class="flex flex-col lg:flex-row gap-12 items-start">
-      <!-- Text -->
-      <div class="flex-1" data-aos="fade-right">
-        <div class="card p-8" style="border:none; background:#fff;">
-          <!-- スマホ：写真が上・プロフィールが下 / PC：テキスト左・写真右 -->
-
-          <!-- 写真（スマホのみ上に表示） -->
-          <div class="sm:hidden" style="width:100%; border-radius:12px; overflow:hidden; height:260px; margin-bottom:1.5rem;">
-            <img src="images/Photo2.jpg"
-                 onerror="this.src='https://placehold.co/400x260/e6f9f8/81D8D0?text=Photo'"
-                 alt="永田亮" style="width:100%; height:100%; object-fit:cover; object-position:center top;" />
-          </div>
-
-          <div style="display:flex; gap:1.5rem; margin-bottom:2rem; align-items:stretch;">
-            <!-- プロフィール（左） -->
-            <div style="flex:1; min-width:0;">
-              <p class="text-xs font-semibold tracking-[0.2em] uppercase mb-1" style="color:#e5025a;">Ryo Nagata</p>
-              <h3 class="text-4xl font-medium mb-4">永田 亮</h3>
-              <table class="w-full text-sm border-collapse" style="margin-top:16px;">
-                <tbody>
-                  <tr><td class="py-2 pr-4 font-bold w-28 text-[#001638]">生年月日</td><td class="py-2 text-[#555]">1991年7月30日</td></tr>
-                  <tr><td class="py-2 pr-4 font-bold text-[#001638]">出身</td><td class="py-2 text-[#555]">静岡県磐田市<br />（現在：東京在住）</td></tr>
-                  <tr><td class="py-2 pr-4 font-bold text-[#001638]">血液型</td><td class="py-2 text-[#555]">B型</td></tr>
-                  <tr><td class="py-2 pr-4 font-bold text-[#001638]">MBTI</td><td class="py-2 text-[#555]">仲介者（INFP）</td></tr>
-                  <tr><td class="py-2 pr-4 font-bold text-[#001638]">動物占い</td><td class="py-2 text-[#555]">華やかな子鹿</td></tr>
-                  <tr><td class="py-2 pr-4 font-bold text-[#001638]">好きな食べ物</td><td class="py-2 text-[#555]">焼肉、茶碗蒸し</td></tr>
-                </tbody>
-              </table>
-            </div>
-            <!-- 写真（右・PCのみ表示） -->
-            <div class="hidden sm:block" style="width:550px; flex-shrink:0; border-radius:12px; overflow:hidden;">
-              <img src="images/Photo2.jpg"
-                   onerror="this.src='https://placehold.co/260x300/e6f9f8/81D8D0?text=Photo'"
-                   alt="永田亮" style="width:100%; height:100%; object-fit:cover; object-position:center top;" />
-            </div>
-          </div>
-
-          <div class="border-t border-tiffany-border pt-6 mb-6">
-            <p class="text-sm font-bold text-[#001638] mb-3">経歴</p>
-            <p class="text-sm text-[#555] leading-loose">静岡と東京で計10年間、小学校教員として勤務。教育研究会の体育部研修部長や労働組合の青年部長なども経験し、人と関わりながら「対話力」と「伝達力」を磨いてきました。また、子どもたち・地域・保護者の方々と関わる中で、学校をよりよくするための改善を日々考え続けてきました。その経験を活かし、新たな挑戦としてWebデザイナーとして活動しています。</p>
-          </div>
-
-          <div class="border-t border-tiffany-border pt-6">
-            <p class="text-sm font-bold text-[#001638] mb-4">趣味・好きなこと</p>
-            <ul class="text-sm text-[#555] space-y-2">
-              <li class="flex items-start gap-2"><span class="mt-0.5 shrink-0" style="color:#e5025a;">●</span>読書（座右の一冊：夜と霧、漫画はワンピース・キングダム）</li>
-              <li class="flex items-start gap-2"><span class="mt-0.5 shrink-0" style="color:#e5025a;">●</span>フットサル（サッカーを20年ほどやっています）</li>
-              <li class="flex items-start gap-2"><span class="mt-0.5 shrink-0" style="color:#e5025a;">●</span>コーヒー（酸味が少なくて、苦いコーヒーが好きです）</li>
-              <li class="flex items-start gap-2"><span class="mt-0.5 shrink-0" style="color:#e5025a;">●</span>投資（クライアントさんたちに全力投球するための時間づくりのためにやっております）</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-  </div>
-</section>
-
-
-<!-- ===================================
      3つの強み（偶数：tiffany-light）
 =================================== -->
-<section id="strength" class="py-20 sm:py-28 relative" style="background: url('images/bgA.jpg') center/cover no-repeat;">
-  <div class="absolute inset-0" style="background:rgba(255,255,255,0.8);"></div>
-  <div class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
-    <div class="text-center mb-14" data-aos="fade-up">
-      <p class="sec-en mb-2">My Strengths</p>
-      <h2 class="sec-ja">私の3つの強み</h2>
+<section id="strength" class="py-20 sm:py-28 relative">
+  <img src="images/strength-bg.webp" alt="" aria-hidden="true" id="strength-scrub" />
+  <div class="relative z-10 wide-wrap mx-auto px-5 sm:px-8">
+    <div class="sec-head-wrap mb-14" data-aos="fade-up">
+      <h2 class="sec-ja sec-head">選ばれる5つの理由<span class="sec-head-en" aria-hidden="true">REASONS</span></h2>
     </div>
 
     <div class="grid md:grid-cols-3 gap-8">
-      <div class="card p-8" data-aos="fade-up" data-aos-delay="100" style="border:none;">
+      <div class="card p-8 strength-card" data-aos="fade-up" data-aos-delay="100" style="border:none;">
         <img src="images/A.png" alt="" class="w-full object-contain mb-4" style="height:160px; object-position:center;" />
-        <div class="text-xs font-bold tracking-[0.15em] uppercase mb-1 text-center md:text-left" style="color:#e5025a;">Strength 01</div>
-        <h3 class="text-2xl font-bold mb-3 text-center md:text-left">対話力</h3>
-        <p class="text-sm text-[#555] leading-loose">丁寧な質問とやりとりを重ねることで、曖昧だったイメージを明確に。「何をつくりたいか」が言葉にならない段階からお手伝いします。</p>
+        <div class="text-xs font-bold tracking-[0.15em] uppercase mb-1 text-center md:text-left" style="color:#e5025a;">Reason 01</div>
+        <h3 class="text-2xl font-bold mb-3 text-center md:text-left">「なんとなく」からのご相談、大歓迎</h3>
+        <p class="text-sm text-[#555] leading-loose">「こんな雰囲気にしたい」がまだ言葉になっていなくても大丈夫です。お話を伺いながら、参考サイトや色・言葉の好みを一緒に整理し、イメージを少しずつ形にしていきます。固まってから相談する必要はありません。</p>
       </div>
-
-      <div class="card p-8" data-aos="fade-up" data-aos-delay="200" style="border:none;">
+      <div class="card p-8 strength-card" data-aos="fade-up" data-aos-delay="200" style="border:none;">
         <img src="images/B.png" alt="" class="w-full object-contain mb-4" style="height:160px; object-position:center;" />
-        <div class="text-xs font-bold tracking-[0.15em] uppercase mb-1 text-center md:text-left" style="color:#e5025a;">Strength 02</div>
-        <h3 class="text-2xl font-bold mb-3 text-center md:text-left">伝達力</h3>
-        <p class="text-sm text-[#555] leading-loose">「なぜこのデザインなのか」を理由とともに説明できるのが強みです。感覚だけに頼らず、論理的な根拠をもとに、誰もが納得できる構成を提案します。</p>
+        <div class="text-xs font-bold tracking-[0.15em] uppercase mb-1 text-center md:text-left" style="color:#e5025a;">Reason 02</div>
+        <h3 class="text-2xl font-bold mb-3 text-center md:text-left">ご希望に合わせたお見積もり</h3>
+        <p class="text-sm text-[#555] leading-loose">決まったプランに当てはめるのではなく、ご予算とやりたいことを伺ってから内容を組み立てます。お見積もりは総額でご提示し、追加費用が発生する場合は事前に必ずお伝えします。あとから金額が膨らむ心配はありません。</p>
       </div>
-
-      <div class="card p-8" data-aos="fade-up" data-aos-delay="300" style="border:none;">
+      <div class="card p-8 strength-card" data-aos="fade-up" data-aos-delay="300" style="border:none;">
         <img src="images/C.png" alt="" class="w-full object-contain mb-4" style="height:160px; object-position:center;" />
-        <div class="text-xs font-bold tracking-[0.15em] uppercase mb-1 text-center md:text-left" style="color:#e5025a;">Strength 03</div>
-        <h3 class="text-2xl font-bold mb-3 text-center md:text-left">導線設計力</h3>
-        <p class="text-sm text-[#555] leading-loose">教員時代、子どもたちが自然に動きたくなる仕掛けを毎日考えてきました。その経験を活かし、ユーザーが思わずクリックしたくなる、人間心理を意識した導線を設計します。</p>
+        <div class="text-xs font-bold tracking-[0.15em] uppercase mb-1 text-center md:text-left" style="color:#e5025a;">Reason 03</div>
+        <h3 class="text-2xl font-bold mb-3 text-center md:text-left">制作過程も見える進行報告</h3>
+        <p class="text-sm text-[#555] leading-loose">「今どうなっているんだろう」と待たせることがないよう、制作の途中経過をこまめに共有します。方向性のズレは早い段階で確認できるので、完成間際の大きな手戻りを防ぎ、スケジュールも読みやすくなります。</p>
       </div>
     </div>
-  </div>
+    <div class="strength-row2">
+      <div class="card p-8 strength-card" data-aos="fade-up" data-aos-delay="100" style="border:none;">
+        <img src="images/A.png" alt="" class="w-full object-contain mb-4" style="height:160px; object-position:center;" />
+        <div class="text-xs font-bold tracking-[0.15em] uppercase mb-1 text-center md:text-left" style="color:#e5025a;">Reason 04</div>
+        <h3 class="text-2xl font-bold mb-3 text-center md:text-left">「なぜ」まで添えたデザイン提出</h3>
+        <p class="text-sm text-[#555] leading-loose">デザインをお渡しする際は、「なぜこの配置なのか」「なぜこの色なのか」という理由も一緒にお伝えします。良し悪しを判断しやすくなるだけでなく、社内での説明や修正のご指示にもそのまま使っていただけます。</p>
+      </div>
+      <div class="card p-8 strength-card" data-aos="fade-up" data-aos-delay="200" style="border:none;">
+        <img src="images/B.png" alt="" class="w-full object-contain mb-4" style="height:160px; object-position:center;" />
+        <div class="text-xs font-bold tracking-[0.15em] uppercase mb-1 text-center md:text-left" style="color:#e5025a;">Reason 05</div>
+        <h3 class="text-2xl font-bold mb-3 text-center md:text-left">納品後は、お客様ご自身で自由に運用</h3>
+        <p class="text-sm text-[#555] leading-loose">サイトの権利はすべてお客様にお渡しし、管理画面から文章や画像を自分で更新できる形で納品します。月額の管理費はいただきません。制作会社に縛られることなく、サイトを自由に育てていただけます。</p>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- ===================================
      サービス（奇数：白）
 =================================== -->
-<section id="service" class="py-20 sm:py-28 relative" style="background: url('images/bg3.jpg?v=3') center/cover no-repeat;">
-  <div class="relative z-10 max-w-4xl mx-auto px-5 sm:px-8">
-    <div class="text-center mb-14" data-aos="fade-up">
-      <p class="sec-en mb-2">Services</p>
-      <h2 class="sec-ja">提供サービス</h2>
+<section id="service" class="py-20 sm:py-28 relative">
+  <div class="relative z-10 wide-wrap mx-auto px-5 sm:px-8">
+    <div class="sec-head-wrap mb-14" data-aos="fade-up">
+      <h2 class="sec-ja sec-head">提供サービス<span class="sec-head-en" aria-hidden="true">SERVICES</span></h2>
     </div>
 
     <div class="grid sm:grid-cols-2 gap-4" data-aos="fade-up" data-aos-delay="100">
@@ -528,88 +1022,61 @@
 <!-- ===================================
      ポートフォリオ（偶数：tiffany-light）
 =================================== -->
-<section id="portfolio" class="py-20 sm:py-28 relative" style="background: url('images/bgA.jpg') center/cover no-repeat;">
-  <div class="absolute inset-0" style="background:rgba(255,255,255,0.8);"></div>
-  <div class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
-    <div class="text-center mb-14" data-aos="fade-up">
-      <p class="sec-en mb-2">Portfolio</p>
-      <h2 class="sec-ja">制作事例</h2>
+<section id="portfolio" class="py-20 sm:py-28 relative">
+  <div class="relative z-10 wide-wrap mx-auto px-5 sm:px-8">
+    <div class="sec-head-wrap mb-14" data-aos="fade-up">
+      <h2 class="sec-ja sec-head">制作事例<span class="sec-head-en" aria-hidden="true">WORKS</span></h2>
     </div>
 
-    <!-- LP -->
-    <div class="mb-14" data-aos="fade-up">
-      <div class="flex items-center gap-4 mb-6">
-        <div class="flex-1 h-px bg-tiffany-border"></div>
-        <span class="text-sm font-bold tracking-[0.15em] uppercase" style="color:#81D8D0;">LP</span>
-        <div class="flex-1 h-px bg-tiffany-border"></div>
+    <div class="works-masonry">
+      <div class="work-item" data-aos="fade-up" data-aos-delay="50" onclick="location.href='portfolio-detail.html?id=1'">
+        <div class="work-thumb"><img src="images/lp01.jpg" alt="LINEマーケティングコンサルタント養成講座 無料説明会LP" loading="lazy" class="thumb-cover" /></div>
+        <p class="work-tag">#LP制作</p>
+        <h3 class="work-title">LINEマーケティングコンサルタント養成講座 無料説明会LP</h3>
       </div>
-      <div class="flex flex-wrap justify-center gap-3 sm:gap-4 lphp-grid">
-        <div class="p-card" data-aos="fade-up" data-aos-delay="50" onclick="location.href='portfolio-detail.html?id=1'">
-          <img src="images/portfolio1.jpg" onerror="this.src='https://placehold.co/480x480/e6f9f8/81D8D0?text=Work+01'" alt="制作実績1" />
-        </div>
-        <div class="p-card" data-aos="fade-up" data-aos-delay="100" onclick="location.href='portfolio-detail.html?id=2'">
-          <img src="images/portfolio2.jpg" onerror="this.src='https://placehold.co/480x480/81D8D0/ffffff?text=Work+02'" alt="制作実績2" />
-        </div>
-        <div class="p-card" data-aos="fade-up" data-aos-delay="150" onclick="location.href='portfolio-detail.html?id=5'">
-          <img src="images/work5.jpg" onerror="this.src='https://placehold.co/480x480/e6f9f8/81D8D0?text=Work+05'" alt="制作実績5" />
-        </div>
+      <div class="work-item" data-aos="fade-up" data-aos-delay="100" onclick="location.href='portfolio-detail.html?id=3'">
+        <div class="work-thumb"><img src="images/hp01.jpg" alt="CCC木村事務所様　コーポレートサイト" loading="lazy" class="thumb-cover" /></div>
+        <p class="work-tag">#HP制作</p>
+        <h3 class="work-title">CCC木村事務所様　コーポレートサイト</h3>
       </div>
-    </div>
-
-    <!-- HP -->
-    <div class="mb-14" data-aos="fade-up">
-      <div class="flex items-center gap-4 mb-6">
-        <div class="flex-1 h-px bg-tiffany-border"></div>
-        <span class="text-sm font-bold tracking-[0.15em] uppercase" style="color:#81D8D0;">HP</span>
-        <div class="flex-1 h-px bg-tiffany-border"></div>
+      <div class="work-item" data-aos="fade-up" data-aos-delay="50" onclick="location.href='portfolio-detail.html?id=2'">
+        <div class="work-thumb"><img src="images/lp02.jpg" alt="酵素ドリンク Enzyme Clense LP" loading="lazy" class="thumb-cover" /></div>
+        <p class="work-tag">#LP制作</p>
+        <h3 class="work-title">酵素ドリンク Enzyme Clense LP</h3>
       </div>
-      <div class="flex flex-wrap justify-center gap-3 sm:gap-4 lphp-grid">
-        <div class="p-card" data-aos="fade-up" data-aos-delay="50" onclick="location.href='portfolio-detail.html?id=3'">
-          <img src="images/portfolio3.jpg" onerror="this.src='https://placehold.co/480x480/b2dcd8/1a1a1a?text=Work+03'" alt="制作実績3" />
-        </div>
-        <div class="p-card" data-aos="fade-up" data-aos-delay="100" onclick="location.href='portfolio-detail.html?id=10'">
-          <img src="images/work４.jpg" alt="制作実績10" />
-        </div>
+      <div class="work-item" data-aos="fade-up" data-aos-delay="50" onclick="location.href='portfolio-detail.html?id=5'">
+        <div class="work-thumb"><img src="images/lp03.jpg" alt="整体・サロンオーナー向けセミナー LP" loading="lazy" class="thumb-cover" /></div>
+        <p class="work-tag">#LP制作</p>
+        <h3 class="work-title">整体・サロンオーナー向けセミナー LP</h3>
       </div>
     </div>
-
-    <!-- バナー -->
-    <div class="mb-14" data-aos="fade-up">
-      <div class="flex items-center gap-4 mb-6">
-        <div class="flex-1 h-px bg-tiffany-border"></div>
-        <span class="text-sm font-bold tracking-[0.15em] uppercase" style="color:#81D8D0;">バナー</span>
-        <div class="flex-1 h-px bg-tiffany-border"></div>
+    <div class="banner-grid">
+      <div class="banner-item" data-aos="fade-up" data-aos-delay="50" onclick="location.href='portfolio-detail.html?id=11'">
+        <img src="images/banner/A.jpg" alt="バナーデザイン 01" loading="lazy" />
       </div>
-      <div class="flex flex-wrap justify-center gap-3 sm:gap-4">
-        <div class="p-card" data-aos="fade-up" data-aos-delay="50" onclick="location.href='portfolio-detail.html?id=11'">
-          <img src="images/banner/A.jpg" onerror="this.src='https://placehold.co/480x480/0f172a/81D8D0?text=Banner+A'" alt="バナーA" />
-        </div>
-        <div class="p-card" data-aos="fade-up" data-aos-delay="100" onclick="location.href='portfolio-detail.html?id=12'">
-          <img src="images/banner/B.jpg" onerror="this.src='https://placehold.co/480x480/e6f9f8/81D8D0?text=Banner+B'" alt="バナーB" />
-        </div>
-        <div class="p-card" data-aos="fade-up" data-aos-delay="150" onclick="location.href='portfolio-detail.html?id=13'">
-          <img src="images/banner/C.jpg" onerror="this.src='https://placehold.co/480x480/0f172a/81D8D0?text=Banner+C'" alt="バナーC" />
-        </div>
-        <div class="p-card" data-aos="fade-up" data-aos-delay="200" onclick="location.href='portfolio-detail.html?id=14'">
-          <img src="images/banner/D.jpg?v=2" onerror="this.src='https://placehold.co/480x480/e6f9f8/81D8D0?text=Banner+D'" alt="バナーD" />
-        </div>
-        <div class="p-card" data-aos="fade-up" data-aos-delay="250" onclick="location.href='portfolio-detail.html?id=15'">
-          <img src="images/banner/E.jpg?v=2" onerror="this.src='https://placehold.co/480x480/0f172a/81D8D0?text=Banner+E'" alt="バナーE" />
-        </div>
-        <div class="p-card" data-aos="fade-up" data-aos-delay="300" onclick="location.href='portfolio-detail.html?id=16'">
-          <img src="images/banner/F.jpg" onerror="this.src='https://placehold.co/480x480/e6f9f8/81D8D0?text=Banner+F'" alt="バナーF" />
-        </div>
-        <div class="p-card" data-aos="fade-up" data-aos-delay="350" onclick="location.href='portfolio-detail.html?id=17'">
-          <img src="images/banner/G.jpg" onerror="this.src='https://placehold.co/480x480/0f172a/81D8D0?text=Banner+G'" alt="バナーG" />
-        </div>
-        <div class="p-card" data-aos="fade-up" data-aos-delay="400" onclick="location.href='portfolio-detail.html?id=18'">
-          <img src="images/banner/H.jpg?v=2" onerror="this.src='https://placehold.co/480x480/e6f9f8/81D8D0?text=Banner+H'" alt="バナーH" />
-        </div>
+      <div class="banner-item" data-aos="fade-up" data-aos-delay="100" onclick="location.href='portfolio-detail.html?id=12'">
+        <img src="images/banner/B.jpg" alt="バナーデザイン 02" loading="lazy" />
+      </div>
+      <div class="banner-item" data-aos="fade-up" data-aos-delay="150" onclick="location.href='portfolio-detail.html?id=13'">
+        <img src="images/banner/C.jpg" alt="バナーデザイン 03" loading="lazy" />
+      </div>
+      <div class="banner-item" data-aos="fade-up" data-aos-delay="200" onclick="location.href='portfolio-detail.html?id=14'">
+        <img src="images/banner/D.jpg?v=2" alt="バナーデザイン 04" loading="lazy" />
+      </div>
+      <div class="banner-item" data-aos="fade-up" data-aos-delay="50" onclick="location.href='portfolio-detail.html?id=15'">
+        <img src="images/banner/E.jpg?v=2" alt="バナーデザイン 05" loading="lazy" />
+      </div>
+      <div class="banner-item" data-aos="fade-up" data-aos-delay="100" onclick="location.href='portfolio-detail.html?id=16'">
+        <img src="images/banner/F.jpg" alt="バナーデザイン 06" loading="lazy" />
+      </div>
+      <div class="banner-item" data-aos="fade-up" data-aos-delay="150" onclick="location.href='portfolio-detail.html?id=17'">
+        <img src="images/banner/G.jpg" alt="バナーデザイン 07" loading="lazy" />
+      </div>
+      <div class="banner-item" data-aos="fade-up" data-aos-delay="200" onclick="location.href='portfolio-detail.html?id=18'">
+        <img src="images/banner/H.jpg?v=2" alt="バナーデザイン 08" loading="lazy" />
       </div>
     </div>
-
-  </div>
-  </div>
+    </div>
 </section>
 
 <!-- Portfolio Modal -->
@@ -664,16 +1131,67 @@
 
 
 <!-- ===================================
+     制作の流れ
+=================================== -->
+<section id="flow" class="py-20 sm:py-28 relative">
+  <div class="relative z-10 wide-wrap mx-auto px-5 sm:px-8">
+    <div class="sec-head-wrap mb-14" data-aos="fade-up">
+      <h2 class="sec-ja sec-head">制作の流れ<span class="sec-head-en" aria-hidden="true">FLOW</span></h2>
+    </div>
+    <div class="flow-list">
+      <div class="flow-band" aria-hidden="true"></div>
+      <div class="flow-card" data-aos="fade-up">
+        <div class="flow-head"><span class="flow-num">01.</span><h3 class="flow-title">お問い合わせ</h3></div>
+        <p class="flow-desc">まずはお気軽にお問い合わせフォームからご相談ください。</p>
+      </div>
+      <div class="flow-card" data-aos="fade-up">
+        <div class="flow-head"><span class="flow-num">02.</span><h3 class="flow-title">お打ち合わせ</h3></div>
+        <p class="flow-desc">オンライン（Zoom）で打ち合わせを行います。<br />目的やターゲット、方向性をすり合わせながら、具体的なイメージを整理していきます。</p>
+      </div>
+      <div class="flow-card" data-aos="fade-up">
+        <div class="flow-head"><span class="flow-num">03.</span><h3 class="flow-title">お見積り・ご提案</h3></div>
+        <p class="flow-desc">お打ち合わせ内容を整理し、お見積りと合わせてご提案します。<br />ご要望を踏まえたうえでの制作スケジュールもご提案いたします。</p>
+      </div>
+      <div class="flow-card" data-aos="fade-up">
+        <div class="flow-head"><span class="flow-num">04.</span><h3 class="flow-title">ご契約</h3></div>
+        <p class="flow-desc">ご提案内容にご納得いただけましたら、正式にご契約を行います。<br />着手金のご入金後、正式に制作を開始します。</p>
+      </div>
+      <div class="flow-card" data-aos="fade-up">
+        <div class="flow-head"><span class="flow-num">05.</span><h3 class="flow-title">制作スタート</h3></div>
+        <p class="flow-desc">リサーチや設計を行い、土台を固めたうえで制作に着手します。<br />要所で方向性にずれがないかご確認いただきながら、丁寧に進めていきます。</p>
+      </div>
+      <div class="flow-card" data-aos="fade-up">
+        <div class="flow-head"><span class="flow-num">06.</span><h3 class="flow-title">修正・確認</h3></div>
+        <p class="flow-desc">デザインや構成についてご確認いただき、必要に応じてブラッシュアップを行います。</p>
+      </div>
+      <div class="flow-card" data-aos="fade-up">
+        <div class="flow-head"><span class="flow-num">07.</span><h3 class="flow-title">納品・ご請求</h3></div>
+        <p class="flow-desc">最終確認完了後、制作物の納品を行います。<br />Webの場合はサイト公開、印刷物の場合はデータのお渡しや入稿完了をもって納品とします。</p>
+      </div>
+      <div class="flow-card" data-aos="fade-up">
+        <div class="flow-head"><span class="flow-num">08.</span><h3 class="flow-title">運用・保守（オプション）</h3></div>
+        <p class="flow-desc">納品後も必要に応じたサポートを行っています。<br />ご希望に応じて、運用のご相談も承りますので、お気軽にご相談ください。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================
      メッセージ（奇数：白）
 =================================== -->
-<section class="py-20 sm:py-28 relative sp-bg-section" style="background: url('images/bg3.jpg?v=3') center/cover no-repeat;">
-  <div class="relative z-10 max-w-3xl mx-auto px-5 sm:px-8 text-center">
+<section class="py-20 sm:py-28 relative overflow-hidden" id="message">
+  <!-- 流れる英字(背面) -->
+  <div class="msg-marquee" aria-hidden="true">
+    <div class="msg-marquee-track">
+      <span>THANK&nbsp;YOU&nbsp;FOR&nbsp;YOUR&nbsp;INTEREST&nbsp;&nbsp;&nbsp;</span><span>THANK&nbsp;YOU&nbsp;FOR&nbsp;YOUR&nbsp;INTEREST&nbsp;&nbsp;&nbsp;</span>
+    </div>
+  </div>
+  <div class="relative z-10 max-w-3xl mx-auto msg-frost-panel text-center">
     <div data-aos="fade-up">
-      <p class="sec-en mb-2">Message</p>
       <h2 class="sec-ja mb-10">このサイトを訪れてくださったあなたへ</h2>
     </div>
-    <div data-aos="fade-up" data-aos-delay="100" class="card p-8 sm:p-12" style="background:rgba(255,255,255,0.7); border:none;">
-      <p class="text-[#001638] text-base sm:text-lg leading-loose text-left">
+    <div data-aos="fade-up" data-aos-delay="100">
+      <p class="text-[#001638] text-base sm:text-lg text-center" style="line-height:2.8;">
         このサイトを訪れてくださり、ありがとうございます。<br />
         事業に取り組むみなさまの魅力が、もっとお客様に届くように。そのお手伝いができればと、日々デザインに向き合っています。<br /><br />
         「どう伝えればいいかわからない」「誰に相談すればいいかわからない」<br />
@@ -687,13 +1205,11 @@
 <!-- ===================================
      お問い合わせ（偶数：tiffany-light）
 =================================== -->
-<section id="contact" class="py-20 sm:py-28 relative" style="background: url('images/bgA.jpg') center/cover no-repeat;">
-  <div class="absolute inset-0" style="background:rgba(255,255,255,0.8);"></div>
-  <div class="relative z-10 max-w-2xl mx-auto px-5 sm:px-8">
-    <div class="text-center mb-12" data-aos="fade-up">
-      <p class="sec-en mb-2">Contact</p>
-      <h2 class="sec-ja mb-3">お気軽にご相談ください</h2>
-      <p class="text-[#555] text-sm">まずはお気軽にお問い合わせください。無料でご相談を受け付けております。</p>
+<section id="contact" class="py-20 sm:py-28 relative">
+  <div class="relative z-10 max-w-4xl mx-auto px-5 sm:px-8">
+    <div class="sec-head-wrap sec-head-center mb-12" data-aos="fade-up">
+      <h2 class="sec-ja sec-head">お気軽にご相談ください<span class="sec-head-en" aria-hidden="true">CONTACT</span></h2>
+      <p class="text-[#555] text-sm mt-3">まずはお気軽にお問い合わせください。無料でご相談を受け付けております。</p>
     </div>
 
     <div class="flex flex-col sm:flex-row gap-4 mb-10" data-aos="fade-up" data-aos-delay="50">
@@ -735,8 +1251,9 @@
       <button type="submit" class="btn-primary w-full text-center">送信する</button>
     </form>
   </div>
-  </div>
 </section>
+
+</div><!-- /.lower-bg-wrap -->
 
 <!-- ===================================
      FOOTER
@@ -874,45 +1391,154 @@
     }
   });
 
-  // ヒーロー 3段階タイプライターアニメーション
-  function typeSequence(el, text, charDelay, onDone, charStyleFn) {
-    let i = 0;
-    function next() {
-      if (i < text.length) {
-        if (text[i] === '\n') {
-          el.appendChild(document.createElement('br'));
-          i++;
-          setTimeout(next, charDelay);
-          return;
+
+  // ===== FV 多層パララックス =====
+  (function() {
+    var bg = document.getElementById('fv-bg');
+    var line = document.getElementById('fv-line');
+    var person = document.getElementById('fv-person');
+    if (!bg || !line || !person) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var ticking = false;
+    function update() {
+      var y = Math.max(0, window.scrollY);
+      if (y < window.innerHeight * 1.2) {
+        bg.style.transform     = 'translate3d(0,' + (y * 0.45) + 'px,0)'; // 奥: ゆっくり
+        line.style.transform   = 'translate3d(0,' + (y * 0.25) + 'px,0)'; // 中間
+        person.style.transform = 'translate3d(0,' + (y * 0.10) + 'px,0)'; // 手前: 速い
+      }
+      ticking = false;
+    }
+    window.addEventListener('scroll', function() {
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
+  })();
+
+  // ===== 制作の流れ スクロール連動で伸びる縦帯 =====
+  (function() {
+    var list = document.querySelector('.flow-list');
+    var band = document.querySelector('.flow-band');
+    if (!list || !band) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      band.style.height = '100%';
+      return;
+    }
+    var ticking = false;
+    function update() {
+      var r = list.getBoundingClientRect();
+      var target = window.innerHeight * 0.6 - r.top; // 画面の60%位置を先端が追う
+      var h = Math.max(0, Math.min(r.height, target));
+      band.style.height = h + 'px';
+      ticking = false;
+    }
+    window.addEventListener('scroll', function() {
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
+    update();
+  })();
+
+  // ===== 制作事例 3段階の背景色フェード切り替え(水色→淡黄→淡ピンク) =====
+  (function() {
+    var sec = document.getElementById('portfolio');
+    if (!sec) return;
+    var COLORS = ['#faf0d3', '#fbe3ec', '#dfecf7']; // 淡黄/淡ピンク/水色
+    sec.style.transition = 'background-color 0.9s ease';
+    var current = -1;
+    var ticking = false;
+    function update() {
+      var r = sec.getBoundingClientRect();
+      var vh = window.innerHeight;
+      if (r.bottom > 0 && r.top < vh) {
+        var p = (vh - r.top) / (vh + r.height); // 0=入り始め, 1=通過完了
+        var stage = p < 0.34 ? 0 : (p < 0.67 ? 1 : 2);
+        if (stage !== current) {
+          current = stage;
+          sec.style.backgroundColor = COLORS[stage];
         }
-        const span = document.createElement('span');
-        span.textContent = text[i];
-        const isSpace = text[i] === ' ';
-        let extra = charStyleFn ? charStyleFn(i, text[i]) : '';
-        span.style.cssText = isSpace
-          ? 'opacity:0; display:inline; animation: charIn 0.3s forwards; white-space:pre;' + extra
-          : 'opacity:0; display:inline-block; animation: charIn 0.3s forwards;' + extra;
-        el.appendChild(span);
-        i++;
-        setTimeout(next, charDelay);
-      } else if (onDone) {
-        setTimeout(onDone, 200);
+      }
+      ticking = false;
+    }
+    window.addEventListener('scroll', function() {
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
+    update();
+  })();
+
+  // ===== 強み 見出しが画面中央に来たらラインが左から流れる =====
+  (function() {
+    var sec = document.getElementById('strength');
+    var heading = sec ? sec.querySelector('.sec-ja') : null;
+    if (!sec || !heading || !document.getElementById('strength-scrub')) return;
+    if (!('IntersectionObserver' in window)) { sec.classList.add('strength-visible'); return; }
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { sec.classList.add('strength-visible'); io.disconnect(); }
+      });
+    }, { rootMargin: '-50% 0px -50% 0px', threshold: 0 });
+    io.observe(heading);
+  })();
+
+  // ===== 自己紹介 黄色帯リビール発火 =====
+  (function() {
+    var sec = document.getElementById('about');
+    var wrap = document.querySelector('.lower-bg-wrap');
+    if (!sec || !wrap) return;
+    if (!('IntersectionObserver' in window)) { wrap.classList.add('about-visible'); return; }
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { wrap.classList.add('about-visible'); io.disconnect(); }
+      });
+    }, { threshold: 0.45 });
+    io.observe(sec);
+  })();
+
+  // ===== コンセプト 背景エクスパンド発火(セクション中央が画面に入ったら) =====
+  (function() {
+    var sec = document.getElementById('concept');
+    if (!sec) return;
+    var fired = false;
+    function check() {
+      if (fired) return;
+      var r = sec.getBoundingClientRect();
+      var centerY = r.top + r.height / 2;
+      if (centerY < window.innerHeight * 0.75 && r.bottom > 0) {
+        fired = true;
+        sec.classList.add('concept-visible');
+        // 円形拡大(1.5s)完了後、少し置いてから白い帯を出す
+        setTimeout(function() { sec.classList.add('concept-line-visible'); }, 2100);
+        window.removeEventListener('scroll', onScroll);
       }
     }
-    next();
-  }
+    var ticking = false;
+    function onScroll() {
+      if (!ticking) { requestAnimationFrame(function(){ check(); ticking = false; }); ticking = true; }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    check();
+  })();
 
-  setTimeout(function() {
-    // 1. メインコピー
-    var mainCopyText = '対話から、\nデザインのその先まで';
-    typeSequence(document.getElementById('main-copy'), mainCopyText, 80, function() {
-      // 2. Talk, Design and Beyond.
-      typeSequence(document.getElementById('talk-to-shape'), 'Talk, Design and Beyond.', 60, function() {
-        // 3. 教員経験10年の…
-        typeSequence(document.getElementById('sub-copy'), '教員経験10年の伴走力で、あなたの事業課題に寄り添います！', 60, null);
-      });
-    });
-  }, 600);
+  // ===== コンセプト 背景パララックス =====
+  (function() {
+    var sec = document.getElementById('concept');
+    if (!sec) return;
+    var bg = sec.querySelector('.concept-bg');
+    if (!bg) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var ticking = false;
+    function update() {
+      var r = sec.getBoundingClientRect();
+      if (r.bottom > 0 && r.top < window.innerHeight) {
+        bg.style.transform = 'translate3d(0,' + (r.top * -0.22) + 'px,0)';
+      }
+      ticking = false;
+    }
+    window.addEventListener('scroll', function() {
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
+    update();
+  })();
+
 </script>
 
 </body>
