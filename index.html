@@ -146,7 +146,7 @@
       column-gap: 1rem;
       row-gap: 0.75rem;
     }
-    @media (max-width: 639px) { .profile-grid { grid-template-columns: 1fr; } .profile-value { white-space: normal; } }
+    @media (max-width: 639px) { .profile-grid { grid-template-columns: 1fr; } #about .profile-value, #about .profile-label { white-space: normal; } #about .profile-label { width: auto; } }
     .profile-item { display: flex; align-items: baseline; gap: 0.5rem; }
     .profile-grid .profile-item:nth-child(even) { margin-left: 12px; }
     .profile-label {
@@ -529,7 +529,7 @@
     }
     #fv-person { z-index: 2; }
     @media (max-width: 767px) {
-      #fv-bg, #fv-line, #fv-person { object-position: 72% center; }
+      #fv-bg, #fv-line, #fv-person { object-position: 88% center; }
     }
     @keyframes fvLineGrow {
       to { clip-path: inset(0 0 0 0); }
