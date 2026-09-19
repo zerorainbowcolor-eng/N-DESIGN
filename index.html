@@ -400,9 +400,19 @@
       font-size: 1.05rem;
     }
 
+    /* ===== コンセプト 背景写真＋紺オーバーレイ ===== */
+    .concept-photo-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background: url('images/concept-bg-photo.jpg') center/cover no-repeat;
+    }
+    .concept-overlay {
+      position: absolute; inset: 0; z-index: 0;
+      background: rgba(0, 22, 56, 0.7);
+    }
+
     /* ===== コンセプト 背景エクスパンド演出 ===== */
     .concept-bg {
-      position: absolute; inset: -30% 0;
+      position: absolute; inset: -30% 0; z-index: 1;
       background: #dfecf7;
       clip-path: circle(0% at 50% 50%);
       will-change: transform;
@@ -741,6 +751,8 @@
      コンセプト（奇数：白）
 =================================== -->
 <section id="concept" class="py-20 sm:py-28 relative overflow-hidden" style="background:#001638;">
+  <div class="concept-photo-bg" aria-hidden="true"></div>
+  <div class="concept-overlay" aria-hidden="true"></div>
   <div class="concept-bg" aria-hidden="true"></div>
   <div class="concept-line" aria-hidden="true"><div class="concept-line-shape"></div></div>
   <div class="concept-photos">
