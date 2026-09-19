@@ -566,6 +566,18 @@
     .sec-ja { font-size: clamp(1.6rem, 3vw, 2rem); font-weight: 700; color: #001638; line-height: 1.3; }
 
     /* ===== BUTTONS ===== */
+    .req-badge {
+      display: inline-block;
+      margin-left: 8px;
+      padding: 2px 8px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      line-height: 1.4;
+      color: #fff;
+      background: #e5025a;
+      border-radius: 4px;
+      vertical-align: middle;
+    }
     .btn-primary {
       display: inline-block;
       font-family: 'Noto Sans JP', 'Inter', sans-serif;
@@ -1248,21 +1260,21 @@
           data-aos="fade-up" data-aos-delay="100"
           class="card p-8 space-y-5">
       <div>
-        <label class="block text-sm font-bold text-[#001638] mb-1.5">お名前 <span class="text-red-400">*</span></label>
+        <label class="block text-sm font-bold text-[#001638] mb-1.5">お名前 <span class="req-badge">必須</span></label>
         <input type="text" name="name" required placeholder="例：山田 太郎"
                class="w-full border border-tiffany-border rounded-xl px-4 py-3 text-sm outline-none focus:border-tiffany focus:ring-2 focus:ring-tiffany/20 transition" />
       </div>
       <div>
-        <label class="block text-sm font-bold text-[#001638] mb-1.5">メールアドレス <span class="text-red-400">*</span></label>
+        <label class="block text-sm font-bold text-[#001638] mb-1.5">メールアドレス <span class="req-badge">必須</span></label>
         <input type="email" name="email" required placeholder="例：example@email.com"
                class="w-full border border-tiffany-border rounded-xl px-4 py-3 text-sm outline-none focus:border-tiffany focus:ring-2 focus:ring-tiffany/20 transition" />
       </div>
       <div>
-        <label class="block text-sm font-bold text-[#001638] mb-1.5">お問い合わせ内容 <span class="text-red-400">*</span></label>
+        <label class="block text-sm font-bold text-[#001638] mb-1.5">お問い合わせ内容 <span class="req-badge">必須</span></label>
         <textarea name="message" required rows="6" placeholder="お気軽にご記入ください"
                   class="w-full border border-tiffany-border rounded-xl px-4 py-3 text-sm outline-none focus:border-tiffany focus:ring-2 focus:ring-tiffany/20 transition resize-none"></textarea>
       </div>
-      <button type="submit" class="btn-primary w-full text-center">送信する</button>
+      <button type="submit" class="btn-primary w-full text-center">問い合わせる</button>
     </form>
   </div>
 </section>
