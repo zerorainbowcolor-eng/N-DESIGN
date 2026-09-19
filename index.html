@@ -1553,6 +1553,39 @@
     update();
   })();
 
+  // ===== コンセプト サイド写真パララックス（PCのみ／スクロールで上に流れる） =====
+  (function() {
+    var sec = document.getElementById('concept');
+    if (!sec) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var photos = sec.querySelectorAll('.concept-photos .cp');
+    if (!photos.length) return;
+    var rates = { 'cp-l1': 0.12, 'cp-l2': 0.20, 'cp-r1': 0.15 };
+    var ticking = false;
+    function update() {
+      if (window.innerWidth < 1440) {
+        photos.forEach(function(p) { p.style.transform = ''; });
+        ticking = false; return;
+      }
+      var r = sec.getBoundingClientRect();
+      if (r.bottom > 0 && r.top < window.innerHeight) {
+        photos.forEach(function(p) {
+          var rate = p.classList.contains('cp-l1') ? rates['cp-l1']
+                   : p.classList.contains('cp-l2') ? rates['cp-l2']
+                   : rates['cp-r1'];
+          var base = p.classList.contains('cp-r1') ? 'translateY(-50%) ' : '';
+          p.style.transform = base + 'translate3d(0,' + (r.top * rate) + 'px,0)';
+        });
+      }
+      ticking = false;
+    }
+    window.addEventListener('scroll', function() {
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    update();
+  })();
+
 </script>
 
 </body>
