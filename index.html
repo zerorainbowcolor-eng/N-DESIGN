@@ -474,7 +474,7 @@
     @media (min-width: 1440px) {
       .concept-photos .cp { position: absolute; z-index: 5; }
       .cp-l1 { left: 3%;  top: 20%; width: clamp(189px, 14vw, 273px); filter: blur(2px); opacity: 0.9; }
-      .cp-l2 { left: 5.5%; top: 58%; width: clamp(324px, 24vw, 468px); }
+      .cp-l2 { left: 3%; top: 58%; width: clamp(356px, 26.4vw, 515px); }
       .cp-r1 { right: 3.5%; top: 50%; transform: translateY(-50%); width: clamp(300px, 22vw, 420px); }
     }
     /* それ以下の幅: 本文の上に3枚を横並び */
@@ -1572,7 +1572,7 @@
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     var photos = sec.querySelectorAll('.concept-photos .cp');
     if (!photos.length) return;
-    var rates = { 'cp-l1': 0.05, 'cp-l2': 0.32, 'cp-r1': 0.15 };
+    var rates = { 'cp-l1': 0.05, 'cp-l2': 0.32, 'cp-r1': 0.05 };
     var ticking = false;
     function update() {
       if (window.innerWidth < 1440) {
