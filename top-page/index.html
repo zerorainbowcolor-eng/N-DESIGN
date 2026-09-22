@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>株式会社アクスコンサルティング｜採用サイト</title>
+<meta name="description" content="企業の変革を支援する総合コンサルティングファーム、株式会社アクスコンサルティングの新卒採用サイトです。本質的な課題解決と個の成長を追求する環境があります。会社概要、事業内容、社員インタビュー、選考情報を掲載中。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="preload" as="image" href="images/slide01.jpg" media="(min-width: 768px)">
+<link rel="preload" as="image" href="images/slide01_sp.jpg" media="(max-width: 767px)">
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<canvas class="bg-canvas" id="hero-canvas" aria-hidden="true"></canvas>
+
+<!-- ============ ヘッダー ============ -->
+<header class="header js-header">
+  <a class="header__logo" href="./" aria-label="株式会社アクスコンサルティング トップページ">
+    <span class="logo-mark" aria-hidden="true"></span>
+    <span class="logo-text">AX CONSULTING</span>
+  </a>
+  <nav class="gnav js-gnav" id="gnav" aria-label="メインメニュー">
+    <ul class="gnav__list">
+      <li><a href="#">会社概要</a></li>
+      <li><a href="#about">理念・ビジョン</a></li>
+      <li><a href="#business">事業領域</a></li>
+      <li><a href="#team">働く仲間</a></li>
+      <li><a href="#works">キャリアパス</a></li>
+      <li><a href="#works">働く環境</a></li>
+    </ul>
+    <a class="gnav__entry" href="#recruit">採用情報</a>
+  </nav>
+  <a class="header__entry" href="#recruit">採用情報</a>
+  <button class="menu-btn js-menu-btn" type="button" aria-controls="gnav" aria-expanded="false" aria-label="メニューを開く">
+    <span></span><span></span>
+  </button>
+</header>
+
+<main>
+  <!-- ============ FV + about（固定背景の上に重なる範囲） ============ -->
+  <div class="fv-wrap js-fv-wrap">
+    <div class="fv-wrap__overlay js-fv-overlay" aria-hidden="true"></div>
+
+    <section class="hero" id="hero">
+      <div class="hero__box">
+        <!-- メインコピーのサブ案：複雑な時代に<br>確かな指針を -->
+        <h1 class="hero__title">
+          <span class="hero__title-main js-title-main">変革の渦の中心へ<br>未来を描き出せ</span>
+          <span class="hero__title-sub js-title-sub">Be the catalyst for change.<br>Transform industries together.</span>
+        </h1>
+        <div class="hero__controls">
+          <div class="hero__fraction" aria-hidden="true">
+            <span class="js-current">01</span>
+            <div class="hero__bar"><div class="hero__bar-in js-bar"></div></div>
+            <span class="js-next">02</span>
+          </div>
+          <button class="hero__toggle js-toggle" type="button" data-state="playing" aria-label="スライドを一時停止">
+            <svg class="icon-pause" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="1" width="3" height="10"/><rect x="7" y="1" width="3" height="10"/></svg>
+            <svg class="icon-play" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1l8 5-8 5z"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <a class="hero__news" href="#">
+        <time datetime="2026-10-01">10/01</time>
+        <span>26卒エントリー受付中</span>
+      </a>
+
+      <a class="hero__entry" href="#recruit">
+        <span class="hero__entry-en">Recruit</span>
+        <span class="hero__entry-ja">新卒エントリー</span>
+        <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+      </a>
+    </section>
+
+    <section class="about" id="about">
+      <div class="container">
+        <p class="sec-label js-reveal">About AX</p>
+        <h2 class="about__title js-reveal">正解のない<br>時代に挑む</h2>
+        <p class="about__en js-reveal">We solve core challenges in a complex world.<br>Empowering clients toward sustainable growth.</p>
+        <p class="about__text js-reveal">
+          変化の激しい現代において、確固たる事実に基づく論理的思考と、<br>
+          クライアントに寄り添う情熱で本質的な課題を解決へと導きます。<br>
+          単なるアドバイザーにとどまらず、伴走者として成果にコミット。<br>
+          社会に新たな価値を生み出し、持続可能な未来を創り上げます。
+        </p>
+        <a class="btn btn--light js-reveal" href="#">
+          <span>企業理念を見る</span>
+          <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ 事業案内 ============ -->
+  <section class="business" id="business">
+    <div class="container">
+      <div class="sec-head">
+        <p class="sec-label js-reveal">Our Services</p>
+        <h2 class="sec-title js-reveal">経営課題を<br>解決する領域</h2>
+        <p class="sec-lead js-reveal">最先端の知見と確かな分析力を駆使し、戦略立案から実行支援まで<br>一貫したサポートで企業の劇的な成長を強力に後押しします。</p>
+      </div>
+
+      <div class="business__body">
+        <div class="swiper business__slider js-business-slider">
+          <div class="swiper-wrapper">
+            <article class="swiper-slide business-slide">
+              <img src="images/business01.jpg" alt="" width="1200" height="800" loading="lazy">
+              <div class="business-slide__caption">
+                <p class="business-slide__en">Corporate Strategy<br>Advisory</p>
+                <h3 class="business-slide__ja">経営戦略コンサル</h3>
+                <p class="business-slide__text">企業の長期的な成長に向け、競争優位性を確立するための事業戦略を立案します。</p>
+              </div>
+            </article>
+            <article class="swiper-slide business-slide">
+              <img src="images/business02.jpg" alt="" width="1200" height="800" loading="lazy">
+              <div class="business-slide__caption">
+                <p class="business-slide__en">Digital<br>Transformation</p>
+                <h3 class="business-slide__ja">DX推進コンサル</h3>
+                <p class="business-slide__text">最新テクノロジーの活用と業務改革により、デジタル時代を生き抜く変革を実現します。</p>
+              </div>
+            </article>
+            <article class="swiper-slide business-slide">
+              <img src="images/business03.jpg" alt="" width="1200" height="800" loading="lazy">
+              <div class="business-slide__caption">
+                <p class="business-slide__en">Organization &amp;<br>Human Resources</p>
+                <h3 class="business-slide__ja">組織・人事コンサル</h3>
+                <p class="business-slide__text">組織改革や人事制度の最適化を行い、従業員の潜在能力を最大限に引き出します。</p>
+              </div>
+            </article>
+            <article class="swiper-slide business-slide">
+              <img src="images/business04.jpg" alt="" width="1200" height="800" loading="lazy">
+              <div class="business-slide__caption">
+                <p class="business-slide__en">Financial<br>Advisory</p>
+                <h3 class="business-slide__ja">財務・M&amp;A支援</h3>
+                <p class="business-slide__text">財務戦略の立案からM&amp;Aの実務支援まで、収益基盤の強化を包括的にサポートします。</p>
+              </div>
+            </article>
+            <article class="swiper-slide business-slide">
+              <img src="images/business05.jpg" alt="" width="1200" height="800" loading="lazy">
+              <div class="business-slide__caption">
+                <p class="business-slide__en">Operations<br>Improvement</p>
+                <h3 class="business-slide__ja">業務プロセス改革</h3>
+                <p class="business-slide__text">業務フローを可視化・分析し、圧倒的な作業効率化と生産性向上を実現します。</p>
+              </div>
+            </article>
+            <article class="swiper-slide business-slide">
+              <img src="images/business06.jpg" alt="" width="1200" height="800" loading="lazy">
+              <div class="business-slide__caption">
+                <p class="business-slide__en">Supply Chain<br>Management</p>
+                <h3 class="business-slide__ja">サプライチェーン改革</h3>
+                <p class="business-slide__text">調達から配送までのサプライチェーン全体を最適化し、グローバル競争力を高めます。</p>
+              </div>
+            </article>
+            <article class="swiper-slide business-slide">
+              <img src="images/business07.jpg" alt="" width="1200" height="800" loading="lazy">
+              <div class="business-slide__caption">
+                <p class="business-slide__en">Sustainability<br>Consulting</p>
+                <h3 class="business-slide__ja">サステナビリティ支援</h3>
+                <p class="business-slide__text">ESG経営の導入を支援し、社会的価値と経済的価値の創出を高度に両立させます。</p>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <ol class="business__list js-business-list">
+          <li><a href="#" class="is-active"><span class="num">01</span>経営戦略コンサル</a></li>
+          <li><a href="#"><span class="num">02</span>DX推進コンサル</a></li>
+          <li><a href="#"><span class="num">03</span>組織・人事コンサル</a></li>
+          <li><a href="#"><span class="num">04</span>財務・M&amp;A支援</a></li>
+          <li><a href="#"><span class="num">05</span>業務プロセス改革</a></li>
+          <li><a href="#"><span class="num">06</span>サプライチェーン改革</a></li>
+          <li><a href="#"><span class="num">07</span>サステナビリティ支援</a></li>
+        </ol>
+      </div>
+
+      <div class="sec-foot">
+        <a class="btn" href="#">
+          <span>事業詳細を見る</span>
+          <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 働くひと ============ -->
+  <section class="team" id="team">
+    <div class="container">
+      <div class="team__head">
+        <div class="sec-head">
+          <p class="sec-label js-reveal">Our Consultants</p>
+          <h2 class="sec-title js-reveal">プロと<br>生きていく</h2>
+          <p class="sec-lead js-reveal">思考の限界を超えて<br>課題に挑み続ける<br>新鋭たちのリアル。</p>
+        </div>
+        <div class="team__nav">
+          <div class="team__progress js-team-progress"></div>
+          <button class="round-btn js-team-prev" type="button" aria-label="前の社員へ"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8H3M7 4L3 8l4 4"/></svg></button>
+          <button class="round-btn js-team-next" type="button" aria-label="次の社員へ"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="swiper team__slider js-team-slider">
+      <div class="swiper-wrapper">
+        <a class="swiper-slide member" href="#">
+          <img src="images/team01.jpg" alt="" width="720" height="960" loading="lazy">
+          <p class="member__role">戦略コンサルタント</p>
+          <p class="member__num">interview #01</p>
+          <p class="member__name">K.T <small>［ 2024年 新卒入社 ］</small></p>
+        </a>
+        <a class="swiper-slide member" href="#">
+          <img src="images/team02.jpg" alt="" width="720" height="960" loading="lazy">
+          <p class="member__role">ITコンサルタント</p>
+          <p class="member__num">interview #02</p>
+          <p class="member__name">M.S <small>［ 2023年 新卒入社 ］</small></p>
+        </a>
+        <a class="swiper-slide member" href="#">
+          <img src="images/team03.jpg" alt="" width="720" height="960" loading="lazy">
+          <p class="member__role">組織人事コンサルタント</p>
+          <p class="member__num">interview #03</p>
+          <p class="member__name">R.N <small>［ 2025年 新卒入社 ］</small></p>
+        </a>
+        <a class="swiper-slide member" href="#">
+          <img src="images/team04.jpg" alt="" width="720" height="960" loading="lazy">
+          <p class="member__role">財務アドバイザー</p>
+          <p class="member__num">interview #04</p>
+          <p class="member__name">Y.A <small>［ 2022年 新卒入社 ］</small></p>
+        </a>
+        <a class="swiper-slide member" href="#">
+          <img src="images/team05.jpg" alt="" width="720" height="960" loading="lazy">
+          <p class="member__role">シニアコンサルタント</p>
+          <p class="member__num">interview #05</p>
+          <p class="member__name">H.K <small>［ 2021年 新卒入社 ］</small></p>
+        </a>
+      </div>
+    </div>
+
+    <div class="marquee marquee--team" aria-hidden="true">
+      <div class="marquee__track">
+        <span>Our Consultant Voice</span><span>Our Consultant Voice</span><span>Our Consultant Voice</span><span>Our Consultant Voice</span>
+        <span>Our Consultant Voice</span><span>Our Consultant Voice</span><span>Our Consultant Voice</span><span>Our Consultant Voice</span>
+      </div>
+    </div>
+
+    <div class="container sec-foot">
+      <a class="btn btn--light" href="#">
+        <span>メンバーを知る</span>
+        <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ キャリア / 働く環境 ============ -->
+  <section class="works" id="works">
+    <div class="container works__grid">
+      <a class="work-card js-reveal" href="#">
+        <img src="images/career.jpg" alt="" width="1200" height="800" loading="lazy">
+        <div class="work-card__body">
+          <p class="sec-label">Career Path</p>
+          <h2 class="work-card__title">高速な成長環境</h2>
+          <p class="work-card__text">若手からプロジェクトの中核を任され、徹底的なフィードバックを通してプロへと素早く育ちます。</p>
+          <span class="work-card__more">詳しく見る<span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></span>
+        </div>
+      </a>
+      <a class="work-card js-reveal" href="#">
+        <img src="images/environment.jpg" alt="" width="1200" height="800" loading="lazy">
+        <div class="work-card__body">
+          <p class="sec-label">Environment</p>
+          <h2 class="work-card__title">自由と責任の文化</h2>
+          <p class="work-card__text">ハイブリッドワークやフレキシブルな制度を完備。自律的にパフォーマンスを発揮できる環境です。</p>
+          <span class="work-card__more">詳しく見る<span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ ギャラリー ============ -->
+  <section class="gallery" aria-label="写真ギャラリー">
+    <div class="marquee marquee--big" aria-hidden="true">
+      <div class="marquee__track">
+        <span>Thinking for value creation.</span><span>Thinking for value creation.</span>
+        <span>Thinking for value creation.</span><span>Thinking for value creation.</span>
+      </div>
+    </div>
+    <div class="marquee marquee--photos">
+      <div class="marquee__track">
+        <img src="images/gallery01.jpg" alt="" width="800" height="600" loading="lazy">
+        <img src="images/gallery02.jpg" alt="" width="800" height="600" loading="lazy">
+        <img src="images/gallery03.jpg" alt="" width="800" height="600" loading="lazy">
+        <img src="images/gallery04.jpg" alt="" width="800" height="600" loading="lazy">
+        <img src="images/gallery05.jpg" alt="" width="800" height="600" loading="lazy">
+        <img src="images/gallery06.jpg" alt="" width="800" height="600" loading="lazy">
+        <img src="images/gallery07.jpg" alt="" width="800" height="600" loading="lazy">
+        <img src="images/gallery08.jpg" alt="" width="800" height="600" loading="lazy">
+        <!-- 途切れなくループさせるための複製（読み上げ対象外） -->
+        <img src="images/gallery01.jpg" alt="" aria-hidden="true" width="800" height="600" loading="lazy">
+        <img src="images/gallery02.jpg" alt="" aria-hidden="true" width="800" height="600" loading="lazy">
+        <img src="images/gallery03.jpg" alt="" aria-hidden="true" width="800" height="600" loading="lazy">
+        <img src="images/gallery04.jpg" alt="" aria-hidden="true" width="800" height="600" loading="lazy">
+        <img src="images/gallery05.jpg" alt="" aria-hidden="true" width="800" height="600" loading="lazy">
+        <img src="images/gallery06.jpg" alt="" aria-hidden="true" width="800" height="600" loading="lazy">
+        <img src="images/gallery07.jpg" alt="" aria-hidden="true" width="800" height="600" loading="lazy">
+        <img src="images/gallery08.jpg" alt="" aria-hidden="true" width="800" height="600" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 採用CTA ============ -->
+  <section class="recruit" id="recruit">
+    <div class="container">
+      <a class="recruit__link" href="#">
+        <span class="recruit__en">Shape the future as a consultant.</span>
+        <span class="recruit__ja">選考エントリー</span>
+        <span class="recruit__text">新卒採用の説明会日程や募集要項はこちらからご確認いただけます。<br>あなたのご応募をお待ちしております。</span>
+        <span class="arrow arrow--lg" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+      </a>
+    </div>
+  </section>
+</main>
+
+<!-- ============ フッター ============ -->
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__info">
+      <a class="footer__logo" href="./"><span class="logo-mark" aria-hidden="true"></span><span class="logo-text">AX CONSULTING</span></a>
+      <!-- 住所は架空のダミー。丸の内1-1-1・梅田2-2-2は実在する街区なので、公開前に必ず実際の住所へ差し替えること -->
+      <dl>
+        <dt>本社</dt>
+        <dd>〒100-0005<br>東京都千代田区丸の内1-1-1</dd>
+        <dt>事業所</dt>
+        <dd>〒530-0001<br>大阪府大阪市北区梅田2-2-2</dd>
+      </dl>
+    </div>
+    <ul class="footer__nav">
+      <li><a href="#">会社概要</a></li>
+      <li><a href="#about">理念・ビジョン</a></li>
+      <li><a href="#business">事業領域</a></li>
+      <li><a href="#team">働く仲間</a></li>
+      <li><a href="#works">キャリアパス</a></li>
+      <li><a href="#works">働く環境</a></li>
+      <li><a href="#recruit">採用情報</a></li>
+    </ul>
+    <ul class="footer__ext">
+      <li><a href="#">コーポレート</a></li>
+      <li><a href="#">サービス紹介</a></li>
+      <li><a href="#">採用メディア</a></li>
+    </ul>
+  </div>
+  <div class="container footer__bottom">
+    <small>&copy; AX Consulting Co., Ltd. All rights reserved.</small>
+    <a href="#">プライバシーポリシー</a>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="js/hero.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
