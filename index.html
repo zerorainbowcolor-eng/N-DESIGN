@@ -210,7 +210,31 @@
     @keyframes fvStreamDown { from { transform: translateY(-50%); } to { transform: translateY(0); } }
     @media (prefers-reduced-motion: reduce) { .fv-col-up, .fv-col-down { animation: none; } }
     #fv-person { z-index: 2; }
-    @media (max-width: 767px) { .fv-stream { display: none; } }
+
+    /* スマホ用：白オーバーレイ＋横スクロール画像 */
+    .fv-person-overlay { display: none; }
+    .fv-hstream { display: none; }
+    @media (max-width: 767px) {
+      .fv-stream { display: none; }
+      .fv-person-overlay {
+        display: block; position: absolute; inset: 0;
+        background: rgba(255,255,255,0.6); z-index: 3; pointer-events: none;
+      }
+      .fv-hstream {
+        display: block; position: absolute; left: 0; right: 0; bottom: 24px;
+        z-index: 4; overflow: hidden; pointer-events: none;
+      }
+      .fv-hrow {
+        display: flex; gap: 12px; width: max-content;
+        animation: fvHScroll 40s linear infinite;
+      }
+      .fv-hrow img {
+        height: 150px; width: auto; display: block;
+        border-radius: 8px; box-shadow: 0 4px 14px rgba(0,22,56,0.12);
+      }
+      @keyframes fvHScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+      @media (prefers-reduced-motion: reduce) { .fv-hrow { animation: none; } }
+    }
 
     /* ===== 制作の流れ ===== */
     .flow-card {
@@ -775,6 +799,29 @@
   </div>
   <img src="images/fv-person.webp" alt="Webデザイナー 永田亮" id="fv-person"
        class="absolute inset-0 w-full h-full" />
+
+  <!-- スマホ用：人物の上に白オーバーレイ -->
+  <div class="fv-person-overlay" aria-hidden="true"></div>
+
+  <!-- スマホ用：下部にLP/HP画像を横並びで右→左に流す -->
+  <div class="fv-hstream" aria-hidden="true">
+    <div class="fv-hrow">
+      <img src="images/stream/s1.webp" alt="" loading="lazy" />
+      <img src="images/stream/s2.webp" alt="" loading="lazy" />
+      <img src="images/stream/s3.jpg" alt="" loading="lazy" />
+      <img src="images/stream/s4.jpg" alt="" loading="lazy" />
+      <img src="images/stream/s5.jpg" alt="" loading="lazy" />
+      <img src="images/stream/s6.jpg" alt="" loading="lazy" />
+      <img src="images/stream/s7.jpg" alt="" loading="lazy" />
+      <img src="images/stream/s1.webp" alt="" loading="lazy" />
+      <img src="images/stream/s2.webp" alt="" loading="lazy" />
+      <img src="images/stream/s3.jpg" alt="" loading="lazy" />
+      <img src="images/stream/s4.jpg" alt="" loading="lazy" />
+      <img src="images/stream/s5.jpg" alt="" loading="lazy" />
+      <img src="images/stream/s6.jpg" alt="" loading="lazy" />
+      <img src="images/stream/s7.jpg" alt="" loading="lazy" />
+    </div>
+  </div>
 
   <div class="relative z-10 w-full px-6 sm:px-10 lg:px-32 py-32">
     <div data-aos="fade-up" data-aos-duration="900">
