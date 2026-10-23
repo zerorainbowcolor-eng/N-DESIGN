@@ -191,12 +191,13 @@
 
     /* ===== FV 画像ストリーム（仮の四角／縦に流れる） ===== */
     .fv-stream {
-      position: absolute; top: 0; right: 0;
-      width: 52%; height: 100%;
+      position: absolute; top: -12%; right: -4%;
+      width: 50%; height: 124%;
       overflow: hidden; z-index: 1; pointer-events: none;
       display: flex; gap: 24px; justify-content: center; align-items: flex-start;
+      transform: rotate(6deg);
     }
-    .fv-col { width: 360px; flex-shrink: 0; }
+    .fv-col { width: 460px; flex-shrink: 0; }
     .fv-col-up { animation: fvStreamUp 28s linear infinite; }
     .fv-col-down { animation: fvStreamDown 100s linear infinite; }
     .fv-card {
