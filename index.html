@@ -725,9 +725,7 @@
 <!-- ===================================
      HERO
 =================================== -->
-<section id="top" class="relative min-h-screen flex items-center">
-  <img src="images/fv-bg.jpg" alt="" id="fv-bg"
-       class="absolute inset-0 w-full h-full" />
+<section id="top" class="relative min-h-screen flex items-center" style="background:#ffffff;">
   <img src="images/fv-line.webp" alt="" aria-hidden="true" id="fv-line"
        class="absolute inset-0 w-full h-full" />
   <img src="images/fv-person.webp" alt="Webデザイナー 永田亮" id="fv-person"
@@ -735,9 +733,7 @@
 
   <div class="relative z-10 max-w-5xl mx-auto px-6 sm:px-10 py-32 w-full">
     <div data-aos="fade-up" data-aos-duration="900">
-      <h1 id="main-copy" class="font-bold leading-tight mb-0"
-          style="font-size:clamp(2.2rem,7vw,4.5rem); color:#001638; letter-spacing:0.02em; margin-top:4rem;">対話から<br>デザインのその先まで</h1>
-      <p id="talk-to-shape" class="mb-6" style="font-size:clamp(1.95rem,6vw,3rem); font-weight:400; letter-spacing:0.1em; color:#001638;">Talk, Design and Beyond.</p>
+      <img src="images/fv-graphic.png" alt="LP・HP制作代行サービス｜修正回数無制限・長さ制限無し・3ヶ月間無料保証・オリジナルテーマ対応" class="fv-graphic" style="width:100%; max-width:580px; height:auto; margin-top:4rem; margin-bottom:1.5rem;" />
       <div class="fv-btns">
       <a href="#contact" class="btn-primary text-base shadow-lg" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; width:290px;">
         <img src="images/メール.png" alt="" style="height:20px; width:auto;" />
@@ -1423,14 +1419,14 @@
     var bg = document.getElementById('fv-bg');
     var line = document.getElementById('fv-line');
     var person = document.getElementById('fv-person');
-    if (!bg || !line || !person) return;
+    if (!line || !person) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     var ticking = false;
     function update() {
       var y = Math.max(0, window.scrollY);
       if (y < window.innerHeight * 1.2) {
-        bg.style.transform     = 'translate3d(0,' + (y * 0.45) + 'px,0)'; // 奥: ゆっくり
+        if (bg) bg.style.transform = 'translate3d(0,' + (y * 0.45) + 'px,0)'; // 奥: ゆっくり
         line.style.transform   = 'translate3d(0,' + (y * 0.25) + 'px,0)'; // 中間
         person.style.transform = 'translate3d(0,' + (y * 0.10) + 'px,0)'; // 手前: 速い
       }
