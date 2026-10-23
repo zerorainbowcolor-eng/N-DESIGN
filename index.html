@@ -200,12 +200,11 @@
     .fv-col-up { animation: fvStreamUp 28s linear infinite; }
     .fv-col-down { animation: fvStreamDown 28s linear infinite; }
     .fv-card {
-      width: 100%; aspect-ratio: 9 / 16; margin-bottom: 24px;
-      background: #e2e8f0; border: 1px solid #cbd5e1; border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      color: #94a3b8; font-weight: 700; font-size: 1.1rem;
+      width: 100%; margin-bottom: 24px;
+      border-radius: 10px; overflow: hidden; background: #fff;
       box-shadow: 0 6px 20px rgba(0,22,56,0.08);
     }
+    .fv-card img { width: 100%; height: auto; display: block; }
     @keyframes fvStreamUp { from { transform: translateY(0); } to { transform: translateY(-50%); } }
     @keyframes fvStreamDown { from { transform: translateY(-50%); } to { transform: translateY(0); } }
     @media (prefers-reduced-motion: reduce) { .fv-col-up, .fv-col-down { animation: none; } }
@@ -757,25 +756,23 @@
   <div class="fv-stream" aria-hidden="true">
     <!-- 左列：下から上へ -->
     <div class="fv-col fv-col-up">
-      <div class="fv-card">LP 1</div>
-      <div class="fv-card">LP 2</div>
-      <div class="fv-card">LP 3</div>
-      <div class="fv-card">LP 4</div>
-      <div class="fv-card">LP 1</div>
-      <div class="fv-card">LP 2</div>
-      <div class="fv-card">LP 3</div>
-      <div class="fv-card">LP 4</div>
+      <div class="fv-card"><img src="images/stream/s1.webp" alt="" loading="lazy" /></div>
+      <div class="fv-card"><img src="images/stream/s2.webp" alt="" loading="lazy" /></div>
+      <div class="fv-card"><img src="images/stream/s3.jpg" alt="" loading="lazy" /></div>
+      <div class="fv-card"><img src="images/stream/s4.jpg" alt="" loading="lazy" /></div>
+      <div class="fv-card"><img src="images/stream/s1.webp" alt="" loading="lazy" /></div>
+      <div class="fv-card"><img src="images/stream/s2.webp" alt="" loading="lazy" /></div>
+      <div class="fv-card"><img src="images/stream/s3.jpg" alt="" loading="lazy" /></div>
+      <div class="fv-card"><img src="images/stream/s4.jpg" alt="" loading="lazy" /></div>
     </div>
     <!-- 右列：上から下へ -->
     <div class="fv-col fv-col-down">
-      <div class="fv-card">LP 5</div>
-      <div class="fv-card">LP 6</div>
-      <div class="fv-card">LP 7</div>
-      <div class="fv-card">LP 8</div>
-      <div class="fv-card">LP 5</div>
-      <div class="fv-card">LP 6</div>
-      <div class="fv-card">LP 7</div>
-      <div class="fv-card">LP 8</div>
+      <div class="fv-card"><img src="images/stream/s5.jpg" alt="" loading="lazy" /></div>
+      <div class="fv-card"><img src="images/stream/s6.jpg" alt="" loading="lazy" /></div>
+      <div class="fv-card"><img src="images/stream/s7.jpg" alt="" loading="lazy" /></div>
+      <div class="fv-card"><img src="images/stream/s5.jpg" alt="" loading="lazy" /></div>
+      <div class="fv-card"><img src="images/stream/s6.jpg" alt="" loading="lazy" /></div>
+      <div class="fv-card"><img src="images/stream/s7.jpg" alt="" loading="lazy" /></div>
     </div>
   </div>
   <img src="images/fv-person.webp" alt="Webデザイナー 永田亮" id="fv-person"
