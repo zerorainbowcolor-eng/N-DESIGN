@@ -726,8 +726,7 @@
      HERO
 =================================== -->
 <section id="top" class="relative min-h-screen flex items-center" style="background:#ffffff;">
-  <img src="images/fv-line.webp" alt="" aria-hidden="true" id="fv-line"
-       class="absolute inset-0 w-full h-full" />
+  <canvas id="fv-canvas" class="absolute inset-0 w-full h-full" aria-hidden="true" style="z-index:0; pointer-events:none;"></canvas>
   <img src="images/fv-person.webp" alt="Webデザイナー 永田亮" id="fv-person"
        class="absolute inset-0 w-full h-full" />
 
@@ -1592,6 +1591,66 @@
     }, { passive: true });
     window.addEventListener('resize', update, { passive: true });
     update();
+  })();
+
+  // ===== FV背景 幾何学アニメ（③ 点と線のネットワーク） =====
+  (function() {
+    var canvas = document.getElementById('fv-canvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var GRAY = '200,200,200';
+    var W = 0, H = 0, pts = [];
+    function rand(a, b) { return a + Math.random() * (b - a); }
+    function isMobile() { return window.innerWidth <= 768; }
+
+    function init() {
+      var n = isMobile() ? 35 : 70;
+      pts = Array.from({ length: n }, function() {
+        return { x: rand(0, W), y: rand(0, H), vx: rand(-12, 12), vy: rand(-12, 12) };
+      });
+    }
+    function draw(dt) {
+      ctx.clearRect(0, 0, W, H);
+      var LINK = isMobile() ? 100 : 140;
+      pts.forEach(function(p) {
+        p.x += p.vx * dt; p.y += p.vy * dt;
+        if (p.x < 0 || p.x > W) p.vx *= -1;
+        if (p.y < 0 || p.y > H) p.vy *= -1;
+      });
+      ctx.lineWidth = 1;
+      for (var i = 0; i < pts.length; i++) {
+        for (var j = i + 1; j < pts.length; j++) {
+          var dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+          var d = Math.hypot(dx, dy);
+          if (d < LINK) {
+            ctx.strokeStyle = 'rgba(' + GRAY + ',' + ((1 - d / LINK) * 0.8) + ')';
+            ctx.beginPath(); ctx.moveTo(pts[i].x, pts[i].y); ctx.lineTo(pts[j].x, pts[j].y); ctx.stroke();
+          }
+        }
+      }
+      ctx.fillStyle = 'rgba(' + GRAY + ',0.9)';
+      pts.forEach(function(p) { ctx.beginPath(); ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2); ctx.fill(); });
+    }
+    function resize() {
+      var dpr = window.devicePixelRatio || 1;
+      W = canvas.clientWidth; H = canvas.clientHeight;
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      init();
+      if (reduceMotion) draw(0);
+    }
+    var last = performance.now();
+    function frame(now) {
+      var dt = Math.min((now - last) / 1000, 0.05);
+      last = now;
+      draw(dt);
+      requestAnimationFrame(frame);
+    }
+    var rt;
+    window.addEventListener('resize', function() { clearTimeout(rt); rt = setTimeout(resize, 200); });
+    resize();
+    if (!reduceMotion) requestAnimationFrame(frame);
   })();
 
 </script>
