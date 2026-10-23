@@ -186,10 +186,8 @@
       margin-top: calc((1.375rem * 1.6 - 26px) / 2);
     }
 
-    /* ===== FVボタン 遅延フェードイン ===== */
-    .fv-btns { opacity: 0; animation: fvBtnsIn 0.6s ease 2.9s forwards; }
-    @keyframes fvBtnsIn { to { opacity: 1; } }
-    @media (prefers-reduced-motion: reduce) { .fv-btns { opacity: 1; animation: none; } }
+    /* ===== FVボタン 文字と同時に表示 ===== */
+    .fv-btns { opacity: 1; }
 
     /* ===== 制作の流れ ===== */
     .flow-card {
