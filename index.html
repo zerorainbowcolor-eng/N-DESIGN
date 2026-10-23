@@ -189,6 +189,29 @@
     /* ===== FVボタン 文字と同時に表示 ===== */
     .fv-btns { opacity: 1; }
 
+    /* ===== FV 画像ストリーム（仮の四角／縦に流れる） ===== */
+    .fv-stream {
+      position: absolute; top: 0; right: 0;
+      width: 52%; height: 100%;
+      overflow: hidden; z-index: 1; pointer-events: none;
+      display: flex; gap: 24px; justify-content: center; align-items: flex-start;
+    }
+    .fv-col { width: 200px; flex-shrink: 0; }
+    .fv-col-up { animation: fvStreamUp 28s linear infinite; }
+    .fv-col-down { animation: fvStreamDown 28s linear infinite; }
+    .fv-card {
+      width: 100%; aspect-ratio: 9 / 16; margin-bottom: 24px;
+      background: #e2e8f0; border: 1px solid #cbd5e1; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: #94a3b8; font-weight: 700; font-size: 1.1rem;
+      box-shadow: 0 6px 20px rgba(0,22,56,0.08);
+    }
+    @keyframes fvStreamUp { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+    @keyframes fvStreamDown { from { transform: translateY(-50%); } to { transform: translateY(0); } }
+    @media (prefers-reduced-motion: reduce) { .fv-col-up, .fv-col-down { animation: none; } }
+    #fv-person { z-index: 2; }
+    @media (max-width: 767px) { .fv-stream { display: none; } }
+
     /* ===== 制作の流れ ===== */
     .flow-card {
       background: #fff;
@@ -729,6 +752,32 @@
 =================================== -->
 <section id="top" class="relative min-h-screen flex items-center" style="background:#ffffff;">
   <canvas id="fv-canvas" class="absolute inset-0 w-full h-full" aria-hidden="true" style="z-index:0; pointer-events:none;"></canvas>
+
+  <!-- FV 画像ストリーム（仮の四角） -->
+  <div class="fv-stream" aria-hidden="true">
+    <!-- 左列：下から上へ -->
+    <div class="fv-col fv-col-up">
+      <div class="fv-card">LP 1</div>
+      <div class="fv-card">LP 2</div>
+      <div class="fv-card">LP 3</div>
+      <div class="fv-card">LP 4</div>
+      <div class="fv-card">LP 1</div>
+      <div class="fv-card">LP 2</div>
+      <div class="fv-card">LP 3</div>
+      <div class="fv-card">LP 4</div>
+    </div>
+    <!-- 右列：上から下へ -->
+    <div class="fv-col fv-col-down">
+      <div class="fv-card">LP 5</div>
+      <div class="fv-card">LP 6</div>
+      <div class="fv-card">LP 7</div>
+      <div class="fv-card">LP 8</div>
+      <div class="fv-card">LP 5</div>
+      <div class="fv-card">LP 6</div>
+      <div class="fv-card">LP 7</div>
+      <div class="fv-card">LP 8</div>
+    </div>
+  </div>
   <img src="images/fv-person.webp" alt="Webデザイナー 永田亮" id="fv-person"
        class="absolute inset-0 w-full h-full" />
 
