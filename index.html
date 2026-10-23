@@ -257,15 +257,15 @@
       width: 30px;
       height: 0;
       background: linear-gradient(180deg, #F7A8C4 0%, #FBCFDF 100%);
-      border-radius: 15px;
+      border-radius: 15px 15px 0 0;
       z-index: 0;
       pointer-events: none;
     }
-    /* 伸びる線の先端に矢印 */
+    /* 伸びる線の先端に矢印（線の先は四角＋三角） */
     .flow-band::after {
       content: '';
       position: absolute;
-      bottom: -16px;
+      bottom: -20px;
       left: 50%;
       transform: translateX(-50%);
       width: 0; height: 0;
