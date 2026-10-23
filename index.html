@@ -179,6 +179,12 @@
     /* ===== お悩みカード説明文(2倍サイズ) ===== */
     .concern-desc { font-size: 1.375rem; line-height: 1.6; }
     @media (max-width: 767px) { .concern-desc { font-size: 1.15rem; } }
+    /* お悩みCTA リード文＋スラッシュ装飾 */
+    .concern-cta-lead { font-weight: 700; color: #001638; margin-bottom: 1rem; font-size: clamp(1.05rem, 4vw, 1.35rem); }
+    .slash-text { position: relative; display: inline-block; padding: 0 1.5em; }
+    .slash-text::before, .slash-text::after { content: ''; position: absolute; top: 4px; bottom: 4px; width: 2px; background: #001638; }
+    .slash-text::before { left: 0.5em; transform: rotate(-18deg); }
+    .slash-text::after { right: 0.5em; transform: rotate(18deg); }
     /* チェックマークを1行目の縦中央に揃える */
     .concern-check {
       flex-shrink: 0;
@@ -1019,8 +1025,11 @@
       </div>
     </div>
 
-    <div data-aos="fade-up" data-aos-delay="200">
-      <a href="#contact" class="btn-primary" style="white-space:nowrap; font-size:clamp(0.75rem,3.5vw,1rem); padding-left:1.2rem; padding-right:1.2rem;">そんな方は、ぜひ一度ご相談ください！</a>
+    <div class="text-center" data-aos="fade-up" data-aos-delay="200">
+      <p class="concern-cta-lead">そんな方は、<span class="slash-text">ぜひ一度ご相談ください</span></p>
+      <a href="#contact" class="btn-primary" style="display:inline-flex; align-items:center; gap:8px; white-space:nowrap; font-size:clamp(0.85rem,3.5vw,1rem); padding-left:1.6rem; padding-right:1.6rem;">
+        <img src="images/メール.png" alt="" style="height:18px; width:auto;" />無料で相談する
+      </a>
     </div>
   </div>
 </section>
