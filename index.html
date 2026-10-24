@@ -1361,7 +1361,7 @@
 <section id="contact" class="py-20 sm:py-28 relative">
   <div class="relative z-10 max-w-4xl mx-auto px-5 sm:px-8">
     <div class="sec-head-wrap sec-head-center mb-12" data-aos="fade-up">
-      <h2 class="sec-ja sec-head">お気軽にご相談ください<span class="sec-head-en" aria-hidden="true">CONTACT</span></h2>
+      <h2 class="sec-ja sec-head">お問い合わせ<span class="sec-head-en" aria-hidden="true">CONTACT</span></h2>
       <p class="text-[#555] text-sm mt-3">まずはお気軽にお問い合わせください。無料でご相談を受け付けております。</p>
     </div>
 
@@ -1738,14 +1738,14 @@
     function isMobile() { return window.innerWidth <= 768; }
 
     function init() {
-      var n = isMobile() ? 35 : 70;
+      var n = isMobile() ? 23 : 46;
       pts = Array.from({ length: n }, function() {
         return { x: rand(0, W), y: rand(0, H), vx: rand(-12, 12), vy: rand(-12, 12) };
       });
     }
     function draw(dt) {
       ctx.clearRect(0, 0, W, H);
-      var LINK = isMobile() ? 100 : 140;
+      var LINK = isMobile() ? 150 : 210;
       pts.forEach(function(p) {
         p.x += p.vx * dt; p.y += p.vy * dt;
         if (p.x < 0 || p.x > W) p.vx *= -1;
@@ -1763,7 +1763,7 @@
         }
       }
       ctx.fillStyle = 'rgba(' + GRAY + ',0.9)';
-      pts.forEach(function(p) { ctx.beginPath(); ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2); ctx.fill(); });
+      pts.forEach(function(p) { ctx.beginPath(); ctx.arc(p.x, p.y, 3.75, 0, Math.PI * 2); ctx.fill(); });
     }
     function resize() {
       var dpr = window.devicePixelRatio || 1;
