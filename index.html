@@ -223,8 +223,8 @@
     @media (max-width: 767px) {
       .fv-stream { display: none; }
       /* コンテンツを上揃えにして、下部の流れる画像と重ならないようにする */
-      #top { align-items: flex-start; }
-      #top > .relative.z-10 { padding-top: 100px; padding-bottom: 0; }
+      .hero-inner { align-items: flex-start; }
+      .hero-inner > .relative.z-10 { padding-top: 100px; padding-bottom: 0; }
       .fv-graphic { margin-top: 0 !important; }
       .fv-person-overlay {
         display: block; position: absolute; inset: 0;
@@ -604,6 +604,12 @@
 
     /* ===== HERO レイヤー構成 ===== */
     #top { overflow: hidden; }
+    .hero-inner {
+      position: relative;
+      width: 100%; max-width: 1400px;
+      margin: 0 auto;
+      display: flex; align-items: center;
+    }
     #fv-bg, #fv-line, #fv-person {
       object-fit: cover;
       object-position: center;
@@ -797,8 +803,10 @@
 <!-- ===================================
      HERO
 =================================== -->
-<section id="top" class="relative min-h-screen flex items-center" style="background:#ffffff;">
+<section id="top" class="relative min-h-screen flex" style="background:#ffffff;">
   <canvas id="fv-canvas" class="absolute inset-0 w-full h-full" aria-hidden="true" style="z-index:0; pointer-events:none;"></canvas>
+
+  <div class="hero-inner">
 
   <!-- FV 画像ストリーム（仮の四角） -->
   <div class="fv-stream" aria-hidden="true">
@@ -846,7 +854,7 @@
     </div>
   </div>
 
-  <div class="relative z-10 w-full px-6 sm:px-10 lg:px-32 py-32">
+  <div class="relative z-10 w-full px-6 sm:px-10 lg:px-12 py-32">
     <div data-aos="fade-up" data-aos-duration="900">
       <img src="images/fv-graphic.png" alt="LP・HP制作代行サービス｜修正回数無制限・長さ制限無し・3ヶ月間無料保証・オリジナルテーマ対応" class="fv-graphic" style="width:100%; max-width:696px; height:auto; margin-top:4rem; margin-bottom:1.5rem;" />
       <div class="fv-btns">
@@ -861,6 +869,7 @@
       </div>
     </div>
   </div>
+  </div><!-- /.hero-inner -->
 
   <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-white/60">
     <span class="text-xs tracking-[0.2em]">SCROLL</span>
