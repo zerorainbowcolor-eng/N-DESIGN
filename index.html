@@ -380,7 +380,6 @@
 
     /* ===== 強み 入場時フェードの色変化 ===== */
     #strength-scrub {
-      display: none;
       position: absolute;
       left: 0; right: 0;
       top: 34%; /* 帯の中心が上段と下段の間に来る位置 */
@@ -902,8 +901,9 @@
       </p>
       <p>
         どんなに素晴らしい商品やサービスを作っても、<br class="hidden sm:inline" />
-        それを伝えるページが見づらく、わかりにくければ、その魅力は届きません。<br class="hidden sm:inline" />
-        ランディングページ、ホームページの力で、あなたの商品やサービスがさらに輝き、<br class="hidden sm:inline" />
+        伝えるページが見づらく、わかりにくければ、その魅力は届きません。<br class="hidden sm:inline" />
+        ランディングページ、ホームページの力で、<br class="hidden sm:inline" />
+        あなたの商品やサービスがさらに輝き、<br class="hidden sm:inline" />
         必要としている人にきちんと届くように、私がとことんお手伝いします。
       </p>
     </div>
@@ -1428,8 +1428,10 @@
 
   function updateActiveLink() {
     let current = '';
+    const probe = window.scrollY + 110;
     sections.forEach(sec => {
-      if (window.scrollY >= sec.offsetTop - 100) current = sec.id;
+      const top = sec.getBoundingClientRect().top + window.scrollY;
+      if (probe >= top) current = sec.id;
     });
     navLinks.forEach(link => {
       link.classList.toggle('active', link.dataset.section === current);
