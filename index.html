@@ -380,6 +380,7 @@
 
     /* ===== 強み 入場時フェードの色変化 ===== */
     #strength-scrub {
+      display: none;
       position: absolute;
       left: 0; right: 0;
       top: 34%; /* 帯の中心が上段と下段の間に来る位置 */
@@ -546,7 +547,7 @@
     @media (min-width: 1440px) {
       .concept-photos .cp { position: absolute; z-index: 5; }
       .cp-l1 { left: 3%;  top: 20%; width: clamp(189px, 14vw, 273px); filter: blur(2px); opacity: 0.9; }
-      .cp-l2 { left: 3%; top: 58%; width: clamp(356px, 26.4vw, 515px); }
+      .cp-l2 { left: -2%; top: 58%; width: clamp(356px, 26.4vw, 515px); }
       .cp-r1 { right: 3.5%; top: 50%; transform: translateY(-50%); width: clamp(300px, 22vw, 420px); }
     }
     /* それ以下の幅: 本文の上に3枚を横並び */
@@ -754,7 +755,7 @@
      NAVIGATION
 =================================== -->
 <nav id="navbar" class="fixed top-0 left-0 w-full z-50 bg-transparent">
-  <div class="max-w-6xl mx-auto px-5 sm:px-8 flex items-center justify-between h-16">
+  <div class="wide-wrap mx-auto px-5 sm:px-8 flex items-center justify-between h-16">
     <a href="#top" class="nav-logo">
       <img src="images/logo.png" alt="N .DESIGN" style="height:36px; width:auto; object-fit:contain;" />
     </a>
