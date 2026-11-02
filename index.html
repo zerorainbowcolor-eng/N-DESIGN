@@ -761,6 +761,58 @@
     .p-card:hover img { transform: scale(1.07); }
     .lphp-grid .p-card { width: calc(33.333% - 11px); }
     @media (max-width: 639px) { .lphp-grid .p-card { width: calc(50% - 8px); } }
+
+    /* ===== 料金（PRICE） ===== */
+    .price-intro { text-align: center; color: #555; font-size: 0.95rem; margin-bottom: 3.5rem; }
+    .price-block { background: #fff; border-radius: 20px; padding: clamp(1.5rem, 4vw, 3.5rem); max-width: 1100px; margin: 0 auto 3rem; }
+    .price-cat { text-align: center; margin-bottom: 2rem; }
+    .price-cat-en { font-family: 'Inter', sans-serif; font-weight: 700; letter-spacing: 0.12em; color: #e5025a; font-size: 0.85rem; text-transform: uppercase; }
+    .price-cat-ja { font-weight: 700; color: #001638; font-size: clamp(1.4rem, 2.4vw, 1.9rem); margin-top: 0.25rem; }
+    .price-lead { color: #555; font-size: 0.95rem; margin-top: 1rem; line-height: 2; }
+    .price-include { display: flex; gap: 1.5rem; align-items: center; border: 1px solid #001638; border-radius: 10px; padding: 1.1rem 1.6rem; margin-bottom: 2rem; }
+    .price-include-label { flex-shrink: 0; font-weight: 700; font-size: 0.85rem; padding-right: 1.5rem; border-right: 1px solid #001638; line-height: 1.6; }
+    .price-include-body { font-size: 0.88rem; color: #333; line-height: 1.9; }
+    .price-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .price-table { width: 100%; border-collapse: separate; border-spacing: 3px; font-size: 0.95rem; }
+    .price-table-2 { min-width: 620px; }
+    .price-table-3 { min-width: 760px; }
+    .price-table th, .price-table td { padding: 1rem 0.9rem; text-align: center; vertical-align: middle; }
+    .price-table .pt-blank { background: transparent; }
+    .price-table .pt-row { background: #f3f1ee; font-weight: 700; font-size: 0.9rem; width: 15%; }
+    .price-table .pt-sub { background: #f3f1ee; font-weight: 400; font-size: 0.88rem; width: 15%; }
+    .price-table .pt-note { display: block; font-weight: 400; font-size: 0.7rem; color: #777; margin-top: 0.35rem; line-height: 1.5; text-align: left; }
+    .price-table .pt-plan { vertical-align: top; padding-top: 1.4rem; padding-bottom: 1.2rem; }
+    .pt-plan-name { display: block; font-weight: 700; font-size: 1.15rem; letter-spacing: 0.05em; }
+    .pt-plan-desc { display: block; font-weight: 400; font-size: 0.78rem; color: #555; margin-top: 0.5rem; line-height: 1.7; text-align: left; }
+    .price-table .pt-c1 { background: #eaf6fb; }
+    .price-table .pt-c2 { background: #e3f5f1; }
+    .price-table .pt-c3 { background: #fbf2e9; }
+    .pt-c1 .pt-plan-name { color: #3aa6c9; }
+    .pt-c2 .pt-plan-name { color: #2f9f8a; }
+    .pt-c3 .pt-plan-name { color: #c58a4e; }
+    .price-table .pt-price { font-family: 'Inter', 'Noto Sans JP', sans-serif; font-weight: 700; font-size: 1.45rem; color: #001638; }
+    .price-table .pt-price small { font-size: 0.8rem; font-weight: 700; margin-left: 2px; }
+    .price-table .pt-list { text-align: left; vertical-align: top; }
+    .price-table .pt-list ul { display: inline-block; text-align: left; list-style: none; margin: 0; padding: 0; }
+    .price-table .pt-list li { position: relative; padding-left: 1em; font-size: 0.86rem; line-height: 2; }
+    .price-table .pt-list li::before { content: '●'; position: absolute; left: 0; font-size: 0.55em; top: 0.25em; color: #e5025a; }
+    .price-direction { position: relative; max-width: 1100px; margin: 0 auto 3rem; border: 1px solid #001638; border-radius: 12px; padding: 2.4rem clamp(1.5rem, 5vw, 4rem) 2rem; background: transparent; }
+    .price-direction-title { position: absolute; top: 0; left: 50%; transform: translate(-50%, -50%); }
+    .price-direction-title span { background: #dfecf7; padding: 0 1.2rem; font-weight: 700; font-size: 1.05rem; letter-spacing: 0.08em; white-space: nowrap; }
+    .price-direction-body { font-size: 0.92rem; color: #333; line-height: 2; }
+    .price-direction-list { margin-top: 1rem; list-style: none; padding: 0; }
+    .price-direction-list li { position: relative; padding-left: 1.6em; font-size: 0.9rem; line-height: 2.1; }
+    .price-direction-list li::before { content: '✓'; position: absolute; left: 0; color: #fff; background: #001638; border-radius: 50%; width: 1.15em; height: 1.15em; font-size: 0.8em; line-height: 1.15em; text-align: center; top: 0.55em; }
+    .price-notes { list-style: none; padding: 0; max-width: 1100px; margin: 0 auto; font-size: 0.78rem; color: #666; line-height: 1.9; }
+    .price-cta { display: inline-block; background: #e5025a; color: #fff; font-weight: 700; padding: 1rem 2.6rem; border-radius: 999px; box-shadow: 0 6px 18px rgba(229,2,90,0.25); transition: transform 0.25s, box-shadow 0.25s; }
+    .price-cta:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(229,2,90,0.35); }
+    @media (max-width: 639px) {
+      .price-include { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+      .price-include-label { border-right: none; padding-right: 0; border-bottom: 1px solid #001638; padding-bottom: 0.4rem; }
+      .price-table .pt-sub, .price-table .pt-row { white-space: nowrap; font-size: 0.8rem; padding: 0.8rem 0.6rem; }
+      .price-table .pt-note { white-space: normal; }
+      .price-table-wrap::after { content: '← 横にスクロールできます →'; display: block; text-align: center; font-size: 0.72rem; color: #888; margin-top: 0.4rem; }
+    }
   </style>
 </head>
 
@@ -1179,6 +1231,160 @@
     <p class="text-center text-[#555] text-sm mt-8" data-aos="fade-up" data-aos-delay="200">
       ※ 上記以外のご要望もお気軽にご相談ください。
     </p>
+  </div>
+</section>
+
+<!-- ===================================
+     料金（PRICE）
+=================================== -->
+<section id="price" class="py-20 sm:py-28 relative">
+  <div class="relative z-10 wide-wrap mx-auto px-5 sm:px-8">
+    <div class="sec-head-wrap mb-14" data-aos="fade-up">
+      <h2 class="sec-ja sec-head">料金<span class="sec-head-en" aria-hidden="true">PRICE</span></h2>
+    </div>
+
+    <p class="price-intro" data-aos="fade-up">
+      下記はあくまで目安の料金です。内容やご予算に合わせて、お客様ごとにお見積もりいたします。
+    </p>
+
+    <!-- ===== LP ===== -->
+    <div class="price-block" data-aos="fade-up">
+      <div class="price-cat">
+        <p class="price-cat-en">Landing Page</p>
+        <h3 class="price-cat-ja">LP（ランディングページ）</h3>
+        <p class="price-lead">商品の購入やお問い合わせ、公式LINEへの登録など、ひとつのゴールに向けて1ページで完結させるランディングページを制作します。</p>
+      </div>
+
+      <div class="price-include">
+        <p class="price-include-label">制作料金に<br class="hidden sm:block">含まれるもの</p>
+        <p class="price-include-body">デザイン制作、デザインに合わせた有料素材、ライティング簡易サポート、実装、スマホ対応、納品時の操作サポート（ご希望の方）、ディレクション</p>
+      </div>
+
+      <div class="price-table-wrap">
+        <table class="price-table price-table-2">
+          <thead>
+            <tr>
+              <th class="pt-blank" colspan="2"></th>
+              <th class="pt-plan pt-c1">
+                <span class="pt-plan-name">シンプルプラン</span>
+                <span class="pt-plan-desc">要点をしぼった、すっきりとした構成のLP（目安：縦10,000pxまで）</span>
+              </th>
+              <th class="pt-plan pt-c2">
+                <span class="pt-plan-name">ハイクオリティープラン</span>
+                <span class="pt-plan-desc">訴求の流れとデザインを作り込み、申し込み・クリックにつなげることを重視したLP</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th class="pt-row" rowspan="2">制作料金</th>
+              <th class="pt-sub">PC or スマホ</th>
+              <td class="pt-c1 pt-price">98,000<small>円</small></td>
+              <td class="pt-c2 pt-price">198,000<small>円</small></td>
+            </tr>
+            <tr>
+              <th class="pt-sub">両デバイス対応</th>
+              <td class="pt-c1">＋20,000円</td>
+              <td class="pt-c2">＋50,000円</td>
+            </tr>
+            <tr>
+              <th class="pt-row" rowspan="2">制作期間<span class="pt-note">※文章や写真をすべてご提出いただいてからの期間です</span></th>
+              <th class="pt-sub">PC or スマホ</th>
+              <td class="pt-c1">約1週間〜1ヶ月</td>
+              <td class="pt-c2">約2週間〜1ヶ月</td>
+            </tr>
+            <tr>
+              <th class="pt-sub">両デバイス対応</th>
+              <td class="pt-c1">約2週間〜1ヶ月</td>
+              <td class="pt-c2">約3週間〜1ヶ月半</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===== ディレクションとは？ ===== -->
+    <div class="price-direction" data-aos="fade-up">
+      <p class="price-direction-title"><span>ディレクションとは？</span></p>
+      <p class="price-direction-body">お客様の商品・サービスが「伝わる」「選ばれる」かたちになるよう、情報を整理し、目的に合ったデザインへ導く進行役のことです。</p>
+      <ul class="price-direction-list">
+        <li>商品・サービスについてのヒアリング</li>
+        <li>競合サイトの調査・分析</li>
+        <li>ヒアリングシートや資料をもとにした構成のご提案</li>
+      </ul>
+    </div>
+
+    <!-- ===== HP ===== -->
+    <div class="price-block" data-aos="fade-up">
+      <div class="price-cat">
+        <p class="price-cat-en">Website</p>
+        <h3 class="price-cat-ja">HP（ホームページ）</h3>
+        <p class="price-lead">見た目の美しさだけでなく、「何のためのサイトか」という目的から考えたホームページを制作します。</p>
+      </div>
+
+      <div class="price-include">
+        <p class="price-include-label">制作料金に<br class="hidden sm:block">含まれるもの</p>
+        <p class="price-include-body">デザイン制作、デザインに合わせた有料素材、ライティング簡易サポート、実装、スマホ対応、納品時の操作サポート（ご希望の方）、ディレクション</p>
+      </div>
+
+      <div class="price-table-wrap">
+        <table class="price-table price-table-3">
+          <thead>
+            <tr>
+              <th class="pt-blank"></th>
+              <th class="pt-plan pt-c1">
+                <span class="pt-plan-name">ベーシックプラン</span>
+                <span class="pt-plan-desc">個人事業主・小規模事業の方向け。まずは信頼感のある「顔」となるサイトを持ちたい方に。</span>
+              </th>
+              <th class="pt-plan pt-c2">
+                <span class="pt-plan-name">スタンダードプラン</span>
+                <span class="pt-plan-desc">成長中の事業者・法人の方向け。ブランドの魅力や機能面まで、しっかり形にしたい方に。</span>
+              </th>
+              <th class="pt-plan pt-c3">
+                <span class="pt-plan-name">プレミアムプラン</span>
+                <span class="pt-plan-desc">事業を本格的に広げたい方向け。設計から作り込み、集客とブランディングを強化したい方に。</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th class="pt-row">制作料金</th>
+              <td class="pt-c1 pt-price">128,000<small>円〜</small></td>
+              <td class="pt-c2 pt-price">298,000<small>円〜</small></td>
+              <td class="pt-c3 pt-price">498,000<small>円〜</small></td>
+            </tr>
+            <tr>
+              <th class="pt-row">内容</th>
+              <td class="pt-c1 pt-list"><ul><li>トップページ</li><li>下層ページ2ページまで</li><li>お問い合わせページ</li><li>プライバシーポリシーページ</li><li>SEOの基本設定</li><li>Googleマップ設定（実店舗の場合）</li></ul></td>
+              <td class="pt-c2 pt-list"><ul><li>トップページ</li><li>下層ページ5ページまで</li><li>お問い合わせページ</li><li>プライバシーポリシーページ</li><li>SEOの基本設定</li><li>Googleマップ設定（実店舗の場合）</li></ul></td>
+              <td class="pt-c3 pt-list"><ul><li>トップページ</li><li>下層ページ8ページまで</li><li>お問い合わせページ</li><li>プライバシーポリシーページ</li><li>SEOの基本設定</li><li>Googleマップ設定（実店舗の場合）</li></ul></td>
+            </tr>
+            <tr>
+              <th class="pt-row">制作期間<span class="pt-note">※文章や写真をすべてご提出いただいてからの期間です</span></th>
+              <td class="pt-c1">約1〜2ヶ月</td>
+              <td class="pt-c2">約2〜3ヶ月</td>
+              <td class="pt-c3">約2〜3ヶ月</td>
+            </tr>
+            <tr>
+              <th class="pt-row">使用ツール</th>
+              <td class="pt-c1">STUDIO</td>
+              <td class="pt-c2">STUDIO</td>
+              <td class="pt-c3">STUDIO</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <ul class="price-notes" data-aos="fade-up">
+      <li>※ 表示料金はすべて税込みです。</li>
+      <li>※ 薬機法に関わる可能性のあるページは、事前に審査を受けた原稿をご用意ください。</li>
+      <li>※ ご予算や内容に合わせて調整も可能です。まずはお気軽にご相談ください。</li>
+    </ul>
+
+    <div class="text-center mt-10" data-aos="fade-up">
+      <a href="#contact" class="price-cta">まずは無料で相談する</a>
+    </div>
   </div>
 </section>
 
