@@ -621,9 +621,10 @@
       clip-path: inset(0 0 0 100%);
       animation: fvLineGrow 0.7s cubic-bezier(.22,.61,.36,1) 0.3s forwards;
     }
-    #fv-person { z-index: 2; object-position: 69% center; }
+    #fv-person { z-index: 2; object-fit: contain; object-position: right bottom; }
     @media (max-width: 767px) {
-      #fv-bg, #fv-line, #fv-person { object-position: 88% center; }
+      #fv-bg, #fv-line { object-position: 88% center; }
+      #fv-person { object-position: center bottom; }
     }
     @keyframes fvLineGrow {
       to { clip-path: inset(0 0 0 0); }
