@@ -621,10 +621,16 @@
       clip-path: inset(0 0 0 100%);
       animation: fvLineGrow 0.7s cubic-bezier(.22,.61,.36,1) 0.3s forwards;
     }
-    #fv-person { z-index: 2; object-fit: contain; object-position: right bottom; }
+    #fv-person {
+      z-index: 2;
+      position: absolute;
+      right: 0; bottom: 0; top: auto; left: auto;
+      height: 80%; width: auto; max-width: 48%;
+      object-fit: contain; object-position: right bottom;
+    }
     @media (max-width: 767px) {
       #fv-bg, #fv-line { object-position: 88% center; }
-      #fv-person { object-position: center bottom; }
+      #fv-person { height: auto; width: 70%; max-width: none; }
     }
     @keyframes fvLineGrow {
       to { clip-path: inset(0 0 0 0); }
@@ -829,8 +835,7 @@
       <div class="fv-card"><img src="images/stream/s7.jpg" alt="" loading="lazy" /></div>
     </div>
   </div>
-  <img src="images/fv-person.webp" alt="Webデザイナー 永田亮" id="fv-person"
-       class="absolute inset-0 w-full h-full" />
+  <img src="images/fv-person.webp" alt="Webデザイナー 永田亮" id="fv-person" />
 
   <!-- スマホ用：人物の上に白オーバーレイ -->
   <div class="fv-person-overlay" aria-hidden="true"></div>
