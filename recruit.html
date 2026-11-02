@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="ja" class="no-js">
+<head>
+<!-- JS が有効な時だけ .reveal を隠す（JS無効/失敗時もコンテンツが見えるようにする） -->
+<script>document.documentElement.className=document.documentElement.className.replace('no-js','js');</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RECRUIT | 株式会社ダミー</title>
+<link rel="icon" href="favicon-48.png" sizes="48x48" type="image/png" />
+  <link rel="icon" href="favicon-96.png" sizes="96x96" type="image/png" />
+  <link rel="icon" href="favicon-192.png" sizes="192x192" type="image/png" />
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<meta name="description" content="株式会社ダミーの採用サイト。情熱を、まっすぐに。まだ見ぬ景色を、私たちと一緒に。">
+
+<!-- Tailwind CSS (CDN) -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Google Fonts : Zen Kaku Gothic New -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          brand:  '#E5261F',   /* メインカラー：鮮烈なスカーレット */
+          brand2: '#C21510',   /* 濃い赤（ホバー等） */
+          maroon: '#5E0A07',   /* 最も深い赤（Entry・グラデ） */
+          white:  '#FFFFFF',
+          ink:    '#231619',    /* 白地の本文 */
+          sub:    '#6E5654',    /* 白地の補助テキスト */
+          tint:   '#FFF1F0',    /* 淡い赤の面 */
+          line:   '#F3D3D1',    /* 淡い赤の罫線 */
+        },
+        fontFamily: {
+          zen: ['"Zen Kaku Gothic New"', 'sans-serif'],
+        },
+      },
+    },
+  }
+</script>
+
+<style>
+  :root{
+    --brand:#E5261F; --brand2:#C21510; --maroon:#5E0A07;
+    --white:#FFFFFF; --ink:#231619; --sub:#6E5654; --tint:#FFF1F0; --line:#F3D3D1;
+  }
+
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:"Zen Kaku Gothic New", sans-serif;
+    font-size:16px; line-height:1.5; font-weight:400;
+    color:var(--ink); background:var(--white);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:clip; /* clip はスクロールコンテナを作らないため縦スクロールに干渉しない */
+  }
+
+  /* ============================================================
+     vw基準のスケーリング設計
+     ・SP〜タブレット(〜768px)は vw 値そのまま
+     ・PC(768px〜)は min() で上限を設けて頭打ち
+     ============================================================ */
+  .sec-pt      { padding-top:    min(30vw, 240px); }
+  .sec-pt-sm   { padding-top:    min(13.5vw,108px); }
+  .pb-20vw     { padding-bottom: min(20vw, 160px); }
+  .pb-24vw     { padding-bottom: min(24vw, 192px); }
+  .pb-28vw     { padding-bottom: min(28vw, 224px); }
+
+  /* 大見出し h2 : 14vw / line-height 1.0 / weight 500（太くしない） */
+  .h2-vw{
+    font-size: min(14vw, 160px);
+    line-height:1.0;
+    font-weight:500;
+    letter-spacing:-0.01em;
+  }
+
+  /* 英語の飾り見出し */
+  .eyebrow{
+    font-size:12px;
+    font-weight:500;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+  }
+  .subhead{ font-size:18px; line-height:1.5; font-weight:700; }
+
+  .container-x{ padding-left:24px; padding-right:24px; }
+  @media (min-width:768px){ .container-x{ padding-left:6vw; padding-right:6vw; } }
+  @media (min-width:1440px){ .container-x{ padding-left:88px; padding-right:88px; } }
+
+  /* ============================================================
+     固定ヘッダー：背景に応じて文字色を反転
+     ============================================================ */
+  #site-header{ transition:color .4s ease; }
+  #site-header[data-header="light"]{ color:var(--white); }              /* 赤い面の上：白文字 */
+  #site-header[data-header="dark"] { color:var(--ink); }                /* 白い面の上：濃色文字 */
+  #site-header .hbtn{ transition:background .3s ease, color .3s ease, border-color .3s ease; }
+  #site-header[data-header="light"] .hbtn{ background:var(--white); color:var(--brand); }
+  #site-header[data-header="dark"]  .hbtn{ background:var(--brand); color:var(--white); }
+  #site-header .burger span{ background:currentColor; }
+
+  /* ============================================================
+     アニメーション : transform / opacity のみ
+     ============================================================ */
+  .js .reveal{
+    opacity:0;
+    transform:translateY(20px);
+    transition:opacity .9s cubic-bezier(.22,.61,.36,1),
+               transform .9s cubic-bezier(.22,.61,.36,1);
+    will-change:opacity, transform;
+  }
+  .reveal.is-in{ opacity:1; transform:translateY(0); }
+  .reveal[data-delay="1"]{ transition-delay:.12s; }
+  .reveal[data-delay="2"]{ transition-delay:.24s; }
+  .reveal[data-delay="3"]{ transition-delay:.36s; }
+
+  /* Scroll 縦線アニメ */
+  @keyframes scrollLine{
+    0%   { transform:scaleY(0); transform-origin:top; }
+    45%  { transform:scaleY(1); transform-origin:top; }
+    55%  { transform:scaleY(1); transform-origin:bottom; }
+    100% { transform:scaleY(0); transform-origin:bottom; }
+  }
+  .scroll-line{ animation:scrollLine 2.2s cubic-bezier(.7,0,.3,1) infinite; }
+
+  /* 無限横スクロールギャラリー */
+  @keyframes marquee{
+    from{ transform:translateX(0); }
+    to  { transform:translateX(-50%); }
+  }
+  .marquee-track{
+    display:flex; width:max-content;
+    animation:marquee 40s linear infinite;
+  }
+  .marquee-track:hover{ animation-play-state:paused; }
+
+  /* Jobs : ホバーで赤い背景が横に伸びる */
+  .job-row{ position:relative; overflow:hidden; }
+  .job-row::before{
+    content:""; position:absolute; inset:0;
+    background:var(--brand);
+    transform:scaleX(0); transform-origin:left;
+    transition:transform .55s cubic-bezier(.22,.61,.36,1);
+    z-index:0;
+  }
+  .job-row:hover::before{ transform:scaleX(1); }
+  .job-row > *{ position:relative; z-index:1; transition:color .4s ease; }
+  .job-row:hover .job-fg{ color:var(--white); }
+  .job-row:hover .job-fg-sub{ color:rgba(255,255,255,.7); }
+
+  /* カルーセル */
+  .carousel-track{
+    display:flex; gap:20px;
+    overflow-x:auto; scroll-snap-type:x mandatory;
+    scrollbar-width:none; -ms-overflow-style:none;
+    scroll-behavior:smooth;
+  }
+  .carousel-track::-webkit-scrollbar{ display:none; }
+  .carousel-card{ scroll-snap-align:start; flex:0 0 auto; }
+
+  /* ボタン */
+  .btn-more{
+    display:inline-flex; align-items:center; gap:14px;
+    font-size:13px; font-weight:700; letter-spacing:0.12em;
+    padding:16px 0; position:relative;
+  }
+  .btn-more .bar{
+    display:block; width:56px; height:1px; background:currentColor;
+    transition:width .4s ease;
+  }
+  .btn-more:hover .bar{ width:84px; }
+
+  .btn-pill{
+    display:inline-flex; align-items:center; justify-content:center;
+    padding:12px 26px; border-radius:999px;
+    font-size:13px; font-weight:700; letter-spacing:0.08em;
+    transition:opacity .3s ease, background .3s ease, color .3s ease;
+  }
+
+  .burger span{ transition:transform .35s ease, opacity .25s ease; }
+  #nav-drawer{ transition:opacity .4s ease, visibility .4s ease; }
+
+  /* reduced-motion : 全アニメ無効化 */
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation:none !important; transition:none !important; }
+    .js .reveal{ opacity:1 !important; transform:none !important; }
+    .carousel-track{ scroll-behavior:auto; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ============================================================
+     1. 固定ヘッダー
+     ============================================================ -->
+<header id="site-header" data-header="light" class="fixed top-0 left-0 w-full z-50">
+  <div class="container-x flex items-center justify-between h-[72px] md:h-[88px]">
+    <!-- 左ロゴ -->
+    <a href="#hero" class="text-[20px] md:text-[22px] font-medium tracking-[0.14em] leading-none">DUMMY<span class="font-normal">®</span></a>
+
+    <!-- 中央ナビ5つ -->
+    <nav class="hidden md:flex items-center gap-9 text-[13px] tracking-[0.14em] font-medium">
+      <a href="#message"   class="hover:opacity-60 transition-opacity">Message</a>
+      <a href="#about"     class="hover:opacity-60 transition-opacity">About</a>
+      <a href="#interview" class="hover:opacity-60 transition-opacity">Interview</a>
+      <a href="#workstyle" class="hover:opacity-60 transition-opacity">Work Style</a>
+      <a href="#jobs"      class="hover:opacity-60 transition-opacity">Jobs</a>
+    </nav>
+
+    <!-- 右 Entry ボタン + ハンバーガー -->
+    <div class="flex items-center gap-4">
+      <a href="#entry" class="hbtn hidden md:inline-flex btn-pill hover:opacity-80">Entry</a>
+      <button id="burger" class="burger md:hidden w-10 h-10 flex flex-col items-center justify-center gap-[6px]" aria-label="メニューを開く" aria-expanded="false">
+        <span class="block w-6 h-[1.5px]"></span>
+        <span class="block w-6 h-[1.5px]"></span>
+        <span class="block w-6 h-[1.5px]"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- SP用ドロワー -->
+<div id="nav-drawer" class="fixed inset-0 z-40 bg-brand text-white opacity-0 invisible md:hidden">
+  <div class="h-full flex flex-col justify-center container-x gap-8">
+    <a href="#message"   class="drawer-link text-[8vw] font-medium leading-none">Message</a>
+    <a href="#about"     class="drawer-link text-[8vw] font-medium leading-none">About</a>
+    <a href="#interview" class="drawer-link text-[8vw] font-medium leading-none">Interview</a>
+    <a href="#workstyle" class="drawer-link text-[8vw] font-medium leading-none">Work Style</a>
+    <a href="#jobs"      class="drawer-link text-[8vw] font-medium leading-none">Jobs</a>
+    <a href="#entry"     class="drawer-link btn-pill bg-white text-brand self-start mt-4">Entry</a>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     2. ヒーロー（赤背景 + 白い波打つドットグリッド）
+     ============================================================ -->
+<section id="hero" data-nav="light" class="relative h-[100svh] min-h-[560px] bg-brand text-white overflow-hidden">
+  <!-- 背景アニメーション：波打つドットグリッド（sin波で上下する点の格子 / canvas） -->
+  <canvas id="hero-grid" class="absolute inset-0 w-full h-full" aria-hidden="true"></canvas>
+  <!-- テキスト可読性のための赤グラデーション -->
+  <div class="absolute inset-0 pointer-events-none"
+       style="background:linear-gradient(to bottom, rgba(94,10,7,.45), rgba(229,38,31,0) 42%, rgba(94,10,7,.55));"></div>
+
+  <div class="relative h-full container-x flex flex-col justify-center">
+    <p class="eyebrow text-white/70 mb-6 md:mb-8">Recruiting Site 2027</p>
+    <h1 class="font-medium leading-[0.95] tracking-[-0.02em]" style="font-size:min(15vw,180px);">
+      Ignite<br class="md:hidden">
+      <span class="hidden md:inline"> the </span><br class="hidden md:inline">
+      <span class="md:hidden">the </span>Unseen<br>
+      Passion.
+    </h1>
+    <p class="mt-8 max-w-md text-[15px] leading-relaxed text-white/85">
+      まだ誰も見たことのない景色を、私たちの手で。<br class="md:hidden">
+      燃えるような好奇心で、次の当たり前をつくる仲間を探しています。
+    </p>
+  </div>
+
+  <!-- 下部 Scroll + 縦線 -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
+    <span class="eyebrow text-white/70 [writing-mode:vertical-rl] tracking-[0.3em]">Scroll</span>
+    <span class="block w-px h-14 bg-white/40 relative overflow-hidden">
+      <span class="scroll-line absolute inset-0 bg-white block"></span>
+    </span>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     3. メッセージ（白背景 / 大見出しは赤）
+     ============================================================ -->
+<section id="message" data-nav="dark" class="bg-white text-ink sec-pt pb-24vw">
+  <div class="container-x max-w-[1000px] mx-auto">
+    <p class="eyebrow text-brand mb-4 reveal">Message</p>
+    <h2 class="h2-vw text-brand reveal" data-delay="1">
+      燃える、<br class="md:hidden">という<br class="hidden md:inline">
+      日常。
+    </h2>
+    <p class="mt-8 md:mt-10 text-sub max-w-xl reveal" data-delay="2">
+      変化のただ中で、私たちは何を大切にするのか。<br class="hidden md:inline">
+      経営から現場まで、共通して流れる4つの熱を届けます。
+    </p>
+
+    <!-- 4ブロック（下から20pxフェードイン） -->
+    <div class="mt-16 md:mt-24 grid gap-14 md:gap-20">
+      <div class="reveal border-t border-line pt-8 md:pt-10 md:grid md:grid-cols-[160px_1fr] md:gap-10">
+        <p class="subhead text-brand mb-3 md:mb-0">01 / 好奇心</p>
+        <p class="text-[15px] leading-[1.9] text-ink/80">
+          わからないことを、面白がれる人が強い。私たちは効率よりも先に「なぜ」を問い、
+          誰も踏み込んでいない領域に足跡を残すことを選びます。失敗は減点ではなく、
+          次の仮説をつくるための貴重なデータです。
+        </p>
+      </div>
+      <div class="reveal border-t border-line pt-8 md:pt-10 md:grid md:grid-cols-[160px_1fr] md:gap-10">
+        <p class="subhead text-brand mb-3 md:mb-0">02 / 誠実さ</p>
+        <p class="text-[15px] leading-[1.9] text-ink/80">
+          スピードが求められる時代だからこそ、ひとつひとつの約束を守り抜く。
+          お客様にも、仲間にも、まっすぐであること。それが結果として、
+          長く選ばれ続けるための唯一の近道だと信じています。
+        </p>
+      </div>
+      <div class="reveal border-t border-line pt-8 md:pt-10 md:grid md:grid-cols-[160px_1fr] md:gap-10">
+        <p class="subhead text-brand mb-3 md:mb-0">03 / 越境</p>
+        <p class="text-[15px] leading-[1.9] text-ink/80">
+          職種や部署の境界線は、あくまで便宜上のもの。より良い答えのためなら、
+          役割を軽やかに飛び越えていく。多様な視点が交わる場所にこそ、
+          思いもよらないアイデアが生まれます。
+        </p>
+      </div>
+      <div class="reveal border-t border-line pt-8 md:pt-10 md:grid md:grid-cols-[160px_1fr] md:gap-10">
+        <p class="subhead text-brand mb-3 md:mb-0">04 / 情熱</p>
+        <p class="text-[15px] leading-[1.9] text-ink/80">
+          華やかな瞬間の裏には、地道な積み重ねがある。それでも、胸の奥にある熱を絶やさない。
+          私たちは一度きりの花火ではなく、毎日を燃やし続けられるチームでありたい。
+          当たり前の水準を、静かに、しかし確実に引き上げていきます。
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-16 reveal">
+      <a href="#" class="btn-more text-brand">READ MORE <span class="bar"></span></a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     4. About us（赤背景 / カード2枚 非対称）
+     ============================================================ -->
+<section id="about" data-nav="light" class="bg-brand text-white sec-pt pb-24vw">
+  <div class="container-x">
+    <p class="eyebrow text-white/70 mb-4 reveal">About us</p>
+    <h2 class="h2-vw reveal" data-delay="1">
+      私たちの<br>
+      現在地。
+    </h2>
+    <p class="mt-8 md:mt-10 text-white/85 max-w-xl reveal" data-delay="2">
+      数字と物語、その両方から会社の輪郭を描きます。<br class="hidden md:inline">
+      これは完成形ではなく、これからを一緒に燃やしていくための出発点です。
+    </p>
+
+    <!-- 非対称レイアウト -->
+    <div class="mt-16 md:mt-24 grid md:grid-cols-12 gap-6 md:gap-8">
+      <!-- 大カード -->
+      <div class="reveal md:col-span-7 group">
+        <div class="overflow-hidden rounded-2xl bg-white/10">
+          <img src="https://placehold.jp/c21510/ffffff/1200x800.png?text=OUR+STORY"
+               alt="オフィスの様子"
+               class="w-full aspect-[3/2] object-cover transition-transform duration-700 group-hover:scale-105">
+        </div>
+        <p class="subhead mt-6">事業を通じて、社会の"あたりまえ"を更新する</p>
+        <p class="mt-3 text-[15px] leading-[1.9] text-white/80">
+          2009年の創業以来、私たちはテクノロジーとデザインの力で、
+          人と情報の距離を縮めるプロダクトを届けてきました。
+          いま向き合っているのは、次の10年のスタンダードづくりです。
+        </p>
+      </div>
+
+      <!-- 小カード（下げて非対称に / 白カード） -->
+      <div class="reveal md:col-span-4 md:col-start-9 md:mt-28" data-delay="1">
+        <div class="overflow-hidden rounded-2xl bg-white group">
+          <img src="https://placehold.jp/ffffff/e5261f/800x1000.png?text=NUMBERS"
+               alt="データで見る会社"
+               class="w-full aspect-[4/5] object-cover transition-transform duration-700 group-hover:scale-105">
+        </div>
+        <div class="mt-6 grid grid-cols-2 gap-y-6 gap-x-4">
+          <div><p class="text-[32px] font-medium leading-none">312<span class="text-[16px] text-white/70">名</span></p><p class="mt-1 text-[12px] text-white/70">従業員数</p></div>
+          <div><p class="text-[32px] font-medium leading-none">33.4<span class="text-[16px] text-white/70">歳</span></p><p class="mt-1 text-[12px] text-white/70">平均年齢</p></div>
+          <div><p class="text-[32px] font-medium leading-none">18<span class="text-[16px] text-white/70">年</span></p><p class="mt-1 text-[12px] text-white/70">創業からの歩み</p></div>
+          <div><p class="text-[32px] font-medium leading-none">64<span class="text-[16px] text-white/70">%</span></p><p class="mt-1 text-[12px] text-white/70">リモート比率</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-16 md:mt-20 reveal">
+      <a href="#" class="btn-more text-white">VIEW COMPANY <span class="bar"></span></a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     5. Interview（白背景 / 横スクロールカルーセル）
+     ============================================================ -->
+<section id="interview" data-nav="dark" class="bg-white text-ink sec-pt pb-24vw overflow-hidden">
+  <div class="container-x">
+    <p class="eyebrow text-brand mb-4 reveal">Interview</p>
+    <h2 class="h2-vw text-brand reveal" data-delay="1">
+      働く人の<br>
+      熱。
+    </h2>
+    <p class="mt-8 md:mt-10 text-sub max-w-xl reveal" data-delay="2">
+      入社の理由も、いまの手応えも、人の数だけ物語がある。<br class="hidden md:inline">
+      現場のメンバーが、飾らない言葉で日々の情熱を語ります。
+    </p>
+  </div>
+
+  <!-- カルーセル操作 -->
+  <div class="container-x mt-10 md:mt-14 flex items-center gap-4 reveal">
+    <button id="carousel-toggle" class="w-12 h-12 rounded-full border border-line flex items-center justify-center hover:bg-tint transition-colors" aria-label="自動再生を一時停止">
+      <svg id="icon-pause" viewBox="0 0 24 24" class="w-4 h-4 fill-brand"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+      <svg id="icon-play" viewBox="0 0 24 24" class="w-4 h-4 fill-brand hidden"><path d="M7 4v16l13-8z"/></svg>
+    </button>
+    <div class="flex-1 h-px bg-line"></div>
+    <div class="flex gap-3">
+      <button id="carousel-prev" class="w-12 h-12 rounded-full border border-line flex items-center justify-center hover:bg-tint transition-colors" aria-label="前へ">
+        <svg viewBox="0 0 24 24" class="w-4 h-4 stroke-ink fill-none" stroke-width="1.6"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <button id="carousel-next" class="w-12 h-12 rounded-full border border-line flex items-center justify-center hover:bg-tint transition-colors" aria-label="次へ">
+        <svg viewBox="0 0 24 24" class="w-4 h-4 stroke-ink fill-none" stroke-width="1.6"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- トラック -->
+  <div id="carousel" class="carousel-track container-x mt-8 pb-2">
+    <article class="carousel-card w-[78vw] sm:w-[380px] md:w-[420px]">
+      <div class="overflow-hidden rounded-2xl bg-tint"><img src="https://placehold.jp/e5261f/ffffff/840x1040.png?text=INTERVIEW+01" alt="社員インタビュー01" class="w-full aspect-[4/5] object-cover"></div>
+      <p class="eyebrow text-brand mt-6">Engineering / 2021</p>
+      <p class="subhead mt-2">「わからない」を面白がれる場所</p>
+      <p class="mt-3 text-[14px] leading-[1.9] text-sub">未知の技術に飛び込むたびに、チームが背中を押してくれる。挑戦のハードルが低いことが、この会社の一番の魅力です。</p>
+      <p class="mt-4 text-[13px] text-ink/60">佐藤 悠 ／ ソフトウェアエンジニア</p>
+    </article>
+    <article class="carousel-card w-[78vw] sm:w-[380px] md:w-[420px]">
+      <div class="overflow-hidden rounded-2xl bg-tint"><img src="https://placehold.jp/c21510/ffffff/840x1040.png?text=INTERVIEW+02" alt="社員インタビュー02" class="w-full aspect-[4/5] object-cover"></div>
+      <p class="eyebrow text-brand mt-6">Design / 2019</p>
+      <p class="subhead mt-2">越境が、あたりまえの毎日</p>
+      <p class="mt-3 text-[14px] leading-[1.9] text-sub">デザインの枠を越えて、事業の意思決定にも関われる。役割で線を引かないカルチャーが、自分の可能性を広げてくれました。</p>
+      <p class="mt-4 text-[13px] text-ink/60">田中 美咲 ／ プロダクトデザイナー</p>
+    </article>
+    <article class="carousel-card w-[78vw] sm:w-[380px] md:w-[420px]">
+      <div class="overflow-hidden rounded-2xl bg-tint"><img src="https://placehold.jp/e5261f/ffffff/840x1040.png?text=INTERVIEW+03" alt="社員インタビュー03" class="w-full aspect-[4/5] object-cover"></div>
+      <p class="eyebrow text-brand mt-6">Sales / 2022</p>
+      <p class="subhead mt-2">誠実さが、信頼に変わる瞬間</p>
+      <p class="mt-3 text-[14px] leading-[1.9] text-sub">短期の数字より、お客様の成功を優先する。その姿勢を会社が後押ししてくれるから、迷わず正しいことに集中できます。</p>
+      <p class="mt-4 text-[13px] text-ink/60">鈴木 健 ／ フィールドセールス</p>
+    </article>
+    <article class="carousel-card w-[78vw] sm:w-[380px] md:w-[420px]">
+      <div class="overflow-hidden rounded-2xl bg-tint"><img src="https://placehold.jp/c21510/ffffff/840x1040.png?text=INTERVIEW+04" alt="社員インタビュー04" class="w-full aspect-[4/5] object-cover"></div>
+      <p class="eyebrow text-brand mt-6">Corporate / 2018</p>
+      <p class="subhead mt-2">続けることの、確かな価値</p>
+      <p class="mt-3 text-[14px] leading-[1.9] text-sub">派手さはなくても、毎日の小さな改善が組織を支えている。積み重ねを正しく評価してくれる環境に感謝しています。</p>
+      <p class="mt-4 text-[13px] text-ink/60">高橋 望 ／ 人事・労務</p>
+    </article>
+  </div>
+
+  <div class="container-x mt-14 reveal">
+    <a href="#" class="btn-more text-brand">ALL INTERVIEWS <span class="bar"></span></a>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     6. Work Style（赤背景 / 3カラム + 無限ギャラリー）
+     ============================================================ -->
+<section id="workstyle" data-nav="light" class="bg-brand text-white sec-pt pb-20vw overflow-hidden">
+  <div class="container-x">
+    <p class="eyebrow text-white/70 mb-4 reveal">Work Style</p>
+    <h2 class="h2-vw reveal" data-delay="1">
+      働き方の<br>
+      設計。
+    </h2>
+    <p class="mt-8 md:mt-10 text-white/85 max-w-xl reveal" data-delay="2">
+      成果に集中できる環境を、制度と文化の両面から整えています。<br class="hidden md:inline">
+      働く場所も時間も、一人ひとりが自分で選べることを大切に。
+    </p>
+
+    <!-- 3カラムカード（白カード） -->
+    <div class="mt-16 md:mt-24 grid md:grid-cols-3 gap-6 md:gap-8">
+      <div class="reveal bg-white text-ink rounded-2xl p-8 md:p-10">
+        <p class="eyebrow text-brand">01</p>
+        <p class="subhead mt-4">場所にとらわれない</p>
+        <p class="mt-3 text-[14px] leading-[1.9] text-sub">フルリモートを基本に、集まりたいときはオフィスへ。全国どこからでも、最高のパフォーマンスを発揮できます。</p>
+      </div>
+      <div class="reveal bg-white text-ink rounded-2xl p-8 md:p-10" data-delay="1">
+        <p class="eyebrow text-brand">02</p>
+        <p class="subhead mt-4">時間を自分で握る</p>
+        <p class="mt-3 text-[14px] leading-[1.9] text-sub">フルフレックスで、集中できる時間に働く。中抜けも自由だから、暮らしと仕事のリズムを自分で設計できます。</p>
+      </div>
+      <div class="reveal bg-white text-ink rounded-2xl p-8 md:p-10" data-delay="2">
+        <p class="eyebrow text-brand">03</p>
+        <p class="subhead mt-4">学びに投資する</p>
+        <p class="mt-3 text-[14px] leading-[1.9] text-sub">書籍・カンファレンス費用は全額支給。学んだことをチームに還元する文化が、成長を加速させます。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 写真の無限横スクロールギャラリー -->
+  <div class="mt-16 md:mt-24 reveal">
+    <div class="marquee-track gap-4">
+      <!-- set A -->
+      <img src="https://placehold.jp/ffffff/e5261f/640x420.png?text=OFFICE+01" alt="" class="h-[180px] md:h-[260px] w-auto rounded-xl object-cover">
+      <img src="https://placehold.jp/c21510/ffffff/640x420.png?text=TEAM+02"   alt="" class="h-[180px] md:h-[260px] w-auto rounded-xl object-cover">
+      <img src="https://placehold.jp/ffffff/e5261f/640x420.png?text=EVENT+03"  alt="" class="h-[180px] md:h-[260px] w-auto rounded-xl object-cover">
+      <img src="https://placehold.jp/5e0a07/ffffff/640x420.png?text=DESK+04"   alt="" class="h-[180px] md:h-[260px] w-auto rounded-xl object-cover">
+      <img src="https://placehold.jp/ffffff/e5261f/640x420.png?text=CAFE+05"   alt="" class="h-[180px] md:h-[260px] w-auto rounded-xl object-cover">
+      <img src="https://placehold.jp/c21510/ffffff/640x420.png?text=MEETUP+06" alt="" class="h-[180px] md:h-[260px] w-auto rounded-xl object-cover">
+      <!-- set B (複製でシームレス) -->
+      <img src="https://placehold.jp/ffffff/e5261f/640x420.png?text=OFFICE+01" alt="" aria-hidden="true" class="h-[180px] md:h-[260px] w-auto rounded-xl object-cover">
+      <img src="https://placehold.jp/c21510/ffffff/640x420.png?text=TEAM+02"   alt="" aria-hidden="true" class="h-[180px] md:h-[260px] w-auto rounded-xl object-cover">
+      <img src="https://placehold.jp/ffffff/e5261f/640x420.png?text=EVENT+03"  alt="" aria-hidden="true" class="h-[180px] md:h-[260px] w-auto rounded-xl object-cover">
+      <img src="https://placehold.jp/5e0a07/ffffff/640x420.png?text=DESK+04"   alt="" aria-hidden="true" class="h-[180px] md:h-[260px] w-auto rounded-xl object-cover">
+      <img src="https://placehold.jp/ffffff/e5261f/640x420.png?text=CAFE+05"   alt="" aria-hidden="true" class="h-[180px] md:h-[260px] w-auto rounded-xl object-cover">
+      <img src="https://placehold.jp/c21510/ffffff/640x420.png?text=MEETUP+06" alt="" aria-hidden="true" class="h-[180px] md:h-[260px] w-auto rounded-xl object-cover">
+    </div>
+  </div>
+
+  <div class="container-x mt-16 reveal">
+    <a href="#" class="btn-more text-white">MORE ABOUT CULTURE <span class="bar"></span></a>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     7. Jobs（白背景 / 縦積みリスト・ホバーで赤が横に伸びる）
+     ============================================================ -->
+<section id="jobs" data-nav="dark" class="bg-white text-ink sec-pt-sm pb-24vw">
+  <div class="container-x">
+    <p class="eyebrow text-brand mb-4 reveal">Jobs</p>
+    <h2 class="h2-vw text-brand reveal" data-delay="1">
+      募集<br class="md:hidden">
+      職種。
+    </h2>
+    <p class="mt-8 md:mt-10 text-sub max-w-xl reveal" data-delay="2">
+      いま、5つのポジションで新しい仲間を探しています。<br class="hidden md:inline">
+      職種を越えた挑戦も歓迎。気になる扉から、のぞいてみてください。
+    </p>
+
+    <!-- リスト -->
+    <ul class="mt-14 md:mt-20 border-t border-line">
+      <li>
+        <a href="#" class="job-row block border-b border-line">
+          <span class="flex items-center gap-4 md:gap-8 px-4 md:px-8 py-7 md:py-9">
+            <span class="job-fg-sub eyebrow text-sub w-10 shrink-0">01</span>
+            <span class="job-fg flex-1 text-[22px] md:text-[34px] font-medium leading-tight">ソフトウェアエンジニア</span>
+            <span class="job-fg-sub hidden sm:inline text-[13px] text-sub">Engineering</span>
+            <span class="job-fg text-sub"><svg viewBox="0 0 24 24" class="w-5 h-5 stroke-current fill-none" stroke-width="1.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="job-row block border-b border-line">
+          <span class="flex items-center gap-4 md:gap-8 px-4 md:px-8 py-7 md:py-9">
+            <span class="job-fg-sub eyebrow text-sub w-10 shrink-0">02</span>
+            <span class="job-fg flex-1 text-[22px] md:text-[34px] font-medium leading-tight">プロダクトデザイナー</span>
+            <span class="job-fg-sub hidden sm:inline text-[13px] text-sub">Design</span>
+            <span class="job-fg text-sub"><svg viewBox="0 0 24 24" class="w-5 h-5 stroke-current fill-none" stroke-width="1.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="job-row block border-b border-line">
+          <span class="flex items-center gap-4 md:gap-8 px-4 md:px-8 py-7 md:py-9">
+            <span class="job-fg-sub eyebrow text-sub w-10 shrink-0">03</span>
+            <span class="job-fg flex-1 text-[22px] md:text-[34px] font-medium leading-tight">フィールドセールス</span>
+            <span class="job-fg-sub hidden sm:inline text-[13px] text-sub">Sales</span>
+            <span class="job-fg text-sub"><svg viewBox="0 0 24 24" class="w-5 h-5 stroke-current fill-none" stroke-width="1.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="job-row block border-b border-line">
+          <span class="flex items-center gap-4 md:gap-8 px-4 md:px-8 py-7 md:py-9">
+            <span class="job-fg-sub eyebrow text-sub w-10 shrink-0">04</span>
+            <span class="job-fg flex-1 text-[22px] md:text-[34px] font-medium leading-tight">コーポレート（人事）</span>
+            <span class="job-fg-sub hidden sm:inline text-[13px] text-sub">Corporate</span>
+            <span class="job-fg text-sub"><svg viewBox="0 0 24 24" class="w-5 h-5 stroke-current fill-none" stroke-width="1.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="job-row block border-b border-line">
+          <span class="flex items-center gap-4 md:gap-8 px-4 md:px-8 py-7 md:py-9">
+            <span class="job-fg-sub eyebrow text-sub w-10 shrink-0">05</span>
+            <span class="job-fg flex-1 text-[22px] md:text-[34px] font-medium leading-tight">データアナリスト</span>
+            <span class="job-fg-sub hidden sm:inline text-[13px] text-sub">Analytics</span>
+            <span class="job-fg text-sub"><svg viewBox="0 0 24 24" class="w-5 h-5 stroke-current fill-none" stroke-width="1.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="mt-14 reveal">
+      <a href="#" class="btn-more text-brand">SEE ALL POSITIONS <span class="bar"></span></a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     8. Entry（全画面動画背景 + 半透明の赤レイヤー）
+     ============================================================ -->
+<section id="entry" data-nav="light" class="relative text-white overflow-hidden bg-maroon">
+  <!-- 動画プレースホルダ -->
+  <video class="absolute inset-0 w-full h-full object-cover" autoplay muted loop playsinline
+         poster="https://placehold.jp/5e0a07/e5261f/1600x900.png?text=ENTRY+MOVIE">
+    <source src="" type="video/mp4">
+  </video>
+  <!-- 半透明の赤レイヤー -->
+  <div class="absolute inset-0" style="background:linear-gradient(135deg, rgba(94,10,7,.9), rgba(229,38,31,.78));"></div>
+
+  <div class="relative container-x sec-pt pb-28vw text-center flex flex-col items-center">
+    <p class="eyebrow text-white/70 mb-4 reveal">Entry</p>
+    <h2 class="h2-vw reveal" data-delay="1">
+      さあ、<br class="md:hidden">
+      燃やそう。
+    </h2>
+    <p class="mt-8 md:mt-10 max-w-lg text-white/85 reveal" data-delay="2">
+      少しでも心が動いたなら、それが始まりの合図です。<br class="hidden md:inline">
+      あなたの物語の続きを、私たちと一緒に。
+    </p>
+
+    <div class="mt-14 flex flex-col sm:flex-row items-center gap-4 reveal">
+      <a href="#" class="btn-pill bg-white text-brand px-10 py-4 text-[14px] hover:opacity-80">新卒エントリー</a>
+      <a href="#" class="btn-pill border border-white/50 text-white px-10 py-4 text-[14px] hover:bg-white/10">キャリア採用</a>
+    </div>
+  </div>
+
+  <!-- フッター -->
+  <footer class="relative border-t border-white/20">
+    <div class="container-x py-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      <div>
+        <p class="text-[18px] font-medium tracking-[0.14em]">DUMMY®</p>
+        <p class="mt-2 text-[12px] text-white/70">© 2027 Dummy Inc. All rights reserved.</p>
+      </div>
+      <nav class="flex flex-wrap gap-x-6 gap-y-3 text-[12px] text-white/70 tracking-[0.1em]">
+        <a href="#" class="hover:text-white transition-colors">会社概要</a>
+        <a href="#" class="hover:text-white transition-colors">ニュース</a>
+        <a href="#" class="hover:text-white transition-colors">プライバシーポリシー</a>
+        <a href="#" class="hover:text-white transition-colors">お問い合わせ</a>
+      </nav>
+    </div>
+  </footer>
+</section>
+
+
+<!-- ============================================================
+     JavaScript（ライブラリ不使用）
+     ============================================================ -->
+<script>
+(function(){
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- ハンバーガー / ドロワー ---- */
+  var burger = document.getElementById('burger');
+  var drawer = document.getElementById('nav-drawer');
+  function closeDrawer(){
+    drawer.classList.remove('opacity-100','visible');
+    drawer.classList.add('opacity-0','invisible');
+    burger.setAttribute('aria-expanded','false');
+    document.body.style.overflow = '';
+  }
+  function openDrawer(){
+    drawer.classList.add('opacity-100','visible');
+    drawer.classList.remove('opacity-0','invisible');
+    burger.setAttribute('aria-expanded','true');
+    document.body.style.overflow = 'hidden';
+  }
+  burger.addEventListener('click', function(){
+    (burger.getAttribute('aria-expanded') === 'true') ? closeDrawer() : openDrawer();
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('.drawer-link'), function(l){
+    l.addEventListener('click', closeDrawer);
+  });
+
+  /* ---- ヘッダーの文字色を、直下のセクションの背景に応じて反転 ---- */
+  var header = document.getElementById('site-header');
+  var navSections = document.querySelectorAll('[data-nav]');
+  if ('IntersectionObserver' in window) {
+    var headH = 88;
+    var navObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) header.setAttribute('data-header', e.target.getAttribute('data-nav'));
+      });
+    }, { rootMargin: '-' + headH + 'px 0px -' + (window.innerHeight - headH - 1) + 'px 0px', threshold: 0 });
+    Array.prototype.forEach.call(navSections, function(s){ navObs.observe(s); });
+  }
+
+  /* ---- IntersectionObserver によるフェードイン ---- */
+  var reveals = document.querySelectorAll('.reveal');
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    Array.prototype.forEach.call(reveals, function(el){ el.classList.add('is-in'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) {
+          e.target.classList.add('is-in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+    Array.prototype.forEach.call(reveals, function(el){ io.observe(el); });
+  }
+
+  /* ---- Interview カルーセル（自動再生 + 再生/一時停止） ---- */
+  var track  = document.getElementById('carousel');
+  var toggle = document.getElementById('carousel-toggle');
+  var prev   = document.getElementById('carousel-prev');
+  var next   = document.getElementById('carousel-next');
+  var iconPause = document.getElementById('icon-pause');
+  var iconPlay  = document.getElementById('icon-play');
+
+  function cardStep(){
+    var card = track.querySelector('.carousel-card');
+    if (!card) return 300;
+    var gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || 20) || 20;
+    return card.offsetWidth + gap;
+  }
+  function goNext(){
+    var max = track.scrollWidth - track.clientWidth - 4;
+    if (track.scrollLeft >= max) { track.scrollTo({ left:0 }); }
+    else { track.scrollBy({ left: cardStep() }); }
+  }
+  function goPrev(){ track.scrollBy({ left: -cardStep() }); }
+
+  next.addEventListener('click', function(){ goNext(); resetAuto(); });
+  prev.addEventListener('click', function(){ goPrev(); resetAuto(); });
+
+  var autoTimer = null;
+  var playing = false;
+  function startAuto(){
+    if (reduceMotion) return;
+    stopAuto();
+    autoTimer = setInterval(goNext, 3500);
+    playing = true;
+    iconPause.classList.remove('hidden');
+    iconPlay.classList.add('hidden');
+    toggle.setAttribute('aria-label','自動再生を一時停止');
+  }
+  function stopAuto(){
+    if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
+    playing = false;
+    iconPause.classList.add('hidden');
+    iconPlay.classList.remove('hidden');
+    toggle.setAttribute('aria-label','自動再生を開始');
+  }
+  function resetAuto(){ if (playing) startAuto(); }
+
+  toggle.addEventListener('click', function(){ playing ? stopAuto() : startAuto(); });
+  track.addEventListener('mouseenter', function(){ if (playing && autoTimer){ clearInterval(autoTimer); autoTimer=null; } });
+  track.addEventListener('mouseleave', function(){ if (playing && !autoTimer){ autoTimer = setInterval(goNext, 3500); } });
+
+  /* 画面内に入ったら自動再生開始（reduced-motion時は開始しない） */
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    var carObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ e.isIntersecting ? startAuto() : stopAuto(); });
+    }, { threshold: 0.2 });
+    carObserver.observe(document.getElementById('interview'));
+  } else {
+    stopAuto();
+  }
+
+  /* ---- ヒーロー背景：フローフィールド流線 × 波紋インタラクティブ ---- */
+  (function heroFlow(){
+    var canvas = document.getElementById('hero-grid');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var hero = document.getElementById('hero');
+    var RED = '#E5261F';
+    var vw = 0, vh = 0, pts = [];
+    var mx = null, my = null;   // ポインタ座標（未接触時は null）
+
+    function fit(){
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var rect = canvas.getBoundingClientRect();
+      vw = rect.width; vh = rect.height;
+      canvas.width  = Math.max(2, Math.round(vw * dpr));
+      canvas.height = Math.max(2, Math.round(vh * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.fillStyle = RED; ctx.fillRect(0, 0, vw, vh);   // 残像用のベースを赤で塗る
+    }
+    function build(){
+      pts = [];
+      var N = Math.min(2600, Math.round(vw * vh / 1400));  // 上限で高解像度端末の負荷を抑制
+      for (var i = 0; i < N; i++) pts.push({ x: Math.random() * vw, y: Math.random() * vh });
+    }
+
+    /* 01: ポインタ / タッチ追従 */
+    hero.addEventListener('mousemove', function(e){
+      var b = canvas.getBoundingClientRect(); mx = e.clientX - b.left; my = e.clientY - b.top;
+    });
+    hero.addEventListener('mouseleave', function(){ mx = null; my = null; });
+    hero.addEventListener('touchmove', function(e){
+      var tch = e.touches[0]; if (!tch) return;
+      var b = canvas.getBoundingClientRect(); mx = tch.clientX - b.left; my = tch.clientY - b.top;
+    }, { passive: true });
+    hero.addEventListener('touchend', function(){ mx = null; my = null; });
+
+    function draw(t){
+      /* 残像フェード（流線を残す） */
+      ctx.fillStyle = 'rgba(229,38,31,0.055)'; ctx.fillRect(0, 0, vw, vh);
+      /* 未接触時は仮想ポインタが自動巡回 */
+      var px = mx != null ? mx : vw * (0.5 + 0.33 * Math.sin(t * 0.0005));
+      var py = my != null ? my : vh * (0.5 + 0.30 * Math.cos(t * 0.0008));
+      var reach = Math.max(160, Math.min(vw, vh) * 0.42);
+      for (var i = 0; i < pts.length; i++){
+        var p = pts[i];
+        /* 03: フローフィールド（ノイズ状の角度場） */
+        var ang = (Math.sin(p.x * 0.008 + t * 0.0003) + Math.cos(p.y * 0.009 - t * 0.00022)) * Math.PI;
+        var vx = Math.cos(ang) * 0.95, vy = Math.sin(ang) * 0.95;
+        /* 01: ポインタ影響（反発＋渦） */
+        var dx = p.x - px, dy = p.y - py, dist = Math.sqrt(dx * dx + dy * dy) || 0.001;
+        var bright = 0.5;
+        if (dist < reach){
+          var f = 1 - dist / reach;
+          vx += (dx / dist) * f * 2.6;  vy += (dy / dist) * f * 2.6;   // 反発
+          vx += (-dy / dist) * f * 2.2; vy += ( dx / dist) * f * 2.2;  // 渦（接線）
+          bright = 0.5 + f * 0.5;                                       // 近いほど明るく
+        }
+        p.x += vx; p.y += vy;
+        if (p.x < 0) p.x += vw; if (p.x > vw) p.x -= vw;
+        if (p.y < 0) p.y += vh; if (p.y > vh) p.y -= vh;
+        ctx.fillStyle = 'rgba(255,255,255,' + bright.toFixed(3) + ')';
+        ctx.fillRect(p.x, p.y, 1.4, 1.4);
+      }
+    }
+
+    var running = false, rafId = null;
+    function loop(t){ draw(t || 0); rafId = requestAnimationFrame(loop); }
+    function start(){ if (running) return; running = true; rafId = requestAnimationFrame(loop); }
+    function stop(){ running = false; if (rafId) { cancelAnimationFrame(rafId); rafId = null; } }
+
+    fit(); build();
+    window.addEventListener('resize', function(){ fit(); build(); });
+
+    if (reduceMotion){ return; }   // 静止（赤一色。motionを出さない）
+
+    if ('IntersectionObserver' in window){
+      var heroObs = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ e.isIntersecting ? start() : stop(); });
+      }, { threshold: 0 });
+      heroObs.observe(hero);
+    } else {
+      start();
+    }
+    document.addEventListener('visibilitychange', function(){
+      if (document.hidden) stop();
+      else if (hero.getBoundingClientRect().bottom > 0) start();
+    });
+  })();
+})();
+</script>
+
+</body>
+</html>
