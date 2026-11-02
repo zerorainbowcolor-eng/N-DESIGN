@@ -80,13 +80,11 @@
     /* ===== NAV ===== */
     #navbar { transition: background 0.3s, box-shadow 0.3s; }
     #navbar.scrolled { background: #fff !important; box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
-    #navbar.scrolled .nav-logo img { filter: brightness(0); }
     #navbar.scrolled .nav-link { color: #001638 !important; }
     #navbar.scrolled .ham-bar { background: #001638 !important; }
     /* FVが白背景のため、最上部でもナビを紺色で表示 */
     #navbar .nav-link { color: #001638; }
     #navbar .ham-bar { background: #001638; }
-    #navbar .nav-logo img { filter: brightness(0); }
     .nav-link { position: relative; padding-bottom: 2px; font-weight: 700; transition: color 0.3s; }
     .nav-link:hover,
     #navbar .nav-link:hover,
@@ -768,8 +766,9 @@
 =================================== -->
 <nav id="navbar" class="fixed top-0 left-0 w-full z-50 bg-transparent">
   <div class="wide-wrap mx-auto px-5 sm:px-8 flex items-center justify-between h-16">
-    <a href="#top" class="nav-logo">
-      <img src="images/logo.png" alt="N .DESIGN" style="height:36px; width:auto; object-fit:contain;" />
+    <a href="#top" class="nav-logo" style="display:inline-flex; align-items:center; gap:10px;">
+      <img src="images/logo-mark.webp" alt="" style="height:36px; width:auto; object-fit:contain;" />
+      <img src="images/logo-text.webp" alt="N .DESIGN" style="height:22px; width:auto; object-fit:contain;" />
     </a>
 
     <!-- Desktop -->
