@@ -520,20 +520,20 @@
     /* ===== コンセプト 白い帯(左下→右上リビール) ===== */
     .concept-line {
       position: absolute;
-      left: -15%;
-      top: 42%;
-      width: 130%;
-      height: clamp(180px, 22vw, 360px);
-      transform: rotate(-17deg);
+      left: -20%;
+      top: 40%;
+      width: 140%;
+      height: clamp(150px, 18vw, 300px);
+      transform: rotate(-14deg);
       pointer-events: none;
       z-index: 2;
       clip-path: inset(0 100% 0 0);
     }
     .concept-line-shape {
       width: 100%; height: 100%;
-      background: linear-gradient(90deg, rgba(255,255,255,0.95), rgba(255,255,255,0.55));
-      /* 左端は全高、右端は1/3の太さにすぼむくさび形 */
-      clip-path: polygon(0 0, 100% 33%, 100% 67%, 0 100%);
+      background: linear-gradient(90deg, rgba(255,255,255,0.6), rgba(255,255,255,0.95));
+      /* 左端を細くすぼめ、右端(画面外)を太くするくさび形 ＝ 左下の見切れ防止 */
+      clip-path: polygon(0 38%, 100% 0, 100% 100%, 0 62%);
     }
     #concept.concept-line-visible .concept-line {
       animation: conceptLineGrow 0.7s cubic-bezier(.22,.61,.36,1) forwards;
@@ -691,7 +691,7 @@
     .line-btn { box-shadow: 0 3px 8px rgba(6,199,85,0.25); }
     /* CTAボタンの矢印（グローバルメニュー内のボタンは除外） */
     .btn-primary::after,
-    .line-btn::after { content: "\203A"; font-weight: 700; font-size: 1em; line-height: 1; margin-left: 0.3em; }
+    .line-btn::after { content: ""; display: inline-block; width: 0.42em; height: 0.42em; border-top: 0.14em solid currentColor; border-right: 0.14em solid currentColor; transform: rotate(45deg); margin-left: 0.5em; position: relative; top: -0.02em; box-sizing: border-box; }
     #navbar .btn-primary::after { content: none; margin-left: 0; }
     .line-btn:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(6,199,85,0.3); background: #c8f0d8; }
 
