@@ -42,7 +42,6 @@
     /* ===== NAV ===== */
     #navbar { transition: background 0.3s, box-shadow 0.3s; }
     #navbar.scrolled { background: #fff !important; box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
-    #navbar.scrolled .nav-logo img { filter: brightness(0); }
     #navbar.scrolled .nav-link { color: #001638 !important; }
     #navbar.scrolled .ham-bar { background: #001638 !important; }
     .nav-link { position: relative; padding-bottom: 2px; }
@@ -167,20 +166,22 @@
 =================================== -->
 <nav id="navbar" class="fixed top-0 left-0 w-full z-50 bg-white shadow-sm">
   <div class="max-w-6xl mx-auto px-5 sm:px-8 flex items-center justify-between h-16">
-    <a href="index.html" class="nav-logo">
-      <img src="images/logo.png" alt="N .DESIGN" style="height:36px; width:auto; object-fit:contain; filter:brightness(0);" />
+    <a href="index.html" class="nav-logo" style="display:inline-flex; align-items:center; gap:10px;">
+      <img src="images/logo-mark.webp" alt="" style="height:36px; width:auto; object-fit:contain;" />
+      <img src="images/logo-text.webp" alt="N .DESIGN" style="height:22px; width:auto; object-fit:contain;" />
     </a>
 
     <!-- Desktop -->
     <ul class="hidden md:flex items-center gap-7 text-sm font-medium">
-      <li><a href="index.html#top"       class="nav-link text-[#001638] hover:text-tiffany transition">トップ</a></li>
-      <li><a href="index.html#concept"   class="nav-link text-[#001638] hover:text-tiffany transition">コンセプト</a></li>
-      <li><a href="index.html#about"     class="nav-link text-[#001638] hover:text-tiffany transition">自己紹介</a></li>
-      <li><a href="index.html#strength"  class="nav-link text-[#001638] hover:text-tiffany transition">強み</a></li>
-      <li><a href="index.html#service"   class="nav-link text-[#001638] hover:text-tiffany transition">サービス</a></li>
-      <li><a href="price.html"           class="nav-link text-[#001638] hover:text-tiffany transition">料金</a></li>
-      <li><a href="index.html#portfolio" class="nav-link text-[#001638] hover:text-tiffany transition">制作事例</a></li>
-      <li><a href="index.html#contact"   class="btn-primary text-sm py-2 px-5" style="display:inline-flex; align-items:center; gap:6px;"><img src="images/mail.png" alt="" style="height:16px; width:auto;" />無料で相談する</a></li>
+      <li><a href="index.html#top"       class="nav-link text-[#001638] hover:text-tiffany transition">TOP</a></li>
+      <li><a href="index.html#concept"   class="nav-link text-[#001638] hover:text-tiffany transition">CONCEPT</a></li>
+      <li><a href="index.html#about"     class="nav-link text-[#001638] hover:text-tiffany transition">ABOUT</a></li>
+      <li><a href="index.html#strength"  class="nav-link text-[#001638] hover:text-tiffany transition">POLICY</a></li>
+      <li><a href="index.html#service"   class="nav-link text-[#001638] hover:text-tiffany transition">SERVICE</a></li>
+      <li><a href="price.html"           class="nav-link text-[#001638] hover:text-tiffany transition">PRICE</a></li>
+      <li><a href="index.html#portfolio" class="nav-link text-[#001638] hover:text-tiffany transition">WORKS</a></li>
+      <li><a href="faq.html"             class="nav-link text-[#001638] hover:text-tiffany transition">Q&amp;A</a></li>
+      <li><a href="index.html#contact"   class="btn-primary text-sm py-2 px-5" style="display:inline-flex; align-items:center; gap:6px;"><img src="images/メール.png" alt="" style="height:16px; width:auto;" />無料で相談する</a></li>
     </ul>
 
     <!-- Hamburger -->
@@ -194,14 +195,15 @@
   <!-- Mobile menu -->
   <div id="mobile-menu" class="md:hidden bg-white border-t border-tiffany-border shadow-lg">
     <ul class="flex flex-col text-sm font-medium text-[#001638] px-5 py-4 gap-3">
-      <li><a href="index.html#top"       onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">トップ</a></li>
-      <li><a href="index.html#concept"   onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">コンセプト</a></li>
-      <li><a href="index.html#about"     onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">自己紹介</a></li>
-      <li><a href="index.html#strength"  onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">強み</a></li>
-      <li><a href="index.html#service"   onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">サービス</a></li>
-      <li><a href="price.html"           onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">料金</a></li>
-      <li><a href="index.html#portfolio" onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">制作事例</a></li>
-      <li><a href="index.html#contact"   onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">お問い合わせ</a></li>
+      <li><a href="index.html#top"       onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">TOP</a></li>
+      <li><a href="index.html#concept"   onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">CONCEPT</a></li>
+      <li><a href="index.html#about"     onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">ABOUT</a></li>
+      <li><a href="index.html#strength"  onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">POLICY</a></li>
+      <li><a href="index.html#service"   onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">SERVICE</a></li>
+      <li><a href="price.html"           onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">PRICE</a></li>
+      <li><a href="index.html#portfolio" onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">WORKS</a></li>
+      <li><a href="faq.html"             onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">Q&amp;A</a></li>
+      <li><a href="index.html#contact"   onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">CONTACT</a></li>
     </ul>
   </div>
 </nav>
@@ -413,7 +415,7 @@
   <div class="text-center py-6" data-aos="fade-up">
     <p class="text-[#555] text-sm mb-6">解決しない場合は、お気軽にお問い合わせください。</p>
     <a href="index.html#contact" class="btn-primary" style="display:inline-flex; align-items:center; gap:8px;">
-      <img src="images/mail.png" alt="" style="height:18px; width:auto;" />
+      <img src="images/メール.png" alt="" style="height:18px; width:auto;" />
       無料で相談する
     </a>
   </div>
