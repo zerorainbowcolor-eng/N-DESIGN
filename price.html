@@ -110,6 +110,10 @@
       box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
     }
     .btn-primary:hover { background: #b8014a; transform: scale(1.03); box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3); }
+    /* CTAボタンの矢印（グローバルメニュー内のボタンは除外） */
+    .btn-primary::after,
+    .price-cta::after { content: "\203A"; font-weight: 700; font-size: 1.2em; line-height: 1; margin-left: 0.3em; }
+    #navbar .btn-primary::after { content: none; margin-left: 0; }
 
     /* ===== 料金（PRICE） ===== */
     .price-intro { text-align: center; color: #555; font-size: 0.95rem; margin-bottom: 3.5rem; }
@@ -218,7 +222,7 @@
      HERO
 =================================== -->
 <div class="pt-16">
-  <div class="py-16 sm:py-20 max-w-3xl mx-auto px-5 sm:px-8" data-aos="fade-up">
+  <div class="py-16 sm:py-20 max-w-6xl mx-auto px-5 sm:px-8" data-aos="fade-up">
     <div class="sec-head-wrap">
       <h1 class="sec-ja sec-head">料金<span class="sec-head-en" aria-hidden="true">PRICE</span></h1>
     </div>

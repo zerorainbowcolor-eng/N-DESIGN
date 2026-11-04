@@ -521,10 +521,10 @@
     .concept-line {
       position: absolute;
       left: -15%;
-      top: 45%;
+      top: 42%;
       width: 130%;
       height: clamp(180px, 22vw, 360px);
-      transform: rotate(-22deg);
+      transform: rotate(-17deg);
       pointer-events: none;
       z-index: 2;
       clip-path: inset(0 100% 0 0);
@@ -689,6 +689,10 @@
     }
     .btn-primary:hover { background: #b8014a; transform: scale(1.03); box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3); }
     .line-btn { box-shadow: 0 3px 8px rgba(6,199,85,0.25); }
+    /* CTAボタンの矢印（グローバルメニュー内のボタンは除外） */
+    .btn-primary::after,
+    .line-btn::after { content: "\203A"; font-weight: 700; font-size: 1.2em; line-height: 1; margin-left: 0.3em; }
+    #navbar .btn-primary::after { content: none; margin-left: 0; }
     .line-btn:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(6,199,85,0.3); background: #c8f0d8; }
 
     /* ===== CARDS ===== */
@@ -1193,7 +1197,7 @@
     </p>
 
     <div class="text-center mt-10" data-aos="fade-up">
-      <a href="price.html" class="btn-primary" style="display:inline-flex; align-items:center; gap:8px;">料金を見る</a>
+      <a href="price.html" class="btn-primary text-base shadow-lg" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; width:290px;">料金を見る</a>
     </div>
   </div>
 </section>
