@@ -45,7 +45,12 @@
     #navbar.scrolled { background: #fff !important; box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
     #navbar.scrolled .nav-link { color: #001638 !important; }
     #navbar.scrolled .ham-bar { background: #001638 !important; }
-    .nav-link { position: relative; padding-bottom: 2px; }
+    .wide-wrap { max-width: min(1600px, 94vw); }
+    #navbar .nav-link { color: #001638; }
+    .nav-link { position: relative; padding-bottom: 2px; font-weight: 700; transition: color 0.3s; }
+    .nav-link:hover,
+    #navbar .nav-link:hover,
+    #navbar.scrolled .nav-link:hover { color: #81D8D0 !important; }
     .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background: #81D8D0; transition: width 0.3s; }
     #mobile-menu { display: none; }
     #mobile-menu.open { display: block; }
@@ -169,7 +174,7 @@
      NAVIGATION
 =================================== -->
 <nav id="navbar" class="fixed top-0 left-0 w-full z-50 bg-white shadow-sm">
-  <div class="max-w-6xl mx-auto px-5 sm:px-8 flex items-center justify-between h-16">
+  <div class="wide-wrap mx-auto px-5 sm:px-8 flex items-center justify-between h-16">
     <a href="index.html" class="nav-logo" style="display:inline-flex; align-items:center; gap:10px;">
       <img src="images/logo-mark.webp" alt="" style="height:36px; width:auto; object-fit:contain;" />
       <img src="images/logo-text.webp" alt="N .DESIGN" style="height:22px; width:auto; object-fit:contain;" />
