@@ -484,28 +484,37 @@
       font-size: 1.05rem;
     }
 
-    /* ===== コンセプト 背景写真＋紺オーバーレイ ===== */
-    .concept-photo-bg {
-      position: absolute; inset: 0; z-index: 0;
-      background: url('images/concept-bg-photo.jpg') center/cover no-repeat;
-    }
-    .concept-overlay {
-      position: absolute; inset: 0; z-index: 0;
-      background: rgba(0, 22, 56, 0.7);
-    }
-
-    /* ===== コンセプト 背景エクスパンド演出 ===== */
-    .concept-bg {
-      position: absolute; inset: -30% 0; z-index: 1;
-      background: #dfecf7;
-      clip-path: circle(0% at 50% 50%);
+    /* ===== コンセプト 背景動画（空） ===== */
+    .concept-video-wrap {
+      position: absolute; left: 0; right: 0; z-index: 0;
+      top: calc(-30% - 20px); bottom: calc(-30vh - 20px); /* パララックスで端が見えないよう上下に余白 */
       will-change: transform;
     }
-    #concept.concept-visible .concept-bg {
-      animation: conceptBgExpand 1.5s ease-out forwards;
+    .concept-video {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
     }
-    @keyframes conceptBgExpand {
-      to { clip-path: circle(150% at 50% 50%); }
+    .concept-overlay { display: none; }
+
+    /* ===== コンセプト 背景エクスパンド演出 ===== */
+    /* 最初は黒で覆い、中央の円い穴が広がって黒が消える */
+    .concept-bg {
+      position: absolute; inset: -30% 0; z-index: 1;
+      overflow: hidden;
+      will-change: transform;
+    }
+    .concept-hole {
+      position: absolute; left: 50%; top: 50%;
+      width: 0; height: 0;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 0 300vmax rgba(0, 0, 0, 0.85); /* 穴の外側が黒 */
+    }
+    #concept.concept-visible .concept-hole {
+      animation: conceptHoleOpen 1.6s ease-in forwards;
+    }
+    @keyframes conceptHoleOpen {
+      to { width: 320vmax; height: 320vmax; }
     }
     .concept-inner {
       opacity: 0; transform: translateY(16px);
@@ -513,7 +522,7 @@
     }
     #concept.concept-visible .concept-inner { opacity: 1; transform: none; }
     @media (prefers-reduced-motion: reduce) {
-      .concept-bg { clip-path: none; animation: none; }
+      .concept-hole { display: none; }
       .concept-inner { opacity: 1; transform: none; transition: none; }
     }
 
@@ -587,12 +596,14 @@
       font-family: 'Noto Sans JP', 'Inter', sans-serif;
       font-weight: 400;
       text-align: center;
-      color: #001638;
+      color: #fff;
       font-size: clamp(1rem, 1.6vw, 1.25rem);
       letter-spacing: 0.06em;
       line-height: 3;
     }
     .concept-copy p + p { margin-top: 3em; }
+    /* 雲と重なっても白文字が読めるよう、目立たない暗い影 */
+    #concept .concept-inner { text-shadow: 0 1px 2px rgba(0,30,90,0.6), 0 0 6px rgba(0,30,90,0.45), 0 2px 16px rgba(0,30,90,0.35); }
     @media (max-width: 639px) {
       .concept-copy { line-height: 2.3; }
       .concept-copy p + p { margin-top: 2em; }
@@ -909,11 +920,14 @@
 <!-- ===================================
      コンセプト（奇数：白）
 =================================== -->
-<section id="concept" class="py-20 sm:py-28 relative overflow-hidden" style="background:#001638;">
-  <div class="concept-photo-bg" aria-hidden="true"></div>
+<section id="concept" class="py-20 sm:py-28 relative overflow-hidden" style="background:#0b1a2c;">
+  <div class="concept-video-wrap" aria-hidden="true">
+    <video class="concept-video" autoplay muted loop playsinline preload="metadata" poster="images/concept-sky-poster.jpg">
+      <source src="images/concept-sky.mp4" type="video/mp4" />
+    </video>
+  </div>
   <div class="concept-overlay" aria-hidden="true"></div>
-  <div class="concept-bg" aria-hidden="true"></div>
-  <div class="concept-line" aria-hidden="true"><div class="concept-line-shape"></div></div>
+  <div class="concept-bg" aria-hidden="true"><div class="concept-hole"></div></div>
   <div class="concept-photos">
     <img class="cp cp-l1" src="images/concept-ph1.jpg" alt="打ち合わせの様子" />
     <img class="cp cp-l2" src="images/concept-ph2.jpg" alt="制作の様子" />
@@ -921,7 +935,7 @@
   </div>
   <div class="relative z-10 max-w-3xl mx-auto px-5 sm:px-8 text-center concept-inner">
     <div>
-      <p class="text-[#001638] font-bold mb-10"
+      <p class="text-white font-bold mb-10"
          style="font-size:clamp(2.4rem,5vw,3.2rem); line-height:1.5">
         デザインの力で、<br>あなたのビジネスに飛躍を。
       </p>
@@ -1708,13 +1722,17 @@
     var sec = document.getElementById('concept');
     if (!sec) return;
     var bg = sec.querySelector('.concept-bg');
+    var vid = sec.querySelector('.concept-video-wrap');
     if (!bg) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
     var ticking = false;
     function update() {
       var r = sec.getBoundingClientRect();
       if (r.bottom > 0 && r.top < window.innerHeight) {
         bg.style.transform = 'translate3d(0,' + (r.top * -0.22) + 'px,0)';
+        if (vid) vid.style.transform = 'translate3d(0,' + (r.top * -0.28) + 'px,0)'; // 空：スクロールの約28%遅れて動く
       }
       ticking = false;
     }
