@@ -602,6 +602,17 @@
       line-height: 3;
     }
     .concept-copy p + p { margin-top: 3em; }
+    /* 本文を1文ずつ左から拭き取るように表示（JSで .cl に分割） */
+    .concept-copy .cl {
+      display: block;
+      width: fit-content; margin-left: auto; margin-right: auto; /* 文字幅に合わせて拭き取る */
+      clip-path: inset(-20px calc(100% + 20px) -20px -20px); /* 影が切れないよう外側に余白 */
+      transition: clip-path 0.12s linear; /* スクロール連動のカクつきをならす */
+    }
+    @media (max-width: 767px) { #concept .concept-copy .cl { margin-left: 0; } }
+    @media (prefers-reduced-motion: reduce) {
+      .concept-copy .cl { clip-path: none; transition: none; }
+    }
     /* 雲と重なっても白文字が読めるよう、目立たない暗い影 */
     #concept .concept-inner { text-shadow: 0 1px 2px rgba(0,30,90,0.6), 0 0 6px rgba(0,30,90,0.45), 0 2px 16px rgba(0,30,90,0.35); }
     @media (max-width: 639px) {
@@ -1715,6 +1726,42 @@
     }
     window.addEventListener('scroll', onScroll, { passive: true });
     check();
+  })();
+
+  // ===== コンセプト 本文をスクロール量に合わせて1文ずつ左から表示 =====
+  (function() {
+    var copy = document.querySelector('#concept .concept-copy');
+    if (!copy) return;
+    copy.querySelectorAll('p').forEach(function(p) {
+      p.innerHTML = p.innerHTML.split(/<br[^>]*>/i)
+        .map(function(t) { return t.trim(); })
+        .filter(Boolean)
+        .map(function(t) { return '<span class="cl">' + t + '</span>'; })
+        .join('');
+    });
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var lines = Array.prototype.slice.call(copy.querySelectorAll('.cl'));
+    var prog = lines.map(function() { return 0; });
+    var START = 0.88, END = 0.5; // 行が画面の下88%→中央50%に来るまでで出しきる
+    var ticking = false;
+    function update() {
+      var vh = window.innerHeight;
+      lines.forEach(function(el, i) {
+        if (prog[i] >= 1) return;
+        var top = el.getBoundingClientRect().top;
+        var p = (START * vh - top) / ((START - END) * vh);
+        p = Math.max(prog[i], Math.min(1, p)); // 一度出た分は戻さない
+        if (p === prog[i]) return;
+        prog[i] = p;
+        el.style.clipPath = 'inset(-20px calc(' + ((1 - p) * 100).toFixed(2) + '% + ' + (20 - 40 * p).toFixed(1) + 'px) -20px -20px)';
+      });
+      ticking = false;
+    }
+    window.addEventListener('scroll', function() {
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
+    window.addEventListener('resize', update);
+    update();
   })();
 
   // ===== コンセプト 背景パララックス =====
