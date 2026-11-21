@@ -1740,28 +1740,19 @@
         .join('');
     });
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    var lines = Array.prototype.slice.call(copy.querySelectorAll('.cl'));
-    var prog = lines.map(function() { return 0; });
-    var START = 0.88, END = 0.5; // 行が画面の下88%→中央50%に来るまでで出しきる
-    var ticking = false;
-    function update() {
-      var vh = window.innerHeight;
-      lines.forEach(function(el, i) {
-        if (prog[i] >= 1) return;
-        var top = el.getBoundingClientRect().top;
-        var p = (START * vh - top) / ((START - END) * vh);
-        p = Math.max(prog[i], Math.min(1, p)); // 一度出た分は戻さない
-        if (p === prog[i]) return;
-        prog[i] = p;
-        el.style.clipPath = 'inset(-20px calc(' + ((1 - p) * 100).toFixed(2) + '% + ' + (20 - 40 * p).toFixed(1) + 'px) -20px -20px)';
+    // 段落が画面に入ったら、上の行から順に自動で左から表示（一度出たら戻さない）
+    var DUR = 0.9, GAP = 0.35; // 1行の表示時間・行ごとの時間差（秒）
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(en) {
+        if (!en.isIntersecting) return;
+        io.unobserve(en.target);
+        en.target.querySelectorAll('.cl').forEach(function(el, i) {
+          el.style.transition = 'clip-path ' + DUR + 's cubic-bezier(.4,0,.2,1) ' + (i * GAP) + 's';
+          el.style.clipPath = 'inset(-20px -20px -20px -20px)';
+        });
       });
-      ticking = false;
-    }
-    window.addEventListener('scroll', function() {
-      if (!ticking) { requestAnimationFrame(update); ticking = true; }
-    }, { passive: true });
-    window.addEventListener('resize', update);
-    update();
+    }, { rootMargin: '0px 0px -20% 0px' });
+    copy.querySelectorAll('p').forEach(function(p) { io.observe(p); });
   })();
 
   // ===== コンセプト 背景パララックス =====
