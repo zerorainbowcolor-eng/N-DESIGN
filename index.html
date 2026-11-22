@@ -497,6 +497,30 @@
     }
     .concept-overlay { display: none; }
 
+    /* ===== ヒーロー固定→ぼかし／コンセプトが下から重なる演出 ===== */
+    .hero-stack { position: relative; }
+    .hero-stack > #top { position: sticky; z-index: 0; will-change: filter; }
+    .hero-stack > #concept {
+      z-index: 1;
+      /* 境目をなじませる：上端をグラデーションで透かす */
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 140px);
+              mask-image: linear-gradient(to bottom, transparent 0, #000 140px);
+    }
+    #concept .concept-video-wrap { will-change: transform, filter; }
+    .concept-hole { display: none; } /* 黒オーバーレイは廃止 */
+    .hero-stack .concept-photos { opacity: 1; transition: none; } /* 写真もスクロール連動のぼかしで見せる */
+    /* 文字：下からふわっと浮き上がる（JSで .cl に分割・順番に表示） */
+    .concept-copy .cl, .concept-head .cl {
+      clip-path: none !important;
+      opacity: 0.05; transform: translateY(30px); filter: blur(16px);
+      will-change: opacity, transform, filter;
+    }
+    .concept-copy .cl.on, .concept-head .cl.on { opacity: 1; transform: none; filter: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-stack > #top { position: relative; }
+      .concept-copy .cl, .concept-head .cl { opacity: 1; transform: none; filter: none; }
+    }
+
     /* ===== コンセプト 背景エクスパンド演出 ===== */
     /* 最初は黒で覆い、中央の円い穴が広がって黒が消える */
     .concept-bg {
@@ -517,10 +541,7 @@
     @keyframes conceptHoleOpen {
       to { width: 320vmax; height: 320vmax; }
     }
-    .concept-inner {
-      opacity: 0; transform: translateY(16px);
-      transition: opacity 0.3s ease, transform 0.3s ease;
-    }
+    .concept-inner { opacity: 1; }
     #concept.concept-visible .concept-inner { opacity: 1; transform: none; }
     @media (prefers-reduced-motion: reduce) {
       .concept-hole { display: none; }
@@ -568,15 +589,15 @@
     @media (min-width: 1440px) {
       .concept-photos .cp { position: absolute; z-index: 5; }
       .cp-l1 { left: 3%;  top: 20%; width: clamp(189px, 14vw, 273px); filter: blur(2px); opacity: 0.9; }
-      .cp-l2 { left: -2%; top: 58%; width: clamp(356px, 26.4vw, 515px); }
-      .cp-r1 { right: 3.5%; top: 50%; transform: translateY(-50%); width: clamp(300px, 22vw, 420px); }
+      .cp-l2 { left: -2%; top: 68%; width: clamp(356px, 26.4vw, 515px); }
+      .cp-r1 { right: 3.5%; top: 62%; transform: translateY(-50%); width: clamp(300px, 22vw, 420px); }
     }
     /* タブレット〜中くらいのPC: 写真を小さくして左右に配置し、本文の幅を狭めて重ならないようにする */
     @media (min-width: 768px) and (max-width: 1439px) {
       .concept-photos .cp { position: absolute; z-index: 5; }
       .cp-l1 { left: 3vw;   top: 20%; width: 11vw; filter: blur(2px); opacity: 0.9; }
-      .cp-l2 { left: 1.5vw; top: 56%; width: 15vw; }
-      .cp-r1 { right: 2vw;  top: 50%; transform: translateY(-50%); width: 14vw; }
+      .cp-l2 { left: 1.5vw; top: 66%; width: 15vw; }
+      .cp-r1 { right: 2vw;  top: 62%; transform: translateY(-50%); width: 14vw; }
       #concept .concept-inner { max-width: 66vw; padding-left: 0; padding-right: 0; }
       #concept .concept-copy { font-size: clamp(0.85rem, 1.85vw, 1.25rem); } /* 狭い本文幅でも1行に収める */
     }
@@ -911,6 +932,7 @@
 <!-- ===================================
      HERO
 =================================== -->
+<div class="hero-stack">
 <section id="top" class="relative min-h-screen flex" style="background:#ffffff;">
   <canvas id="fv-canvas" class="absolute inset-0 w-full h-full" aria-hidden="true" style="z-index:0; pointer-events:none;"></canvas>
 
@@ -1030,6 +1052,7 @@
     </div>
   </div>
 </section>
+</div><!-- /.hero-stack -->
 
 <!-- ===================================
      自己紹介（偶数：tiffany-light）
@@ -1684,7 +1707,6 @@
       var y = Math.max(0, window.scrollY);
       if (y < window.innerHeight * 1.3) {
         if (canvas) canvas.style.transform = 'translate3d(0,' + (y * 0.4) + 'px,0)'; // 奥(背景): ゆっくり
-        person.style.transform = 'translate3d(0,' + (y * 0.15) + 'px,0)'; // 手前(人物): 速い
       }
       ticking = false;
     }
@@ -1814,34 +1836,64 @@
     if (head) head.innerHTML = head.innerHTML.split(/<br[^>]*>/i)
       .map(function(t) { return '<span class="cl">' + t.trim() + '</span>'; }).join('');
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    // オーバーレイが消えた直後から「見出し→上の段落→下の段落」の順に、
-    // 前のブロックが出終わってから次を1行ずつ左から表示（各ブロックは画面に入るまで待つ）
-    var DUR = 0.9, GAP = 0.35, HOLE = 1100; // 1行の表示時間・行の時間差（秒）・オーバーレイ消滅待ち（ms）
+    // スクロール連動：各行が画面の下から上がってくるにつれ、上の行から順にぼかしが晴れて浮き上がる
+    // （上に戻すと逆再生でまたぼやける）
+    var lines = Array.prototype.slice.call(document.querySelectorAll('#concept .cl'));
+    var START = 1.0, END = 0.6; // 行が画面の下端→下から40%の位置に来るまでで、ゆっくりはっきりさせる
+    var ticking = false;
     var sec = document.getElementById('concept');
-    var groups = [head].concat(Array.prototype.slice.call(copy.querySelectorAll('p'))).filter(Boolean);
-    var seen = groups.map(function() { return false; });
-    var io = new IntersectionObserver(function(entries) {
-      entries.forEach(function(en) {
-        if (en.isIntersecting) { seen[groups.indexOf(en.target)] = true; io.unobserve(en.target); }
+    function update() {
+      var vh = window.innerHeight;
+      // セクションが画面の40%以上覆うまでは文字をぼかしたまま、覆いきる頃にはっきりする
+      var ps = 1 - sec.getBoundingClientRect().top / vh;
+      ps = Math.max(0, Math.min(1, (ps - 0.4) / 0.6));
+      lines.forEach(function(el) {
+        if (el.dataset.done) return; // 一度はっきり出た行はそのまま残す
+        var top = el.getBoundingClientRect().top;
+        var p = (START * vh - top) / ((START - END) * vh);
+        p = Math.max(0, Math.min(1, Math.min(p, ps)));
+        el.style.opacity = (0.05 + 0.95 * p * p).toFixed(3); // 前半はゆっくり濃くなる
+        el.style.transform = p < 1 ? 'translateY(' + ((1 - p) * 30).toFixed(1) + 'px)' : 'none';
+        el.style.filter = p < 1 ? 'blur(' + ((1 - p) * 16).toFixed(1) + 'px)' : 'none'; // 空にするとCSSの初期ぼかしに戻るため none を明示
+        if (p >= 1) el.dataset.done = '1';
       });
-    }, { rootMargin: '0px 0px -5% 0px' });
-    groups.forEach(function(g) { io.observe(g); });
-    var idx = 0, nextFree = 0;
-    (function tick() {
-      if (idx >= groups.length) return;
-      var now = Date.now();
-      if (!nextFree && sec.classList.contains('concept-visible')) nextFree = now + HOLE;
-      if (nextFree && now >= nextFree && seen[idx]) {
-        var lines = groups[idx].querySelectorAll('.cl');
-        lines.forEach(function(el, i) {
-          el.style.transition = 'clip-path ' + DUR + 's cubic-bezier(.4,0,.2,1) ' + (i * GAP) + 's';
-          el.style.clipPath = 'inset(-20px -20px -20px -20px)';
-        });
-        nextFree = now + ((lines.length - 1) * GAP + DUR) * 1000;
-        idx++;
-      }
-      setTimeout(tick, 50);
-    })();
+      ticking = false;
+    }
+    window.addEventListener('scroll', function() {
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // ===== ヒーロー固定→ぼかし／コンセプトのぼかしが晴れる（スクロール連動） =====
+  (function() {
+    var hero = document.getElementById('top');
+    var sec = document.getElementById('concept');
+    if (!hero || !sec || !hero.parentElement.classList.contains('hero-stack')) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var vid = sec.querySelector('.concept-video-wrap');
+    var photos = sec.querySelector('.concept-photos');
+    var ticking = false;
+    function fitSticky() { // ヒーローが画面より高い場合は、下端まで見えてから固定する
+      hero.style.top = Math.min(0, window.innerHeight - hero.offsetHeight) + 'px';
+    }
+    function update() {
+      var vh = window.innerHeight;
+      var p = 1 - sec.getBoundingClientRect().top / vh; // コンセプト上端：画面下(0)→画面上(1)
+      p = Math.max(0, Math.min(1, p));
+      hero.style.filter = p > 0 ? 'blur(' + (p * 14).toFixed(1) + 'px) brightness(' + (1 - p * 0.35).toFixed(3) + ')' : '';
+      hero.style.visibility = p >= 1 ? 'hidden' : '';
+      if (vid) vid.style.filter = p < 1 ? 'blur(' + ((1 - p) * 18).toFixed(1) + 'px) saturate(' + (0.5 + 0.5 * p).toFixed(3) + ')' : '';
+      if (photos) photos.style.filter = p < 1 ? 'blur(' + ((1 - p) * 12).toFixed(1) + 'px)' : '';
+      sec.style.opacity = (0.35 + 0.65 * p).toFixed(3); // 最初は薄く、後ろのヒーローが透ける
+      ticking = false;
+    }
+    window.addEventListener('scroll', function() {
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
+    window.addEventListener('resize', function() { fitSticky(); update(); });
+    fitSticky(); update();
   })();
 
   // ===== コンセプト 背景パララックス =====
