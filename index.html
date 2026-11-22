@@ -817,11 +817,11 @@
     <ul class="hidden md:flex items-center gap-7 text-sm font-medium">
       <li><a href="#top"       class="nav-link text-white hover:text-tiffany transition" data-section="top">TOP</a></li>
       <li><a href="#concept"   class="nav-link text-white hover:text-tiffany transition" data-section="concept">CONCEPT</a></li>
-      <li><a href="#about"     class="nav-link text-white hover:text-tiffany transition" data-section="about">ABOUT</a></li>
       <li><a href="#strength"  class="nav-link text-white hover:text-tiffany transition" data-section="strength">POLICY</a></li>
       <li><a href="#service"   class="nav-link text-white hover:text-tiffany transition" data-section="service">SERVICE</a></li>
       <li><a href="price.html" class="nav-link text-white hover:text-tiffany transition">PRICE</a></li>
       <li><a href="#portfolio" class="nav-link text-white hover:text-tiffany transition" data-section="portfolio">WORKS</a></li>
+      <li><a href="#about"     class="nav-link text-white hover:text-tiffany transition" data-section="about">PROFILE</a></li>
       <li><a href="faq.html" class="nav-link text-white hover:text-tiffany transition">Q&amp;A</a></li>
       <li><a href="#contact" class="btn-primary text-sm py-2 px-5" style="display:inline-flex; align-items:center; gap:6px;"><img src="images/メール.png" alt="" style="height:16px; width:auto;" />無料で相談する</a></li>
     </ul>
@@ -839,11 +839,11 @@
     <ul class="flex flex-col text-sm font-medium text-[#001638] px-5 py-4 gap-3">
       <li><a href="#top"       onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">TOP</a></li>
       <li><a href="#concept"   onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">CONCEPT</a></li>
-      <li><a href="#about"     onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">ABOUT</a></li>
       <li><a href="#strength"  onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">POLICY</a></li>
       <li><a href="#service"   onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">SERVICE</a></li>
       <li><a href="price.html" onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">PRICE</a></li>
       <li><a href="#portfolio" onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">WORKS</a></li>
+      <li><a href="#about"     onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">PROFILE</a></li>
       <li><a href="faq.html"   onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">Q&amp;A</a></li>
       <li><a href="#contact"   onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">CONTACT</a></li>
     </ul>
@@ -977,69 +977,7 @@
 <div class="lower-bg-wrap">
   <img src="images/about-line.webp" alt="" aria-hidden="true" class="about-line" />
 
-<section id="about" class="py-20 sm:py-28 relative">
-  <div class="relative z-10 wide-wrap mx-auto px-5 sm:px-8">
-    <div class="sec-head-wrap mb-14" data-aos="fade-up">
-      <h2 class="sec-ja sec-head">自己紹介<span class="sec-head-en" aria-hidden="true">ABOUT</span></h2>
-    </div>
 
-    <div class="flex flex-col lg:flex-row gap-12 items-start">
-      <!-- Text -->
-      <div class="flex-1" data-aos="fade-right">
-        <div class="card p-8" style="border:none; background:#fff;">
-          <!-- スマホ：写真が上・プロフィールが下 / PC：テキスト左・写真右 -->
-
-          <!-- 写真（スマホのみ上に表示） -->
-          <div class="sm:hidden about-photo" style="width:100%; border-radius:12px; overflow:hidden; height:260px; margin-bottom:1.5rem;">
-            <img src="images/Photo2.jpg"
-                 onerror="this.src='https://placehold.co/400x260/e6f9f8/81D8D0?text=Photo'"
-                 alt="永田亮" style="width:100%; height:100%; object-fit:cover; object-position:center top;" />
-          </div>
-
-          <div class="about-split" style="display:flex; gap:2rem; align-items:stretch;">
-            <!-- 左: 全テキスト -->
-            <div style="flex:1; min-width:0;">
-              <p class="text-xs font-semibold tracking-[0.2em] uppercase mb-1" style="color:#e5025a;">Ryo Nagata</p>
-              <h3 class="font-medium mb-4" style="font-size:41px;">永田 亮</h3>
-              <div class="profile-grid" style="margin-top:22px;">
-                <div class="profile-item"><span class="profile-label">生年月日</span><span class="profile-value">1991年7月30日</span></div>
-                <div class="profile-item"><span class="profile-label">出身</span><span class="profile-value">静岡県（現在：東京在住）</span></div>
-                <div class="profile-item"><span class="profile-label">血液型</span><span class="profile-value">B型</span></div>
-                <div class="profile-item"><span class="profile-label">MBTI</span><span class="profile-value">仲介者（INFP）</span></div>
-                <div class="profile-item"><span class="profile-label">動物占い</span><span class="profile-value">華やかな子鹿</span></div>
-                <div class="profile-item"><span class="profile-label">好きな食べ物</span><span class="profile-value">焼肉、茶碗蒸し</span></div>
-              </div>
-
-          <div class="border-t border-tiffany-border pt-6 mb-6" style="margin-top:24px;">
-            <p class="font-bold text-[#001638] mb-3" style="font-size:1.05rem;">経歴</p>
-            <p class="text-sm text-[#555] leading-loose">静岡と東京で計10年間、小学校教員として勤務。教育研究会の体育部研修部長や労働組合の青年部長なども経験し、人と関わりながら「対話力」と「伝達力」を磨いてきました。また、子どもたち・地域・保護者の方々と関わる中で、学校をよりよくするための改善を日々考え続けてきました。その経験を活かし、新たな挑戦としてWebデザイナーとして活動しています。</p>
-          </div>
-
-          <div class="pt-2">
-            <p class="font-bold text-[#001638] mb-4" style="font-size:1.05rem;">趣味・好きなこと</p>
-            <ul class="text-sm text-[#555] space-y-2">
-              <li class="flex items-start gap-2"><span class="mt-0.5 shrink-0 hobby-dot" style="color:#e5025a;">●</span>読書（座右の一冊：夜と霧、漫画はワンピース）</li>
-              <li class="flex items-start gap-2"><span class="mt-0.5 shrink-0 hobby-dot" style="color:#e5025a;">●</span>フットサル（サッカーを小学生から大学生までやっていました）</li>
-              <li class="flex items-start gap-2"><span class="mt-0.5 shrink-0 hobby-dot" style="color:#e5025a;">●</span>コーヒー（酸味が少なくて、苦いコーヒーが好きです）</li>
-              <li class="flex items-start gap-2"><span class="mt-0.5 shrink-0 hobby-dot" style="color:#e5025a;">●</span>株式投資（個別銘柄選びが好きです）</li>
-            </ul>
-          </div>
-            </div>
-            <!-- 右: 写真(カード全高・PCのみ表示) -->
-            <div class="hidden sm:block about-photo" style="width:50%; flex-shrink:0; border-radius:12px; overflow:hidden;">
-              <img src="images/Photo2.jpg"
-                   onerror="this.src='https://placehold.co/600x900/e6f9f8/81D8D0?text=Photo'"
-                   alt="永田亮" style="width:100%; height:100%; object-fit:cover; object-position:center top;" />
-            </div>
-          </div>
-
-
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
 
 
 <!-- ===================================
@@ -1407,6 +1345,73 @@
         そんな時こそ、ぜひ声をかけてください。<br />
         気軽に話せる伴走相手として、一緒に考えていけたら嬉しいです。
       </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================
+     自己紹介
+=================================== -->
+<section id="about" class="py-20 sm:py-28 relative">
+  <div class="relative z-10 wide-wrap mx-auto px-5 sm:px-8">
+    <div class="sec-head-wrap mb-14" data-aos="fade-up">
+      <h2 class="sec-ja sec-head">自己紹介<span class="sec-head-en" aria-hidden="true">PROFILE</span></h2>
+    </div>
+
+    <div class="flex flex-col lg:flex-row gap-12 items-start">
+      <!-- Text -->
+      <div class="flex-1" data-aos="fade-right">
+        <div class="card p-8" style="border:none; background:#fff;">
+          <!-- スマホ：写真が上・プロフィールが下 / PC：テキスト左・写真右 -->
+
+          <!-- 写真（スマホのみ上に表示） -->
+          <div class="sm:hidden about-photo" style="width:100%; border-radius:12px; overflow:hidden; height:260px; margin-bottom:1.5rem;">
+            <img src="images/Photo2.jpg"
+                 onerror="this.src='https://placehold.co/400x260/e6f9f8/81D8D0?text=Photo'"
+                 alt="永田亮" style="width:100%; height:100%; object-fit:cover; object-position:center top;" />
+          </div>
+
+          <div class="about-split" style="display:flex; gap:2rem; align-items:stretch;">
+            <!-- 左: 全テキスト -->
+            <div style="flex:1; min-width:0;">
+              <p class="text-xs font-semibold tracking-[0.2em] uppercase mb-1" style="color:#e5025a;">Ryo Nagata</p>
+              <h3 class="font-medium mb-4" style="font-size:41px;">永田 亮</h3>
+              <div class="profile-grid" style="margin-top:22px;">
+                <div class="profile-item"><span class="profile-label">生年月日</span><span class="profile-value">1991年7月30日</span></div>
+                <div class="profile-item"><span class="profile-label">出身</span><span class="profile-value">静岡県（現在：東京在住）</span></div>
+                <div class="profile-item"><span class="profile-label">血液型</span><span class="profile-value">B型</span></div>
+                <div class="profile-item"><span class="profile-label">MBTI</span><span class="profile-value">仲介者（INFP）</span></div>
+                <div class="profile-item"><span class="profile-label">動物占い</span><span class="profile-value">華やかな子鹿</span></div>
+                <div class="profile-item"><span class="profile-label">好きな食べ物</span><span class="profile-value">焼肉、茶碗蒸し</span></div>
+              </div>
+
+          <div class="border-t border-tiffany-border pt-6 mb-6" style="margin-top:24px;">
+            <p class="font-bold text-[#001638] mb-3" style="font-size:1.05rem;">経歴</p>
+            <p class="text-sm text-[#555] leading-loose">静岡と東京で計10年間、小学校教員として勤務。教育研究会の体育部研修部長や労働組合の青年部長なども経験し、人と関わりながら「対話力」と「伝達力」を磨いてきました。また、子どもたち・地域・保護者の方々と関わる中で、学校をよりよくするための改善を日々考え続けてきました。その経験を活かし、お客様の声に耳を傾けて課題を見つけ、Webデザインで解決するお手伝いをしています。</p>
+          </div>
+
+          <div class="pt-2">
+            <p class="font-bold text-[#001638] mb-4" style="font-size:1.05rem;">趣味・好きなこと</p>
+            <ul class="text-sm text-[#555] space-y-2">
+              <li class="flex items-start gap-2"><span class="mt-0.5 shrink-0 hobby-dot" style="color:#e5025a;">●</span>読書（座右の一冊：夜と霧、漫画はワンピース）</li>
+              <li class="flex items-start gap-2"><span class="mt-0.5 shrink-0 hobby-dot" style="color:#e5025a;">●</span>フットサル（サッカーを小学生から大学生までやっていました）</li>
+              <li class="flex items-start gap-2"><span class="mt-0.5 shrink-0 hobby-dot" style="color:#e5025a;">●</span>コーヒー（酸味が少なくて、苦いコーヒーが好きです）</li>
+              <li class="flex items-start gap-2"><span class="mt-0.5 shrink-0 hobby-dot" style="color:#e5025a;">●</span>株式投資（個別銘柄選びが好きです）</li>
+            </ul>
+          </div>
+            </div>
+            <!-- 右: 写真(カード全高・PCのみ表示) -->
+            <div class="hidden sm:block about-photo" style="width:50%; flex-shrink:0; border-radius:12px; overflow:hidden;">
+              <img src="images/Photo2.jpg"
+                   onerror="this.src='https://placehold.co/600x900/e6f9f8/81D8D0?text=Photo'"
+                   alt="永田亮" style="width:100%; height:100%; object-fit:cover; object-position:center top;" />
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
