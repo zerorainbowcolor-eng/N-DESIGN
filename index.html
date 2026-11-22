@@ -1839,23 +1839,24 @@
     // スクロール連動：各行が画面の下から上がってくるにつれ、上の行から順にぼかしが晴れて浮き上がる
     // （上に戻すと逆再生でまたぼやける）
     var lines = Array.prototype.slice.call(document.querySelectorAll('#concept .cl'));
-    var START = 1.0, END = 0.6; // 行が画面の下端→下から40%の位置に来るまでで、ゆっくりはっきりさせる
+    // 1行ずつ順番に：スクロール量全体を行数で区切り、前の行が出きったら次の行がはっきりし始める
+    // 開始＝セクションが画面の40%を覆った時点／終了＝最後の行が画面の下から30%の位置に来た時点
     var ticking = false;
     var sec = document.getElementById('concept');
     function update() {
       var vh = window.innerHeight;
-      // セクションが画面の40%以上覆うまでは文字をぼかしたまま、覆いきる頃にはっきりする
-      var ps = 1 - sec.getBoundingClientRect().top / vh;
-      ps = Math.max(0, Math.min(1, (ps - 0.4) / 0.6));
-      lines.forEach(function(el) {
-        if (el.dataset.done) return; // 一度はっきり出た行はそのまま残す
-        var top = el.getBoundingClientRect().top;
-        var p = (START * vh - top) / ((START - END) * vh);
-        p = Math.max(0, Math.min(1, Math.min(p, ps)));
-        el.style.opacity = (0.05 + 0.95 * p * p).toFixed(3); // 前半はゆっくり濃くなる
+      var secTop = sec.getBoundingClientRect().top;
+      var last = lines[lines.length - 1];
+      var lastOff = last.getBoundingClientRect().top - secTop; // セクション上端から最後の行までの距離
+      var startTop = 0.6 * vh, endTop = 0.7 * vh - lastOff;
+      var T = (startTop - secTop) / Math.max(1, startTop - endTop);
+      T = Math.max(0, Math.min(1, T));
+      var n = lines.length;
+      lines.forEach(function(el, i) {
+        var p = Math.max(0, Math.min(1, T * n - i));
+        el.style.opacity = (0.05 + 0.95 * p).toFixed(3);
         el.style.transform = p < 1 ? 'translateY(' + ((1 - p) * 30).toFixed(1) + 'px)' : 'none';
         el.style.filter = p < 1 ? 'blur(' + ((1 - p) * 16).toFixed(1) + 'px)' : 'none'; // 空にするとCSSの初期ぼかしに戻るため none を明示
-        if (p >= 1) el.dataset.done = '1';
       });
       ticking = false;
     }
@@ -1873,7 +1874,8 @@
     if (!hero || !sec || !hero.parentElement.classList.contains('hero-stack')) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     var vid = sec.querySelector('.concept-video-wrap');
-    var photos = sec.querySelector('.concept-photos');
+    // 入れ物にfilterをかけると写真の配置基準が変わるため、写真1枚ずつにかける
+    var photos = Array.prototype.slice.call(sec.querySelectorAll('.concept-photos .cp'));
     var ticking = false;
     function fitSticky() { // ヒーローが画面より高い場合は、下端まで見えてから固定する
       hero.style.top = Math.min(0, window.innerHeight - hero.offsetHeight) + 'px';
@@ -1885,7 +1887,10 @@
       hero.style.filter = p > 0 ? 'blur(' + (p * 14).toFixed(1) + 'px) brightness(' + (1 - p * 0.35).toFixed(3) + ')' : '';
       hero.style.visibility = p >= 1 ? 'hidden' : '';
       if (vid) vid.style.filter = p < 1 ? 'blur(' + ((1 - p) * 18).toFixed(1) + 'px) saturate(' + (0.5 + 0.5 * p).toFixed(3) + ')' : '';
-      if (photos) photos.style.filter = p < 1 ? 'blur(' + ((1 - p) * 12).toFixed(1) + 'px)' : '';
+      photos.forEach(function(ph) {
+        var base = ph.classList.contains('cp-l1') && window.innerWidth >= 768 ? 2 : 0; // 左上の写真は元々少しぼかしている
+        ph.style.filter = p < 1 ? 'blur(' + (base + (1 - p) * 12).toFixed(1) + 'px)' : '';
+      });
       sec.style.opacity = (0.35 + 0.65 * p).toFixed(3); // 最初は薄く、後ろのヒーローが透ける
       ticking = false;
     }
