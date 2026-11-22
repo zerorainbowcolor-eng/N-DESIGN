@@ -511,14 +511,14 @@
       box-shadow: 0 0 0 300vmax rgba(0, 0, 0, 0.85); /* 穴の外側が黒 */
     }
     #concept.concept-visible .concept-hole {
-      animation: conceptHoleOpen 1.6s ease-in forwards;
+      animation: conceptHoleOpen 1.2s ease-in forwards;
     }
     @keyframes conceptHoleOpen {
       to { width: 320vmax; height: 320vmax; }
     }
     .concept-inner {
       opacity: 0; transform: translateY(16px);
-      transition: opacity 0.8s ease 1.4s, transform 0.8s ease 1.4s;
+      transition: opacity 0.3s ease, transform 0.3s ease;
     }
     #concept.concept-visible .concept-inner { opacity: 1; transform: none; }
     @media (prefers-reduced-motion: reduce) {
@@ -570,8 +570,17 @@
       .cp-l2 { left: -2%; top: 58%; width: clamp(356px, 26.4vw, 515px); }
       .cp-r1 { right: 3.5%; top: 50%; transform: translateY(-50%); width: clamp(300px, 22vw, 420px); }
     }
-    /* それ以下の幅: 本文の上に3枚を横並び */
-    @media (max-width: 1439px) {
+    /* タブレット〜中くらいのPC: 写真を小さくして左右に配置し、本文の幅を狭めて重ならないようにする */
+    @media (min-width: 768px) and (max-width: 1439px) {
+      .concept-photos .cp { position: absolute; z-index: 5; }
+      .cp-l1 { left: 3vw;   top: 20%; width: 11vw; filter: blur(2px); opacity: 0.9; }
+      .cp-l2 { left: 1.5vw; top: 56%; width: 15vw; }
+      .cp-r1 { right: 2vw;  top: 50%; transform: translateY(-50%); width: 14vw; }
+      #concept .concept-inner { max-width: 66vw; padding-left: 0; padding-right: 0; }
+      #concept .concept-copy { font-size: clamp(0.85rem, 1.85vw, 1.25rem); } /* 狭い本文幅でも1行に収める */
+    }
+    /* スマホ: 本文の下に3枚を横並び */
+    @media (max-width: 767px) {
       .concept-photos {
         position: relative; z-index: 5;
         display: flex; gap: 12px; justify-content: center;
@@ -603,7 +612,7 @@
     }
     .concept-copy p + p { margin-top: 3em; }
     /* 本文を1文ずつ左から拭き取るように表示（JSで .cl に分割） */
-    .concept-copy .cl {
+    .concept-copy .cl, .concept-head .cl {
       display: block;
       width: fit-content; margin-left: auto; margin-right: auto; /* 文字幅に合わせて拭き取る */
       clip-path: inset(-20px calc(100% + 20px) -20px -20px); /* 影が切れないよう外側に余白 */
@@ -611,7 +620,7 @@
     }
     @media (max-width: 767px) { #concept .concept-copy .cl { margin-left: 0; } }
     @media (prefers-reduced-motion: reduce) {
-      .concept-copy .cl { clip-path: none; transition: none; }
+      .concept-copy .cl, .concept-head .cl { clip-path: none; transition: none; }
     }
     /* 雲と重なっても白文字が読めるよう、目立たない暗い影 */
     #concept .concept-inner { text-shadow: 0 1px 2px rgba(0,30,90,0.6), 0 0 6px rgba(0,30,90,0.45), 0 2px 16px rgba(0,30,90,0.35); }
@@ -798,6 +807,12 @@
     .lphp-grid .p-card { width: calc(33.333% - 11px); }
     @media (max-width: 639px) { .lphp-grid .p-card { width: calc(50% - 8px); } }
 
+    /* タブレット幅(768〜1023px): メニューが収まらないため、スマホと同じハンバーガーメニューにする */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      #navbar ul.md\:flex { display: none !important; }
+      #hamburger { display: flex !important; }
+      #mobile-menu.open { display: block !important; }
+    }
   </style>
 </head>
 
@@ -946,7 +961,7 @@
   </div>
   <div class="relative z-10 max-w-3xl mx-auto px-5 sm:px-8 text-center concept-inner">
     <div>
-      <p class="text-white font-bold mb-10"
+      <p class="concept-head text-white font-bold mb-10"
          style="font-size:clamp(2.4rem,5vw,3.2rem); line-height:1.5">
         デザインの力で、<br>あなたのビジネスに飛躍を。
       </p>
@@ -1340,7 +1355,7 @@
     <div data-aos="fade-up" data-aos-delay="100">
       <p class="text-[#001638] text-base sm:text-lg text-center" style="line-height:2.8;">
         このサイトを訪れてくださり、ありがとうございます。<br />
-        事業に取り組むみなさまの魅力が、もっとお客様に届くように。そのお手伝いができればと、日々デザインに向き合っています。<br /><br />
+        事業に取り組むみなさまの魅力が、もっとお客様に届くように。<br class="hidden sm:inline" />そのお手伝いができればと、日々デザインに向き合っています。<br /><br />
         「どう伝えればいいかわからない」「誰に相談すればいいかわからない」<br />
         そんな時こそ、ぜひ声をかけてください。<br />
         気軽に話せる伴走相手として、一緒に考えていけたら嬉しいです。
@@ -1717,7 +1732,7 @@
       if (fired) return;
       var r = sec.getBoundingClientRect();
       var centerY = r.top + r.height / 2;
-      if (centerY < window.innerHeight * 0.75 && r.bottom > 0) {
+      if (r.top < window.innerHeight * 0.85 && r.bottom > 0) { // セクション上端が画面下15%に入ったら開始
         fired = true;
         sec.classList.add('concept-visible');
         // 円形拡大(1.5s)完了後、少し置いてから白い帯を出す
@@ -1738,26 +1753,46 @@
     var copy = document.querySelector('#concept .concept-copy');
     if (!copy) return;
     copy.querySelectorAll('p').forEach(function(p) {
-      p.innerHTML = p.innerHTML.split(/<br[^>]*>/i)
+      // スマホでは「hidden sm:inline」の改行では区切らず、ひと続きにする
+      var re = window.matchMedia('(max-width: 639px)').matches ? /<br(?![^>]*hidden)[^>]*>/i : /<br[^>]*>/i;
+      p.innerHTML = p.innerHTML.replace(/\s*(<br[^>]*>)\s*/gi, '$1').split(re)
         .map(function(t) { return t.trim(); })
         .filter(Boolean)
         .map(function(t) { return '<span class="cl">' + t + '</span>'; })
         .join('');
     });
+    var head = document.querySelector('#concept .concept-head');
+    if (head) head.innerHTML = head.innerHTML.split(/<br[^>]*>/i)
+      .map(function(t) { return '<span class="cl">' + t.trim() + '</span>'; }).join('');
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    // 段落が画面に入ったら、上の行から順に自動で左から表示（一度出たら戻さない）
-    var DUR = 0.9, GAP = 0.35; // 1行の表示時間・行ごとの時間差（秒）
+    // オーバーレイが消えた直後から「見出し→上の段落→下の段落」の順に、
+    // 前のブロックが出終わってから次を1行ずつ左から表示（各ブロックは画面に入るまで待つ）
+    var DUR = 0.9, GAP = 0.35, HOLE = 1100; // 1行の表示時間・行の時間差（秒）・オーバーレイ消滅待ち（ms）
+    var sec = document.getElementById('concept');
+    var groups = [head].concat(Array.prototype.slice.call(copy.querySelectorAll('p'))).filter(Boolean);
+    var seen = groups.map(function() { return false; });
     var io = new IntersectionObserver(function(entries) {
       entries.forEach(function(en) {
-        if (!en.isIntersecting) return;
-        io.unobserve(en.target);
-        en.target.querySelectorAll('.cl').forEach(function(el, i) {
+        if (en.isIntersecting) { seen[groups.indexOf(en.target)] = true; io.unobserve(en.target); }
+      });
+    }, { rootMargin: '0px 0px -5% 0px' });
+    groups.forEach(function(g) { io.observe(g); });
+    var idx = 0, nextFree = 0;
+    (function tick() {
+      if (idx >= groups.length) return;
+      var now = Date.now();
+      if (!nextFree && sec.classList.contains('concept-visible')) nextFree = now + HOLE;
+      if (nextFree && now >= nextFree && seen[idx]) {
+        var lines = groups[idx].querySelectorAll('.cl');
+        lines.forEach(function(el, i) {
           el.style.transition = 'clip-path ' + DUR + 's cubic-bezier(.4,0,.2,1) ' + (i * GAP) + 's';
           el.style.clipPath = 'inset(-20px -20px -20px -20px)';
         });
-      });
-    }, { rootMargin: '0px 0px -20% 0px' });
-    copy.querySelectorAll('p').forEach(function(p) { io.observe(p); });
+        nextFree = now + ((lines.length - 1) * GAP + DUR) * 1000;
+        idx++;
+      }
+      setTimeout(tick, 50);
+    })();
   })();
 
   // ===== コンセプト 背景パララックス =====
@@ -1795,7 +1830,7 @@
     var rates = { 'cp-l1': 0.05, 'cp-l2': 0.32, 'cp-r1': 0.05 };
     var ticking = false;
     function update() {
-      if (window.innerWidth < 1440) {
+      if (window.innerWidth < 768) {
         photos.forEach(function(p) { p.style.transform = ''; });
         ticking = false; return;
       }
@@ -1806,6 +1841,7 @@
                    : p.classList.contains('cp-l2') ? rates['cp-l2']
                    : rates['cp-r1'];
           var base = p.classList.contains('cp-r1') ? 'translateY(-50%) ' : '';
+          if (window.innerWidth < 1440) rate *= 0.5; // 中くらいの幅では動きを控えめに
           p.style.transform = base + 'translate3d(0,' + (r.top * rate) + 'px,0)';
         });
       }

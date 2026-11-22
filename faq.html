@@ -165,6 +165,12 @@
       padding-left: 0.75rem;
       border-left: 4px solid #81D8D0;
     }
+    /* タブレット幅(768〜1023px): メニューが収まらないため、スマホと同じハンバーガーメニューにする */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      #navbar ul.md\:flex { display: none !important; }
+      #hamburger { display: flex !important; }
+      #mobile-menu.open { display: block !important; }
+    }
   </style>
 </head>
 
