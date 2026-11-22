@@ -2111,5 +2111,40 @@
 
 </script>
 
+<script>
+  // ===== 慣性スクロール(マウスホイールのみ・指を離しても少し進んで止まる) =====
+  (function() {
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var EASE = 0.06, target = scrollY, cur = scrollY, running = false;
+    function maxY() { return document.documentElement.scrollHeight - innerHeight; }
+    function isMouse(e) {
+      if (e.deltaMode === 1) return true;
+      return e.deltaX === 0 && Math.abs(e.deltaY) >= 50 && Number.isInteger(e.deltaY);
+    }
+    function inScrollable(el) {
+      for (; el && el !== document.body; el = el.parentElement) {
+        var oy = getComputedStyle(el).overflowY;
+        if ((oy === 'auto' || oy === 'scroll') && el.scrollHeight > el.clientHeight) return true;
+      }
+      return false;
+    }
+    function tick() {
+      cur += (target - cur) * EASE;
+      if (Math.abs(target - cur) < 0.5) { cur = target; running = false; }
+      scrollTo({ top: cur, behavior: 'instant' });
+      if (running) requestAnimationFrame(tick);
+    }
+    addEventListener('wheel', function(e) {
+      if (e.ctrlKey || !isMouse(e) || inScrollable(e.target)) return;
+      if (getComputedStyle(document.body).overflow === 'hidden') return;
+      e.preventDefault();
+      if (!running) { target = cur = scrollY; }
+      var d = e.deltaMode === 1 ? e.deltaY * 40 : e.deltaY;
+      target = Math.max(0, Math.min(maxY(), target + d));
+      if (!running) { running = true; requestAnimationFrame(tick); }
+    }, { passive: false });
+    addEventListener('scroll', function() { if (!running) { target = cur = scrollY; } }, { passive: true });
+  })();
+</script>
 </body>
 </html>
