@@ -500,6 +500,7 @@
     /* ===== ヒーロー固定→ぼかし／コンセプトが下から重なる演出 ===== */
     .hero-stack { position: relative; }
     .concept-pin { position: relative; z-index: 1; }
+    .concept-pin.is-stick #concept { position: sticky; }
     /* PC：コンセプトの下端で固定し、スクロールで1文字ずつ表示（JSで高さとtopを設定） */
     @media (min-width: 768px) {
       .concept-pin.is-pin #concept { position: sticky; padding-top: 88px; padding-bottom: 48px; } /* 固定時に1画面へ収まるよう余白を詰める */
@@ -814,6 +815,10 @@
       background: #dfecf7;
       position: relative;
       overflow: hidden;
+      /* コンセプトとの境目の角を丸くする（上に少し重ねて角の外側に空を見せる） */
+      z-index: 2;
+      border-radius: clamp(28px, 4vw, 56px) clamp(28px, 4vw, 56px) 0 0;
+      margin-top: calc(-1 * clamp(28px, 4vw, 56px));
     }
 
     /* ===== 自己紹介カード ホバー演出 ===== */
@@ -1866,6 +1871,8 @@
       });
       pin.classList.add('is-pin');
       var PIN_VH = 2.5; // 固定中にスクロールさせる量（画面の高さの何倍か）
+      var GAP_VH = 0.5, RISE_VH = 1.0; // 全文字表示後に止まる間／お悩みエリアがせり上がる量
+      var wrapEl = document.querySelector('.lower-bg-wrap');
       var W = 6;        // 1文字がぼやけ→はっきりするまでに重なる文字数（なめらかさ）
       var pinLen = 0, ticking2 = false;
       function layout() {
@@ -1874,7 +1881,8 @@
         // 下端が画面下に来た位置で固定。ただし画面が低い場合も見出しがメニューに隠れないようにする
         var headOff = allLines[0].getBoundingClientRect().top - csec.getBoundingClientRect().top;
         csec.style.top = Math.min(0, Math.max(vh - h, 76 - headOff)) + 'px';
-        pin.style.height = (h + pinLen) + 'px';
+        pin.style.height = (h + pinLen + Math.round(vh * (GAP_VH + RISE_VH))) + 'px'; // 文字表示＋読む間＋お悩みのせり上がり
+        wrapEl.style.marginTop = -Math.round(vh * RISE_VH) + 'px';
       }
       function render() {
         var vh = window.innerHeight, h = csec.offsetHeight;
@@ -1897,16 +1905,28 @@
       layout(); render();
       return;
     }
-    // 1行ずつ順番に：スクロール量全体を行数で区切り、前の行が出きったら次の行がはっきりし始める
-    // 開始＝セクションが画面の40%を覆った時点／終了＝最後の行が画面の下から30%の位置に来た時点
-    var ticking = false;
+    // ===== スマホ：コンセプト下端で固定 → 少し間を置いてお悩みエリアがせり上がる =====
     var sec = document.getElementById('concept');
+    var spPin = document.querySelector('.concept-pin');
+    var spWrap = document.querySelector('.lower-bg-wrap');
+    spPin.classList.add('is-stick');
+    function spLayout() {
+      var vh = window.innerHeight, h = sec.offsetHeight;
+      sec.style.top = Math.min(0, vh - h) + 'px';
+      spPin.style.height = (h + Math.round(vh * 1.5)) + 'px'; // 読む間0.5画面＋せり上がり1画面
+      spWrap.style.marginTop = -vh + 'px';
+    }
+    window.addEventListener('resize', spLayout);
+    spLayout();
+    // 1行ずつ順番に：スクロール量全体を行数で区切り、前の行が出きったら次の行がはっきりし始める
+    // 開始＝セクションが画面の40%を覆った時点／終了＝固定が始まる時点（下端が画面下に来たとき）
+    var ticking = false;
     function update() {
       var vh = window.innerHeight;
       var secTop = sec.getBoundingClientRect().top;
       var last = lines[lines.length - 1];
       var lastOff = last.getBoundingClientRect().top - secTop; // セクション上端から最後の行までの距離
-      var startTop = 0.6 * vh, endTop = 0.7 * vh - lastOff;
+      var startTop = 0.6 * vh, endTop = Math.min(0, vh - sec.offsetHeight) + vh * 0.15; // 固定の少し手前で出しきる
       var T = (startTop - secTop) / Math.max(1, startTop - endTop);
       T = Math.max(0, Math.min(1, T));
       var n = lines.length;
@@ -1932,6 +1952,7 @@
     if (!hero || !sec || !hero.parentElement.classList.contains('hero-stack')) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     var vid = sec.querySelector('.concept-video-wrap');
+    var lowerWrap = document.querySelector('.lower-bg-wrap');
     // 入れ物にfilterをかけると写真の配置基準が変わるため、写真1枚ずつにかける
     var photos = Array.prototype.slice.call(sec.querySelectorAll('.concept-photos .cp'));
     var ticking = false;
@@ -1950,6 +1971,10 @@
         ph.style.filter = p < 1 ? 'blur(' + (base + (1 - p) * 12).toFixed(1) + 'px)' : '';
       });
       sec.style.opacity = (0.35 + 0.65 * p).toFixed(3); // 最初は薄く、後ろのヒーローが透ける
+      // お悩みエリアがせり上がるにつれて、コンセプトをぼかす
+      var wrapTop = lowerWrap ? lowerWrap.getBoundingClientRect().top : vh;
+      var q = Math.max(0, Math.min(1, (vh - wrapTop) / vh));
+      sec.style.filter = q > 0 ? 'blur(' + (q * 14).toFixed(1) + 'px)' : '';
       ticking = false;
     }
     window.addEventListener('scroll', function() {
