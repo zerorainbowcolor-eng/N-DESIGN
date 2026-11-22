@@ -206,6 +206,7 @@
 
     /* ===== FVボタン 文字と同時に表示 ===== */
     .fv-btns { opacity: 1; }
+    @media (min-width: 768px) { .fv-btns .line-btn { margin-left: 16px; } } /* PC: 2つのボタンの間隔を少し広げる */
 
     /* ===== FV 画像ストリーム（仮の四角／縦に流れる） ===== */
     .fv-stream {
@@ -727,6 +728,48 @@
     #navbar .btn-primary::after { content: none; margin-left: 0; }
     .line-btn:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(6,199,85,0.3); background: #c8f0d8; }
 
+    /* ===== CTAボタン ホバーアニメーション（グローバルメニュー内は対象外） =====
+       From Uiverse.io by gharsh11032000 - https://uiverse.io/gharsh11032000/foolish-sloth-90
+       MIT License, Copyright (c) gharsh11032000 (Harsh Gupta) */
+    .cta {
+      position: relative; overflow: hidden; isolation: isolate; will-change: transform; /* 角丸の切り抜きを安定させる */
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      transition: color 0.3s cubic-bezier(0.23, 1, 0.320, 1), scale 0.3s cubic-bezier(0.23, 1, 0.320, 1), box-shadow 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+    }
+    .cta::before {
+      content: ""; position: absolute; left: 50%; top: 50%;
+      width: 50px; height: 50px; margin: -25px 0 0 -25px;
+      border-radius: inherit; scale: 0; z-index: -1;
+      transition: scale 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+    }
+    .cta:hover::before { scale: var(--cta-scale, 7); }
+    .btn-primary.cta::after, .line-btn.cta::after { content: none; }
+    /* ピンク */
+    .btn-primary.cta { border: 2px solid #e5025a; }
+    .btn-primary.cta::before { background: #fff; }
+    .btn-primary.cta:hover { background: #e5025a; color: #e5025a; transform: none; box-shadow: 0 0 20px rgba(229, 2, 90, 0.4); }
+    /* LINE */
+    .line-btn.cta { color: #06c755; background: #fff; border: 2px solid #06c755; border-radius: 50px; padding: 1rem 1.5rem; }
+    .line-btn.cta::before { background: #06c755; }
+    .line-btn.cta:hover { color: #fff; transform: none; background: #fff; box-shadow: 0 0 20px rgba(6, 199, 85, 0.45); }
+    /* 右側の丸矢印 */
+    .cta-arrow {
+      display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+      width: 24px; height: 24px; border-radius: 50%; margin-left: 4px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .cta-arrow svg { width: 14px; height: 14px; display: block; }
+    .btn-primary .cta-arrow { background: #fff; color: #e5025a; }
+    .btn-primary.cta:hover .cta-arrow { background: #e5025a; color: #fff; }
+    .line-btn .cta-arrow { background: #06c755; color: #fff; }
+    .line-btn.cta:hover .cta-arrow { background: #fff; color: #06c755; }
+    /* メールアイコン（文字色と一緒に変わるようマスクで表示） */
+    .cta-mail {
+      display: inline-block; flex-shrink: 0; width: 26px; height: 18px; background-color: currentColor;
+      -webkit-mask: url("images/メール.png") center / contain no-repeat;
+              mask: url("images/メール.png") center / contain no-repeat;
+    }
+
     /* ===== CARDS ===== */
     .card {
       background: #fff;
@@ -838,7 +881,7 @@
       <li><a href="#portfolio" class="nav-link text-white hover:text-tiffany transition" data-section="portfolio">WORKS</a></li>
       <li><a href="#about"     class="nav-link text-white hover:text-tiffany transition" data-section="about">PROFILE</a></li>
       <li><a href="faq.html" class="nav-link text-white hover:text-tiffany transition">Q&amp;A</a></li>
-      <li><a href="#contact" class="btn-primary text-sm py-2 px-5" style="display:inline-flex; align-items:center; gap:6px;"><img src="images/メール.png" alt="" style="height:16px; width:auto;" />無料で相談する</a></li>
+      <li><a href="#contact" class="btn-primary cta text-sm py-2 px-5" style="gap:6px;"><span class="cta-mail" aria-hidden="true" style="width:22px; height:15px;"></span>無料で相談する</a></li>
     </ul>
 
     <!-- Hamburger -->
@@ -922,13 +965,15 @@
     <div data-aos="fade-up" data-aos-duration="900">
       <img src="images/fv-graphic.png" alt="LP&amp;HP制作代行サービス｜修正回数無制限・長さ制限無し・3ヶ月間無料保証・オリジナルテーマ対応" class="fv-graphic" style="width:100%; max-width:696px; height:auto; margin-top:4rem; margin-bottom:1.5rem;" />
       <div class="fv-btns">
-      <a href="#contact" class="btn-primary text-base shadow-lg" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; width:290px;">
-        <img src="images/メール.png" alt="" style="height:20px; width:auto;" />
+      <a href="#contact" class="btn-primary cta text-base shadow-lg" style="width:290px;">
+        <span class="cta-mail" aria-hidden="true"></span>
         無料で相談する
+        <span class="cta-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
-      <a href="https://lin.ee/WxoibvU" target="_blank" rel="noopener noreferrer" class="font-bold line-btn" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; width:290px; padding:1rem 1.5rem; border-radius:50px; border:2px solid #06c755; color:#06c755; background:#fff; margin-top:1rem; transition:transform 0.2s, box-shadow 0.2s, background 0.2s; font-size:0.9rem; white-space:nowrap;">
+      <a href="https://lin.ee/WxoibvU" target="_blank" rel="noopener noreferrer" class="font-bold line-btn cta" style="width:290px; margin-top:1rem; font-size:0.9rem; white-space:nowrap;">
         <img src="images/LINE.png" alt="" style="height:20px; width:auto;" />
         無料でLINEから相談する
+        <span class="cta-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
       </div>
     </div>
@@ -1043,8 +1088,8 @@
     <div class="text-center" data-aos="fade-up" data-aos-delay="200">
       <div style="display:inline-block;">
         <p class="concern-cta-lead"><span class="slash-text">そんな方は、ぜひ一度ご相談ください</span></p>
-        <a href="#contact" class="btn-primary" style="display:flex; width:100%; align-items:center; justify-content:center; gap:8px; white-space:nowrap; font-size:clamp(0.85rem,3.5vw,1rem);">
-          <img src="images/メール.png" alt="" style="height:18px; width:auto;" />無料で相談する
+        <a href="#contact" class="btn-primary cta" style="display:flex; width:100%; white-space:nowrap; font-size:clamp(0.85rem,3.5vw,1rem); --cta-scale:10;">
+          <span class="cta-mail" aria-hidden="true"></span>無料で相談する<span class="cta-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         </a>
       </div>
     </div>
@@ -1176,7 +1221,7 @@
     </p>
 
     <div class="text-center mt-10" data-aos="fade-up">
-      <a href="price.html" class="btn-primary text-base shadow-lg" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; width:290px;">料金を見る</a>
+      <a href="price.html" class="btn-primary cta text-base shadow-lg" style="width:290px;">料金を見る<span class="cta-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
     </div>
   </div>
 </section>
@@ -1477,7 +1522,7 @@
         <textarea name="message" required rows="6" placeholder="お気軽にご記入ください"
                   class="w-full border border-tiffany-border rounded-xl px-4 py-3 text-sm outline-none focus:border-tiffany focus:ring-2 focus:ring-tiffany/20 transition resize-none"></textarea>
       </div>
-      <button type="submit" class="btn-primary w-full text-center">問い合わせる</button>
+      <button type="submit" class="btn-primary cta w-full text-center" style="display:flex; --cta-scale:20;">問い合わせる<span class="cta-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
     </form>
   </div>
 </section>
