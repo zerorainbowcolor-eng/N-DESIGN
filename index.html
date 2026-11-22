@@ -499,8 +499,16 @@
 
     /* ===== ヒーロー固定→ぼかし／コンセプトが下から重なる演出 ===== */
     .hero-stack { position: relative; }
+    .concept-pin { position: relative; z-index: 1; }
+    /* PC：コンセプトの下端で固定し、スクロールで1文字ずつ表示（JSで高さとtopを設定） */
+    @media (min-width: 768px) {
+      .concept-pin.is-pin #concept { position: sticky; padding-top: 88px; padding-bottom: 48px; } /* 固定時に1画面へ収まるよう余白を詰める */
+      .concept-pin.is-pin #concept .concept-copy p + p { margin-top: 2em; }
+      .concept-pin.is-pin #concept .cl { opacity: 1 !important; transform: none !important; filter: none !important; }
+      .concept-pin.is-pin #concept .ch { display: inline-block; white-space: pre; opacity: 0; }
+    }
     .hero-stack > #top { position: sticky; z-index: 0; will-change: filter; }
-    .hero-stack > #concept {
+    .hero-stack #concept {
       z-index: 1;
       /* 境目をなじませる：上端をグラデーションで透かす */
       -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 140px);
@@ -1013,6 +1021,7 @@
 <!-- ===================================
      コンセプト（奇数：白）
 =================================== -->
+<div class="concept-pin">
 <section id="concept" class="py-20 sm:py-28 relative overflow-hidden" style="background:#0b1a2c;">
   <div class="concept-video-wrap" aria-hidden="true">
     <video class="concept-video" autoplay muted loop playsinline preload="metadata" poster="images/concept-sky-poster.jpg">
@@ -1052,6 +1061,7 @@
     </div>
   </div>
 </section>
+</div><!-- /.concept-pin -->
 </div><!-- /.hero-stack -->
 
 <!-- ===================================
@@ -1839,6 +1849,54 @@
     // スクロール連動：各行が画面の下から上がってくるにつれ、上の行から順にぼかしが晴れて浮き上がる
     // （上に戻すと逆再生でまたぼやける）
     var lines = Array.prototype.slice.call(document.querySelectorAll('#concept .cl'));
+    // ===== PC：コンセプト下端で固定し、固定中のスクロールで左から1文字ずつ表示 =====
+    if (window.innerWidth >= 768) {
+      var pin = document.querySelector('.concept-pin');
+      var csec = document.getElementById('concept');
+      var allLines = Array.prototype.slice.call(document.querySelectorAll('#concept .cl'));
+      var chars = [];
+      allLines.forEach(function(el) {
+        var text = el.textContent;
+        el.textContent = '';
+        Array.prototype.forEach.call(text, function(c) {
+          var sp = document.createElement('span');
+          sp.className = 'ch'; sp.textContent = c;
+          el.appendChild(sp); chars.push(sp);
+        });
+      });
+      pin.classList.add('is-pin');
+      var PIN_VH = 2.5; // 固定中にスクロールさせる量（画面の高さの何倍か）
+      var W = 6;        // 1文字がぼやけ→はっきりするまでに重なる文字数（なめらかさ）
+      var pinLen = 0, ticking2 = false;
+      function layout() {
+        var vh = window.innerHeight, h = csec.offsetHeight;
+        pinLen = Math.round(vh * PIN_VH);
+        // 下端が画面下に来た位置で固定。ただし画面が低い場合も見出しがメニューに隠れないようにする
+        var headOff = allLines[0].getBoundingClientRect().top - csec.getBoundingClientRect().top;
+        csec.style.top = Math.min(0, Math.max(vh - h, 76 - headOff)) + 'px';
+        pin.style.height = (h + pinLen) + 'px';
+      }
+      function render() {
+        var vh = window.innerHeight, h = csec.offsetHeight;
+        var startTop = parseFloat(csec.style.top) || 0; // 固定が始まるときのラッパー上端位置
+        var T = (startTop - pin.getBoundingClientRect().top) / pinLen;
+        T = Math.max(0, Math.min(1, T));
+        var n = chars.length, pos = T * (n + W);
+        chars.forEach(function(c, k) {
+          var p = Math.max(0, Math.min(1, (pos - k) / W));
+          c.style.opacity = p.toFixed(3);
+          c.style.filter = p < 1 && p > 0 ? 'blur(' + ((1 - p) * 8).toFixed(1) + 'px)' : 'none';
+          c.style.transform = p < 1 ? 'translateX(' + ((1 - p) * -6).toFixed(1) + 'px)' : 'none';
+        });
+        ticking2 = false;
+      }
+      window.addEventListener('scroll', function() {
+        if (!ticking2) { requestAnimationFrame(render); ticking2 = true; }
+      }, { passive: true });
+      window.addEventListener('resize', function() { layout(); render(); });
+      layout(); render();
+      return;
+    }
     // 1行ずつ順番に：スクロール量全体を行数で区切り、前の行が出きったら次の行がはっきりし始める
     // 開始＝セクションが画面の40%を覆った時点／終了＝最後の行が画面の下から30%の位置に来た時点
     var ticking = false;
