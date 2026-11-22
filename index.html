@@ -144,7 +144,7 @@
       z-index: 0;
       clip-path: inset(0 100% 0 0);
     }
-    .lower-bg-wrap.about-visible .about-line {
+    #about.about-visible .about-line {
       animation: aboutLineGrow 0.7s cubic-bezier(.22,.61,.36,1) 0.4s forwards;
     }
     @keyframes aboutLineGrow {
@@ -1073,7 +1073,6 @@
      自己紹介（偶数：tiffany-light）
 =================================== -->
 <div class="lower-bg-wrap">
-  <img src="images/about-line.webp" alt="" aria-hidden="true" class="about-line" />
 
 
 
@@ -1451,6 +1450,7 @@
      自己紹介
 =================================== -->
 <section id="about" class="py-20 sm:py-28 relative">
+  <img src="images/about-line.webp" alt="" aria-hidden="true" class="about-line" />
   <div class="relative z-10 wide-wrap mx-auto px-5 sm:px-8">
     <div class="sec-head-wrap mb-14" data-aos="fade-up">
       <h2 class="sec-ja sec-head">自己紹介<span class="sec-head-en" aria-hidden="true">PROFILE</span></h2>
@@ -1798,12 +1798,11 @@
   // ===== 自己紹介 黄色帯リビール発火 =====
   (function() {
     var sec = document.getElementById('about');
-    var wrap = document.querySelector('.lower-bg-wrap');
-    if (!sec || !wrap) return;
-    if (!('IntersectionObserver' in window)) { wrap.classList.add('about-visible'); return; }
+    if (!sec) return;
+    if (!('IntersectionObserver' in window)) { sec.classList.add('about-visible'); return; }
     var io = new IntersectionObserver(function(entries) {
       entries.forEach(function(e) {
-        if (e.isIntersecting) { wrap.classList.add('about-visible'); io.disconnect(); }
+        if (e.isIntersecting) { sec.classList.add('about-visible'); io.disconnect(); }
       });
     }, { threshold: 0.45 });
     io.observe(sec);
