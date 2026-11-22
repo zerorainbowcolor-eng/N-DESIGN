@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>プライバシーポリシー ｜ N.DESIGN 永田 亮 Webデザイナー</title>
+  <meta name="description" content="N.DESIGN（永田 亮）のプライバシーポリシーです。お問い合わせで取得する個人情報の取り扱いや、Googleアナリティクスの利用について記載しています。" />
+  <link rel="canonical" href="https://ndesign-official.com/privacy.html" />
+<link rel="icon" href="favicon-48.png" sizes="48x48" type="image/png" />
+  <link rel="icon" href="favicon-96.png" sizes="96x96" type="image/png" />
+  <link rel="icon" href="favicon-192.png" sizes="192x192" type="image/png" />
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            tiffany: '#81D8D0',
+            'tiffany-dark': '#5fc4bb',
+            'tiffany-light': '#e6f9f8',
+            'tiffany-border': '#b2dcd8',
+          },
+          fontFamily: {
+            sans: ['Noto Sans JP', 'Inter', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Noto Sans JP', 'Inter', sans-serif; color: #001638; font-size: 1rem; line-height: 1.8; }
+
+    /* ===== NAV ===== */
+    #navbar { transition: background 0.3s, box-shadow 0.3s; }
+    #navbar.scrolled { background: #fff !important; box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
+    #navbar.scrolled .nav-link { color: #001638 !important; }
+    #navbar.scrolled .ham-bar { background: #001638 !important; }
+    .wide-wrap { max-width: min(1600px, 94vw); }
+    #navbar .nav-link { color: #001638; }
+    .nav-link { position: relative; padding-bottom: 2px; font-weight: 700; transition: color 0.3s; }
+    .nav-link:hover,
+    #navbar .nav-link:hover,
+    #navbar.scrolled .nav-link:hover { color: #81D8D0 !important; }
+    .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background: #81D8D0; transition: width 0.3s; }
+    #mobile-menu { display: none; }
+    #mobile-menu.open { display: block; }
+
+    /* ===== SECTION HEADING ===== */
+    .sec-en { font-size: 0.85rem; letter-spacing: 0.15em; color: #F5C842; text-transform: uppercase; font-family: 'Inter', sans-serif; font-weight: 600; }
+    .sec-ja { font-size: clamp(1.6rem, 3vw, 2rem); font-weight: 700; color: #001638; line-height: 1.3; }
+    /* ===== セクション見出し(左揃え+背景英字) ===== */
+    .sec-head-wrap { text-align: left; }
+    .sec-ja.sec-head {
+      display: inline-block;
+      position: relative;
+      text-align: left;
+      z-index: 1;
+    }
+    .sec-head-en {
+      position: absolute;
+      top: 50%;
+      left: 72%;
+      transform: translateY(-52%);
+      z-index: -1;
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: clamp(3.4rem, 8vw, 7.5rem);
+      letter-spacing: 0.04em;
+      line-height: 1;
+      color: #ffffff;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    @media (min-width: 768px) {
+      .sec-ja.sec-head { font-size: clamp(2rem, 3.4vw, 3rem); }
+    }
+    @media (max-width: 767px) {
+      .sec-head-en {
+        left: 0;
+        transform: translateY(-52%);
+        font-size: clamp(2.4rem, 13vw, 3.4rem);
+      }
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn-primary {
+      display: inline-block;
+      font-family: 'Noto Sans JP', 'Inter', sans-serif;
+      background: #e5025a;
+      color: #ffffff;
+      font-weight: 700;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      transition: background 0.25s, transform 0.2s, box-shadow 0.2s;
+      font-size: 1rem;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+    }
+    .btn-primary:hover { background: #b8014a; transform: scale(1.03); box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3); }
+    /* CTAボタンの矢印（グローバルメニュー内のボタンは除外） */
+    .btn-primary::after { content: ""; display: inline-block; width: 0.42em; height: 0.42em; border-top: 0.14em solid currentColor; border-right: 0.14em solid currentColor; transform: rotate(45deg); margin-left: 0.5em; position: relative; top: -0.02em; box-sizing: border-box; }
+    #navbar .btn-primary::after { content: none; margin-left: 0; }
+
+    /* ===== CTAボタン ホバーアニメーション（グローバルメニュー内は対象外） =====
+       From Uiverse.io by gharsh11032000 - https://uiverse.io/gharsh11032000/foolish-sloth-90
+       MIT License, Copyright (c) gharsh11032000 (Harsh Gupta) */
+    .cta {
+      position: relative; overflow: hidden; isolation: isolate; will-change: transform; /* 角丸の切り抜きを安定させる */
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      transition: color 0.3s cubic-bezier(0.23, 1, 0.320, 1), scale 0.3s cubic-bezier(0.23, 1, 0.320, 1), box-shadow 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+    }
+    .cta::before {
+      content: ""; position: absolute; left: 50%; top: 50%;
+      width: 50px; height: 50px; margin: -25px 0 0 -25px;
+      border-radius: inherit; scale: 0; z-index: -1;
+      transition: scale 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+    }
+    .cta:hover::before { scale: var(--cta-scale, 7); }
+    .btn-primary.cta::after, .line-btn.cta::after { content: none; }
+    /* ピンク */
+    .btn-primary.cta { border: 2px solid #e5025a; }
+    .btn-primary.cta::before { background: #fff; }
+    .btn-primary.cta:hover { background: #e5025a; color: #e5025a; transform: none; box-shadow: 0 0 20px rgba(229, 2, 90, 0.4); }
+    /* LINE */
+    .line-btn.cta { color: #06c755; background: #fff; border: 2px solid #06c755; border-radius: 50px; padding: 1rem 1.5rem; }
+    .line-btn.cta::before { background: #06c755; }
+    .line-btn.cta:hover { color: #fff; transform: none; background: #fff; box-shadow: 0 0 20px rgba(6, 199, 85, 0.45); }
+    /* 右側の丸矢印 */
+    .cta-arrow {
+      display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+      width: 24px; height: 24px; border-radius: 50%; margin-left: 4px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .cta-arrow svg { width: 14px; height: 14px; display: block; }
+    .btn-primary .cta-arrow { background: #fff; color: #e5025a; }
+    .btn-primary.cta:hover .cta-arrow { background: #e5025a; color: #fff; }
+    .line-btn .cta-arrow { background: #06c755; color: #fff; }
+    .line-btn.cta:hover .cta-arrow { background: #fff; color: #06c755; }
+    /* メールアイコン（文字色と一緒に変わるようマスクで表示） */
+    .cta-mail {
+      display: inline-block; flex-shrink: 0; width: 26px; height: 18px; background-color: currentColor;
+      -webkit-mask: url("images/メール.png") center / contain no-repeat;
+              mask: url("images/メール.png") center / contain no-repeat;
+    }
+
+    /* ===== CARDS ===== */
+    .card {
+      background: #fff;
+      border: 1px solid #b2dcd8;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(129,216,208,0.15);
+    }
+
+    /* ===== FAQ アコーディオン ===== */
+    .faq-item { border-bottom: 1px solid #b2dcd8; }
+    .faq-item:first-child { border-top: 1px solid #b2dcd8; }
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      cursor: pointer;
+      padding: 1.25rem 0;
+      gap: 1rem;
+      user-select: none;
+    }
+    .faq-question:hover .faq-q-text { color: #5fc4bb; }
+    .faq-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #e6f9f8;
+      border: 1px solid #b2dcd8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, transform 0.3s;
+      margin-top: 2px;
+    }
+    .faq-icon svg { transition: transform 0.3s; }
+    .faq-item.open .faq-icon { background: #81D8D0; }
+    .faq-item.open .faq-icon svg { transform: rotate(45deg); }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s;
+    }
+    .faq-item.open .faq-answer { max-height: 600px; }
+    .faq-answer-inner { padding-bottom: 1.25rem; }
+
+    /* ===== カテゴリバッジ ===== */
+    .category-badge {
+      display: block;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #001638;
+      margin-bottom: 1rem;
+      padding-left: 0.75rem;
+      border-left: 4px solid #81D8D0;
+    }
+    /* タブレット幅(768〜1023px): メニューが収まらないため、スマホと同じハンバーガーメニューにする */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      #navbar ul.md\:flex { display: none !important; }
+      #hamburger { display: flex !important; }
+      #mobile-menu.open { display: block !important; }
+    }
+  </style>
+</head>
+
+<body style="background: #dfecf7;">
+
+<!-- ===================================
+     NAVIGATION
+=================================== -->
+<nav id="navbar" class="fixed top-0 left-0 w-full z-50 bg-white shadow-sm">
+  <div class="wide-wrap mx-auto px-5 sm:px-8 flex items-center justify-between h-16">
+    <a href="index.html" class="nav-logo" style="display:inline-flex; align-items:center; gap:10px;">
+      <img src="images/logo-mark.webp" alt="" style="height:36px; width:auto; object-fit:contain;" />
+      <img src="images/logo-text.webp" alt="N .DESIGN" style="height:22px; width:auto; object-fit:contain;" />
+    </a>
+
+    <!-- Desktop -->
+    <ul class="hidden md:flex items-center gap-7 text-sm font-medium">
+      <li><a href="index.html#top"       class="nav-link text-[#001638] hover:text-tiffany transition">TOP</a></li>
+      <li><a href="index.html#concept"   class="nav-link text-[#001638] hover:text-tiffany transition">CONCEPT</a></li>
+      <li><a href="index.html#strength"  class="nav-link text-[#001638] hover:text-tiffany transition">POLICY</a></li>
+      <li><a href="index.html#service"   class="nav-link text-[#001638] hover:text-tiffany transition">SERVICE</a></li>
+      <li><a href="price.html"           class="nav-link text-[#001638] hover:text-tiffany transition">PRICE</a></li>
+      <li><a href="index.html#portfolio" class="nav-link text-[#001638] hover:text-tiffany transition">WORKS</a></li>
+      <li><a href="index.html#about"     class="nav-link text-[#001638] hover:text-tiffany transition">PROFILE</a></li>
+      <li><a href="faq.html"             class="nav-link text-[#001638] hover:text-tiffany transition">Q&amp;A</a></li>
+      <li><a href="index.html#contact"   class="btn-primary cta text-sm py-2 px-5" style="gap:6px;"><span class="cta-mail" aria-hidden="true" style="width:22px; height:15px;"></span>無料で相談する</a></li>
+    </ul>
+
+    <!-- Hamburger -->
+    <button id="hamburger" class="md:hidden p-2 flex flex-col gap-1.5" aria-label="メニュー">
+      <span class="ham-bar w-6 h-0.5 bg-[#001638] block transition-all"></span>
+      <span class="ham-bar w-6 h-0.5 bg-[#001638] block transition-all"></span>
+      <span class="ham-bar w-6 h-0.5 bg-[#001638] block transition-all"></span>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="md:hidden bg-white border-t border-tiffany-border shadow-lg">
+    <ul class="flex flex-col text-sm font-medium text-[#001638] px-5 py-4 gap-3">
+      <li><a href="index.html#top"       onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">TOP</a></li>
+      <li><a href="index.html#concept"   onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">CONCEPT</a></li>
+      <li><a href="index.html#strength"  onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">POLICY</a></li>
+      <li><a href="index.html#service"   onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">SERVICE</a></li>
+      <li><a href="price.html"           onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">PRICE</a></li>
+      <li><a href="index.html#portfolio" onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">WORKS</a></li>
+      <li><a href="index.html#about"     onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">PROFILE</a></li>
+      <li><a href="faq.html"             onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">Q&amp;A</a></li>
+      <li><a href="index.html#contact"   onclick="closeMobileMenu()" class="block py-1 hover:text-tiffany">CONTACT</a></li>
+    </ul>
+  </div>
+</nav>
+
+<style>
+  .pp-sec + .pp-sec { margin-top: 2.5rem; }
+  .pp-h { font-size: 1.05rem; font-weight: 700; color: #001638; padding-left: 0.8rem; border-left: 4px solid #81D8D0; margin-bottom: 0.9rem; line-height: 1.5; }
+  .pp-body p, .pp-body li { font-size: 0.9rem; color: #555; line-height: 2; }
+  .pp-body p + p { margin-top: 0.6rem; }
+  .pp-list { margin-top: 0.4rem; padding-left: 1.3em; list-style: disc; }
+  .pp-list li::marker { color: #81D8D0; }
+  .pp-body a { color: #2a9d93; text-decoration: underline; }
+</style>
+
+<!-- ===================================
+     HERO
+=================================== -->
+<div class="pt-16">
+  <div class="py-16 sm:py-20 max-w-3xl mx-auto px-5 sm:px-8" data-aos="fade-up">
+    <div class="sec-head-wrap">
+      <h1 class="sec-ja sec-head">プライバシーポリシー<span class="sec-head-en" aria-hidden="true">PRIVACY</span></h1>
+    </div>
+    <p class="mt-4 text-[#555] text-sm leading-loose">N.DESIGN（以下「当事業者」）は、お客様の個人情報を適切に取り扱うことを大切に考え、以下のとおりプライバシーポリシーを定めます。</p>
+  </div>
+</div>
+
+<!-- ===================================
+     本文
+=================================== -->
+<div class="max-w-3xl mx-auto px-5 sm:px-8 pb-24">
+  <div class="card p-6 sm:p-10 pp-body" data-aos="fade-up">
+
+    <section class="pp-sec">
+      <h2 class="pp-h">1. 事業者情報</h2>
+      <ul class="pp-list">
+        <li>屋号：N.DESIGN</li>
+        <li>代表者：永田 亮</li>
+        <li>所在地：東京都（詳細はお問い合わせいただいた方にお知らせします）</li>
+      </ul>
+    </section>
+
+    <section class="pp-sec">
+      <h2 class="pp-h">2. 取得する個人情報</h2>
+      <p>当事業者は、お問い合わせフォームやメール、LINE等を通じて、以下の情報を取得することがあります。</p>
+      <ul class="pp-list">
+        <li>お名前</li>
+        <li>メールアドレス</li>
+        <li>お問い合わせ内容、その他お客様がご自身で入力・送信された情報</li>
+      </ul>
+    </section>
+
+    <section class="pp-sec">
+      <h2 class="pp-h">3. 利用目的</h2>
+      <p>取得した個人情報は、以下の目的の範囲内で利用します。</p>
+      <ul class="pp-list">
+        <li>お問い合わせへの回答、ご連絡のため</li>
+        <li>お見積り、ご提案、お打ち合わせの調整のため</li>
+        <li>ご依頼いただいた制作業務の遂行、納品、アフターサポートのため</li>
+        <li>サービスの改善や、より良いご提案に役立てるため</li>
+      </ul>
+    </section>
+
+    <section class="pp-sec">
+      <h2 class="pp-h">4. 第三者への提供</h2>
+      <p>当事業者は、次の場合を除き、ご本人の同意なく個人情報を第三者に提供することはありません。</p>
+      <ul class="pp-list">
+        <li>法令に基づく場合</li>
+        <li>人の生命、身体または財産の保護のために必要で、ご本人の同意を得ることが難しい場合</li>
+        <li>国の機関や地方公共団体等が法令の定める事務を行うことに協力する必要がある場合</li>
+      </ul>
+    </section>
+
+    <section class="pp-sec">
+      <h2 class="pp-h">5. 個人情報の管理</h2>
+      <p>当事業者は、個人情報の漏えい、紛失、改ざん等を防ぐため、適切な安全管理に努めます。利用目的を達成し、保管の必要がなくなった個人情報は、適切な方法で削除します。</p>
+    </section>
+
+    <section class="pp-sec">
+      <h2 class="pp-h">6. アクセス解析ツール（Googleアナリティクス）について</h2>
+      <p>当サイトでは、サイトの利用状況を把握し改善に役立てるため、Google LLCが提供するアクセス解析ツール「Googleアナリティクス」を利用しています。Googleアナリティクスは、Cookieを使用して閲覧に関するデータを収集します。このデータは匿名で収集されており、個人を特定するものではありません。</p>
+      <p>Cookieはブラウザの設定で無効にすることができます。また、<a href="https://tools.google.com/dlpage/gaoptout?hl=ja" target="_blank" rel="noopener noreferrer">Googleアナリティクス オプトアウト アドオン</a>を利用して、データの収集を停止することもできます。詳しくは<a href="https://policies.google.com/technologies/partner-sites?hl=ja" target="_blank" rel="noopener noreferrer">Googleのポリシーと規約</a>をご確認ください。</p>
+    </section>
+
+    <section class="pp-sec">
+      <h2 class="pp-h">7. 個人情報の開示・訂正・削除</h2>
+      <p>ご本人から、ご自身の個人情報の開示、訂正、利用停止、削除のご依頼があった場合は、ご本人であることを確認したうえで、速やかに対応いたします。</p>
+    </section>
+
+    <section class="pp-sec">
+      <h2 class="pp-h">8. プライバシーポリシーの変更</h2>
+      <p>本ポリシーの内容は、法令の改正や必要に応じて、予告なく変更することがあります。変更後の内容は、当サイトに掲載した時点から効力を生じるものとします。</p>
+    </section>
+
+    <section class="pp-sec">
+      <h2 class="pp-h">9. お問い合わせ窓口</h2>
+      <p>本ポリシーや個人情報の取り扱いに関するお問い合わせは、<a href="index.html#contact">お問い合わせフォーム</a>よりご連絡ください。</p>
+    </section>
+
+    <p class="text-right" style="margin-top:2.5rem;">制定日：2026年6月1日<br />N.DESIGN　永田 亮</p>
+  </div>
+</div>
+
+<!-- ===================================
+     FOOTER
+=================================== -->
+<footer class="bg-[#001638] text-white">
+  <div class="h-1 bg-tiffany"></div>
+  <div class="max-w-5xl mx-auto px-5 py-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <p class="text-lg font-bold text-tiffany">N.DESIGN</p>
+    <div class="flex flex-col sm:flex-row items-center gap-2 sm:gap-6">
+      <a href="privacy.html" class="text-gray-400 text-xs hover:text-tiffany transition">プライバシーポリシー</a>
+      <p class="text-gray-500 text-xs">© 2026 N.DESIGN All Rights Reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  AOS.init({ duration: 700, once: true, offset: 50 });
+
+  const navbar = document.getElementById('navbar');
+  function updateNav() {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  }
+  window.addEventListener('scroll', updateNav);
+  updateNav();
+
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('mobile-menu').classList.toggle('open');
+  });
+  function closeMobileMenu() {
+    document.getElementById('mobile-menu').classList.remove('open');
+  }
+</script>
+
+</body>
+</html>
