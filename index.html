@@ -485,7 +485,7 @@
       font-size: 1.05rem;
     }
 
-    /* ===== コンセプト 背景動画（空） ===== */
+    /* ===== コンセプト 背景画像（空） ===== */
     .concept-video-wrap {
       position: absolute; left: 0; right: 0; z-index: 0;
       top: calc(-30% - 20px); bottom: calc(-30vh - 20px); /* パララックスで端が見えないよう上下に余白 */
@@ -1029,9 +1029,7 @@
 <div class="concept-pin">
 <section id="concept" class="py-20 sm:py-28 relative overflow-hidden" style="background:#0b1a2c;">
   <div class="concept-video-wrap" aria-hidden="true">
-    <video class="concept-video" autoplay muted loop playsinline preload="metadata" poster="images/concept-sky-poster.jpg">
-      <source src="images/concept-sky.mp4" type="video/mp4" />
-    </video>
+    <img class="concept-video" src="images/concept-sky.jpg" alt="" decoding="async" />
   </div>
   <div class="concept-overlay" aria-hidden="true"></div>
   <div class="concept-bg" aria-hidden="true"><div class="concept-hole"></div></div>
