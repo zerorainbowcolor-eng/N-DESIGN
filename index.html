@@ -497,6 +497,14 @@
     }
     .concept-overlay { display: none; }
 
+    /* ===== コンセプト左右の写真：自動でゆっくり上下にふわふわ移動（JSのtransformと別のtranslateで重ねる） ===== */
+    @keyframes cpFloat { from { translate: 0 18px; } to { translate: 0 -18px; } }
+    @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+      .concept-photos .cp { animation: cpFloat 7s ease-in-out infinite alternate; }
+      .concept-photos .cp-l2 { animation-duration: 8.5s; animation-delay: -3s; }
+      .concept-photos .cp-r1 { animation-duration: 7.8s; animation-delay: -5s; }
+    }
+
     /* ===== ヒーロー固定→ぼかし／コンセプトが下から重なる演出 ===== */
     .hero-stack { position: relative; }
     .concept-pin { position: relative; z-index: 1; }
