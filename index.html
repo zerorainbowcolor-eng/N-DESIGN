@@ -2014,47 +2014,6 @@
     update();
   })();
 
-  // ===== コンセプト サイド写真パララックス（PCのみ／スクロールで上に流れる） =====
-  (function() {
-    var sec = document.getElementById('concept');
-    if (!sec) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    var photos = sec.querySelectorAll('.concept-photos .cp');
-    if (!photos.length) return;
-    var rates = { 'cp-l1': 0.05, 'cp-l2': 0.32, 'cp-r1': 0.05 };
-    var pinBox = document.querySelector('.concept-pin');
-    var ticking = false;
-    function update() {
-      if (window.innerWidth < 768) {
-        photos.forEach(function(p) { p.style.transform = ''; });
-        ticking = false; return;
-      }
-      var r = sec.getBoundingClientRect();
-      // 固定中（文字表示中）は、スクロールに合わせて写真を少しずつ上へ（最大140px）
-      var drift = 0;
-      if (pinBox && pinBox.classList.contains('is-pin')) {
-        var moved = (parseFloat(sec.style.top) || 0) - pinBox.getBoundingClientRect().top;
-        drift = -Math.min(140, Math.max(0, moved) * 0.05);
-      }
-      if (r.bottom > 0 && r.top < window.innerHeight) {
-        photos.forEach(function(p) {
-          var rate = p.classList.contains('cp-l1') ? rates['cp-l1']
-                   : p.classList.contains('cp-l2') ? rates['cp-l2']
-                   : rates['cp-r1'];
-          var base = p.classList.contains('cp-r1') ? 'translateY(-50%) ' : '';
-          if (window.innerWidth < 1440) rate *= 0.5; // 中くらいの幅では動きを控えめに
-          p.style.transform = base + 'translate3d(0,' + (r.top * rate + drift) + 'px,0)';
-        });
-      }
-      ticking = false;
-    }
-    window.addEventListener('scroll', function() {
-      if (!ticking) { requestAnimationFrame(update); ticking = true; }
-    }, { passive: true });
-    window.addEventListener('resize', update, { passive: true });
-    update();
-  })();
-
   // ===== FV背景 幾何学アニメ（③ 点と線のネットワーク） =====
   (function() {
     var canvas = document.getElementById('fv-canvas');
