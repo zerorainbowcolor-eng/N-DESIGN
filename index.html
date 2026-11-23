@@ -193,6 +193,7 @@
     @media (max-width: 767px) { .concern-desc { font-size: 1.15rem; } }
     /* お悩みCTA リード文＋スラッシュ装飾 */
     .concern-cta-lead { font-weight: 700; color: #001638; margin-bottom: 1rem; font-size: clamp(1.05rem, 4vw, 1.35rem); }
+    @media (max-width: 639px) { .concern-cta-lead { white-space: nowrap; font-size: min(1.05rem, calc((100vw - 56px) / 19)); } .concern-cta-lead .slash-text { padding: 0 1.2em; } .concern-cta-lead .slash-text::before { left: 0.35em; } .concern-cta-lead .slash-text::after { right: 0.35em; } } /* スマホで1行に収める */
     .slash-text { position: relative; display: inline-block; padding: 0 1.5em; }
     .slash-text::before, .slash-text::after { content: ''; position: absolute; top: 4px; bottom: 4px; width: 2px; background: #001638; }
     .slash-text::before { left: 0.5em; transform: rotate(-18deg); }
@@ -509,6 +510,8 @@
     .hero-stack { position: relative; }
     .concept-pin { position: relative; z-index: 1; }
     .concept-pin.is-stick #concept { position: sticky; }
+    .concept-pin.is-chars #concept .cl { opacity: 1 !important; transform: none !important; filter: none !important; }
+    .concept-pin.is-chars #concept .ch { display: inline-block; white-space: pre; opacity: 0; }
     /* PC：コンセプトの下端で固定し、スクロールで1文字ずつ表示（JSで高さとtopを設定） */
     @media (min-width: 768px) {
       .concept-pin.is-pin #concept { position: sticky; padding-top: 88px; padding-bottom: 48px; min-height: 100vh; } /* 画面より低いと下に白が出るため最低1画面分 */ /* 固定時に1画面へ収まるよう余白を詰める */
@@ -1910,36 +1913,35 @@
       layout(); render();
       return;
     }
-    // ===== スマホ：コンセプト下端で固定 → 少し間を置いてお悩みエリアがせり上がる =====
+    // ===== スマホ：固定はせず、普通のスクロールに合わせて左から1文字ずつ表示（PC版と同じ出し方） =====
     var sec = document.getElementById('concept');
     var spPin = document.querySelector('.concept-pin');
-    var spWrap = document.querySelector('.lower-bg-wrap');
-    spPin.classList.add('is-stick');
-    function spLayout() {
-      var vh = window.innerHeight, h = sec.offsetHeight;
-      sec.style.top = Math.min(0, vh - h) + 'px';
-      spPin.style.height = (h + Math.round(vh * 1.5)) + 'px'; // 読む間0.5画面＋せり上がり1画面
-      spWrap.style.marginTop = -vh + 'px';
-    }
-    window.addEventListener('resize', spLayout);
-    spLayout();
-    // 1行ずつ順番に：スクロール量全体を行数で区切り、前の行が出きったら次の行がはっきりし始める
-    // 開始＝セクションが画面の40%を覆った時点／終了＝固定が始まる時点（下端が画面下に来たとき）
+    var spChars = [];
+    lines.forEach(function(el) {
+      var text = el.textContent;
+      el.textContent = '';
+      Array.prototype.forEach.call(text, function(c) {
+        var sp = document.createElement('span');
+        sp.className = 'ch'; sp.textContent = c;
+        el.appendChild(sp); spChars.push(sp);
+      });
+    });
+    spPin.classList.add('is-chars');
+    var SW = 6;
     var ticking = false;
     function update() {
       var vh = window.innerHeight;
-      var secTop = sec.getBoundingClientRect().top;
-      var last = lines[lines.length - 1];
-      var lastOff = last.getBoundingClientRect().top - secTop; // セクション上端から最後の行までの距離
-      var startTop = 0.6 * vh, endTop = Math.min(0, vh - sec.offsetHeight) + vh * 0.15; // 固定の少し手前で出しきる
-      var T = (startTop - secTop) / Math.max(1, startTop - endTop);
-      T = Math.max(0, Math.min(1, T));
-      var n = lines.length;
-      lines.forEach(function(el, i) {
-        var p = Math.max(0, Math.min(1, T * n - i));
-        el.style.opacity = (0.05 + 0.95 * p).toFixed(3);
-        el.style.transform = p < 1 ? 'translateY(' + ((1 - p) * 30).toFixed(1) + 'px)' : 'none';
-        el.style.filter = p < 1 ? 'blur(' + ((1 - p) * 16).toFixed(1) + 'px)' : 'none'; // 空にするとCSSの初期ぼかしに戻るため none を明示
+      // 開始＝最初の行が画面の85%の高さに来たとき／終了＝最後の行が画面の45%の高さに来たとき
+      var firstTop = lines[0].getBoundingClientRect().top;
+      var lastTop = lines[lines.length - 1].getBoundingClientRect().top;
+      var span = Math.max(1, (lastTop - firstTop) + vh * 0.4);
+      var T = Math.max(0, Math.min(1, (vh * 0.85 - firstTop) / span));
+      var n = spChars.length, pos = T * (n + SW);
+      spChars.forEach(function(c, k) {
+        var p = Math.max(0, Math.min(1, (pos - k) / SW));
+        c.style.opacity = p.toFixed(3);
+        c.style.filter = p < 1 && p > 0 ? 'blur(' + ((1 - p) * 8).toFixed(1) + 'px)' : 'none';
+        c.style.transform = p < 1 ? 'translateX(' + ((1 - p) * -6).toFixed(1) + 'px)' : 'none';
       });
       ticking = false;
     }
