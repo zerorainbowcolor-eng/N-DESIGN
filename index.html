@@ -190,6 +190,11 @@
 
     /* ===== お悩みカード説明文(2倍サイズ) ===== */
     .concern-desc { font-size: 1.375rem; line-height: 1.6; }
+    /* お悩み：枠なし。イラストの下に中央揃えの文章 */
+    .concern-item { text-align: center; }
+    .concern-illust { display: block; width: 100%; height: 220px; object-fit: contain; margin: 0 auto 1.5rem; }
+    .concern-item .concern-desc { font-size: 1.1rem; line-height: 1.9; font-weight: 500; }
+    @media (max-width: 767px) { .concern-illust { height: 190px; margin-bottom: 1.1rem; } .concern-item .concern-desc { font-size: 1.05rem; } }
     @media (max-width: 767px) { .concern-desc { font-size: 1.15rem; } }
     /* お悩みCTA リード文＋スラッシュ装飾 */
     .concern-cta-lead { font-weight: 700; color: #001638; margin-bottom: 1rem; font-size: clamp(1.05rem, 4vw, 1.35rem); }
@@ -1102,30 +1107,21 @@
 
     <!-- 3カードグリッド -->
     <div class="mb-10">
-      <div class="grid md:grid-cols-3 gap-5">
+      <div class="grid md:grid-cols-3 gap-12 md:gap-8">
 
-        <div class="card p-6 text-left" data-aos="fade-up" data-aos-delay="100" style="border:none;">
-          <img src="images/悩む男性.png" alt="" class="w-full object-contain mb-4" style="height:160px; object-position:center;" />
-          <div class="flex items-start gap-3">
-            <span class="concern-check"><svg width="26" height="26" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="11" fill="#81D8D0"/><path d="M6 11.5l3.5 3.5 6.5-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <p class="text-[#001638] leading-relaxed font-medium concern-desc">LPやHPを作りたいが、<span class="font-bold" style="color:#3ab8d0;">何から始めればいいかわからない</span>。</p>
-          </div>
+        <div class="concern-item" data-aos="fade-up" data-aos-delay="100" style="border:none;">
+          <img src="images/悩む男性.png" alt="" class="concern-illust" />
+          <p class="text-[#001638] leading-relaxed font-medium concern-desc">LPやHPを作りたいが、<br /><span class="font-bold" style="color:#3ab8d0;">何から始めればいいかわからない</span>。</p>
         </div>
 
-        <div class="card p-6 text-left" data-aos="fade-up" data-aos-delay="200" style="border:none;">
-          <img src="images/忙しい女性.png" alt="" class="w-full object-contain mb-4" style="height:160px; object-position:center;" />
-          <div class="flex items-start gap-3">
-            <span class="concern-check"><svg width="26" height="26" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="11" fill="#81D8D0"/><path d="M6 11.5l3.5 3.5 6.5-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <p class="text-[#001638] leading-relaxed font-medium concern-desc">LPやHPを作りたいが、日々の業務に追われて<span class="font-bold" style="color:#3ab8d0;">手が回らない</span>。</p>
-          </div>
+        <div class="concern-item" data-aos="fade-up" data-aos-delay="200" style="border:none;">
+          <img src="images/忙しい女性.png" alt="" class="concern-illust" />
+          <p class="text-[#001638] leading-relaxed font-medium concern-desc">LPやHPを作りたいが、<br />日々の業務に追われて<span class="font-bold" style="color:#3ab8d0;">手が回らない</span>。</p>
         </div>
 
-        <div class="card p-6 text-left" data-aos="fade-up" data-aos-delay="300" style="border:none;">
-          <img src="images/悩む女性.png" alt="" class="w-full object-contain mb-4" style="height:160px; object-position:center;" />
-          <div class="flex items-start gap-3">
-            <span class="concern-check"><svg width="26" height="26" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="11" fill="#81D8D0"/><path d="M6 11.5l3.5 3.5 6.5-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <p class="text-[#001638] leading-relaxed font-medium concern-desc">制作会社に頼むと、<br /><span class="font-bold" style="color:#3ab8d0;">制作費や毎月の運用費が高い</span>。</p>
-          </div>
+        <div class="concern-item" data-aos="fade-up" data-aos-delay="300" style="border:none;">
+          <img src="images/悩む女性_red.png" alt="" class="concern-illust" />
+          <p class="text-[#001638] leading-relaxed font-medium concern-desc">制作会社に頼むと、<br /><span class="font-bold" style="color:#3ab8d0;">制作費や毎月の運用費が高い</span>。</p>
         </div>
 
       </div>
@@ -1154,19 +1150,19 @@
 
     <div class="grid md:grid-cols-3 gap-8">
       <div class="card p-8 strength-card" data-aos="fade-up" data-aos-delay="100" style="border:none;">
-        <img src="images/A.png" alt="" class="w-full object-contain mb-4" style="height:160px; object-position:center;" />
+        <img src="images/A.png" alt="" class="concern-illust" />
         <div class="text-xs font-bold tracking-[0.15em] uppercase mb-1 text-center md:text-left" style="color:#e5025a;">Policy 01</div>
         <h3 class="text-2xl font-bold mb-3 text-center md:text-left">「なんとなく」からのご相談でも大歓迎</h3>
         <p class="text-sm text-[#555] leading-loose">「こんな雰囲気にしたい」がまだ言葉になっていなくても大丈夫です。お話を伺いながら、参考サイトや色・言葉の好みを一緒に整理し、イメージを少しずつ形にしていきます。固まってから相談する必要はありません。</p>
       </div>
       <div class="card p-8 strength-card" data-aos="fade-up" data-aos-delay="200" style="border:none;">
-        <img src="images/policy02.webp" alt="" class="w-full object-contain mb-4" style="height:160px; object-position:center;" />
+        <img src="images/policy02.webp" alt="" class="concern-illust" />
         <div class="text-xs font-bold tracking-[0.15em] uppercase mb-1 text-center md:text-left" style="color:#e5025a;">Policy 02</div>
         <h3 class="text-2xl font-bold mb-3 text-center md:text-left">ご希望に合わせたお見積もり</h3>
         <p class="text-sm text-[#555] leading-loose">決まったプランに当てはめるのではなく、ご予算とやりたいことを伺ってから内容を組み立てます。お見積もりは総額でご提示し、追加費用が発生する場合は事前に必ずお伝えします。あとから金額が膨らむ心配はありません。</p>
       </div>
       <div class="card p-8 strength-card" data-aos="fade-up" data-aos-delay="300" style="border:none;">
-        <img src="images/C.png" alt="" class="w-full object-contain mb-4" style="height:160px; object-position:center;" />
+        <img src="images/C.png" alt="" class="concern-illust" />
         <div class="text-xs font-bold tracking-[0.15em] uppercase mb-1 text-center md:text-left" style="color:#e5025a;">Policy 03</div>
         <h3 class="text-2xl font-bold mb-3 text-center md:text-left">制作過程も見える進行報告</h3>
         <p class="text-sm text-[#555] leading-loose">「今どうなっているんだろう」と待たせることがないよう、制作の途中経過をこまめに共有します。方向性のズレは早い段階で確認できるので、完成間際の大きな手戻りを防ぎ、スケジュールも読みやすくなります。</p>
