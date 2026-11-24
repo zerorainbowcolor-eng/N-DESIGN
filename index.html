@@ -516,13 +516,13 @@
     .concept-pin { position: relative; z-index: 1; }
     .concept-pin.is-stick #concept { position: sticky; }
     .concept-pin.is-chars #concept .cl { opacity: 1 !important; transform: none !important; filter: none !important; }
-    .concept-pin.is-chars #concept .ch { display: inline-block; white-space: pre; opacity: 0; }
+    .concept-pin.is-chars #concept .ch { display: inline-block; white-space: pre; color: #8cb4ea; text-shadow: none; }
     /* PC：コンセプトの下端で固定し、スクロールで1文字ずつ表示（JSで高さとtopを設定） */
     @media (min-width: 768px) {
       .concept-pin.is-pin #concept { position: sticky; padding-top: 88px; padding-bottom: 48px; min-height: 100vh; } /* 画面より低いと下に白が出るため最低1画面分 */ /* 固定時に1画面へ収まるよう余白を詰める */
       .concept-pin.is-pin #concept .concept-copy p + p { margin-top: 2em; }
       .concept-pin.is-pin #concept .cl { opacity: 1 !important; transform: none !important; filter: none !important; }
-      .concept-pin.is-pin #concept .ch { display: inline-block; white-space: pre; opacity: 0; }
+      .concept-pin.is-pin #concept .ch { display: inline-block; white-space: pre; color: #8cb4ea; text-shadow: none; }
     }
     .hero-stack > #top { position: sticky; z-index: 0; will-change: filter; }
     .hero-stack #concept {
@@ -670,7 +670,7 @@
       .concept-copy .cl, .concept-head .cl { clip-path: none; transition: none; }
     }
     /* 雲と重なっても白文字が読めるよう、目立たない暗い影 */
-    #concept .concept-inner { text-shadow: 0 1px 2px rgba(0,30,90,0.6), 0 0 6px rgba(0,30,90,0.45), 0 2px 16px rgba(0,30,90,0.35); }
+    #concept .concept-inner { text-shadow: 0 1px 2px rgba(0,30,90,0.28), 0 0 6px rgba(0,30,90,0.2); } /* 影をうすめに（元: 0.6 / 0.45 / 0.35） */
     @media (max-width: 639px) {
       .concept-copy { line-height: 2.3; }
       .concept-copy p + p { margin-top: 2em; }
@@ -1279,9 +1279,9 @@
 
     <div class="works-masonry">
       <div class="work-item" data-aos="fade-up" data-aos-delay="50" onclick="location.href='portfolio-detail.html?id=19'">
-        <div class="work-thumb"><img src="images/works/hp-sample-card.webp" alt="キャニング・アンド・アソシエイツ様　コーポレートサイト（トップページリニューアル）" loading="lazy" class="thumb-cover" /></div>
+        <div class="work-thumb"><img src="images/works/hp-sample-card.webp" alt="キャニング・アンド・アソシエイツ様　コーポレートサイト【トップページリニューアル】" loading="lazy" class="thumb-cover" /></div>
         <p class="work-tag">#HP制作</p>
-        <h3 class="work-title">キャニング・アンド・アソシエイツ様　コーポレートサイト（トップページリニューアル）</h3>
+        <h3 class="work-title">キャニング・アンド・アソシエイツ様　コーポレートサイト【トップページリニューアル】</h3>
       </div>
       <div class="work-item" data-aos="fade-up" data-aos-delay="50" onclick="location.href='portfolio-detail.html?id=1'">
         <div class="work-thumb"><img src="images/lp01.webp" alt="LINEマーケティングコンサルタント養成講座 無料説明会LP" loading="lazy" class="thumb-cover" /></div>
@@ -1869,6 +1869,16 @@
     // スクロール連動：各行が画面の下から上がってくるにつれ、上の行から順にぼかしが晴れて浮き上がる
     // （上に戻すと逆再生でまたぼやける）
     var lines = Array.prototype.slice.call(document.querySelectorAll('#concept .cl'));
+    // 文字色：最初は薄い青(140,180,234)、スクロールに合わせて左から順に白へ
+    function chColor(p) {
+      if (p >= 1) return '#fff';
+      return 'rgb(' + Math.round(140 + 115 * p) + ',' + Math.round(180 + 75 * p) + ',' + Math.round(234 + 21 * p) + ')';
+    }
+    // 影：白くなるのに合わせて、なし → うすめの影 へ
+    function chShadow(p) {
+      if (p <= 0) return 'none';
+      return '0 1px 2px rgba(0,30,90,' + (0.28 * p).toFixed(3) + '), 0 0 6px rgba(0,30,90,' + (0.2 * p).toFixed(3) + ')';
+    }
     // ===== PC：コンセプト下端で固定し、固定中のスクロールで左から1文字ずつ表示 =====
     if (window.innerWidth >= 768) {
       var pin = document.querySelector('.concept-pin');
@@ -1907,9 +1917,7 @@
         var n = chars.length, pos = T * (n + W);
         chars.forEach(function(c, k) {
           var p = Math.max(0, Math.min(1, (pos - k) / W));
-          c.style.opacity = p.toFixed(3);
-          c.style.filter = p < 1 && p > 0 ? 'blur(' + ((1 - p) * 8).toFixed(1) + 'px)' : 'none';
-          c.style.transform = p < 1 ? 'translateX(' + ((1 - p) * -6).toFixed(1) + 'px)' : 'none';
+          c.style.color = chColor(p); c.style.textShadow = chShadow(p);
         });
         ticking2 = false;
       }
@@ -1946,9 +1954,7 @@
       var n = spChars.length, pos = T * (n + SW);
       spChars.forEach(function(c, k) {
         var p = Math.max(0, Math.min(1, (pos - k) / SW));
-        c.style.opacity = p.toFixed(3);
-        // スマホはぼかしを使わない（ぼかしの描画範囲で文字の影が切れ、縦線が出るため）
-        c.style.transform = p < 1 ? 'translateX(' + ((1 - p) * -6).toFixed(1) + 'px)' : 'none';
+        c.style.color = chColor(p); c.style.textShadow = chShadow(p);
       });
       ticking = false;
     }
