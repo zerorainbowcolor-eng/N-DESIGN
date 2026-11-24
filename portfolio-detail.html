@@ -104,7 +104,7 @@
 </nav>
 
 <!-- CONTENT -->
-<div class="pt-16 max-w-4xl mx-auto px-5 sm:px-8 py-12">
+<div class="pt-28 max-w-4xl mx-auto px-5 sm:px-8 py-12">
 
   <!-- パンくず -->
   <p class="text-xs text-[#999] mb-8">
@@ -189,11 +189,11 @@
   // 各作品のスライド定義
   // 通常画像は文字列、縦スクロールスライドは {type:'scroll', images:[...]} で指定
   const extraImages = {
-    1: [{ type: 'scroll', images: ['images/work1A.jpg', 'images/work1B.jpg'] }],
-    2: [{ type: 'scroll', images: ['images/work2A.jpg', 'images/work2B.jpg'] }],
-    3: [{ type: 'scroll', images: ['images/work3A.jpg', 'images/work3B.jpg'] }],
-    5: [{ type: 'scroll', images: ['images/work5A.jpg', 'images/work5B.jpg'] }],
-    10: [{ type: 'scroll', images: ['images/work4A.jpg', 'images/work4B.jpg'] }],
+    1: [{ type: 'scroll', images: ['images/work1A.webp', 'images/work1B.webp'] }],
+    2: [{ type: 'scroll', images: ['images/work2A.webp', 'images/work2B.jpg'] }],
+    3: [{ type: 'scroll', images: ['images/work3A.webp', 'images/work3B.webp'] }],
+    5: [{ type: 'scroll', images: ['images/work5A.webp', 'images/work5B.jpg'] }],
+    10: [{ type: 'scroll', images: ['images/work4A.webp', 'images/work4B.webp'] }],
   };
 
   let currentSlide = 0;
@@ -216,7 +216,7 @@
         slide.style.cssText = 'min-width:100%; height:70vw; max-height:500px; overflow-y:auto; background:#111;';
         item.images.forEach(src => {
           // PC用高画質版（-pc.jpg）があればpictureで出し分け
-          const pcSrc = src.replace(/\.jpg$/i, '-pc.jpg');
+          const pcSrc = src.replace(/\.(jpg|webp)$/i, '-pc.$1');
           const picture = document.createElement('picture');
           const source = document.createElement('source');
           source.media = '(min-width: 640px)';
@@ -396,16 +396,16 @@
 
     // スライダー構築
     const bannerImages = {
-      5: 'images/work5.jpg',
-      10: 'images/work４.jpg',
-      11: 'images/banner/A.jpg',
-      12: 'images/banner/B.jpg',
-      13: 'images/banner/C.jpg',
-      14: 'images/banner/D.jpg',
-      15: 'images/banner/E.jpg',
-      16: 'images/banner/F.jpg',
-      17: 'images/banner/G.jpg',
-      18: 'images/banner/H.jpg',
+      5: 'images/work5.webp',
+      10: 'images/work４.webp',
+      11: 'images/banner/A.webp',
+      12: 'images/banner/B.webp',
+      13: 'images/banner/C.webp',
+      14: 'images/banner/D.webp',
+      15: 'images/banner/E.webp',
+      16: 'images/banner/F.webp',
+      17: 'images/banner/G.webp',
+      18: 'images/banner/H.webp',
     };
     const mainImg = bannerImages[id] || `images/portfolio${id}.jpg`;
     const extras  = extraImages[id] || [];
@@ -413,13 +413,13 @@
     // ショーケース（メイン画像 → サイト全体）。画像は仮。後で差し替え
     const showcase = {
       20: {
-        main: 'images/works/novelie-card.jpg',
+        main: 'images/works/novelie-card.webp',
         mainCols: [
-          ['images/works/novelie-col-1.jpg'],
-          ['images/works/novelie-col-2.jpg'],
-          ['images/works/novelie-col-3.jpg'],
+          ['images/works/novelie-col-1.webp'],
+          ['images/works/novelie-col-2.webp'],
+          ['images/works/novelie-col-3.webp'],
         ],
-        full: [{ src: 'images/works/novelie-full.jpg', h: 18770 }],
+        full: [{ src: 'images/works/novelie-full.webp', h: 18770 }],
         notes: [
           { x: .75, y: .045, side: 'R', text: 'FVは「目元に新習慣。」の縦書きコピーと女性の写真で、上品で清潔感のある世界観に。人気成分の配合をゴールドの丸いバッジで見せています。' },
           { x: .1, y: .075, side: 'L', text: 'FVの直後に「各ランキングで第1位」を月桂樹とゴールドで強調し、実績で信頼感を伝えています。' },
@@ -433,13 +433,13 @@
         ],
       },
       1: {
-        main: 'images/lp01.jpg',
+        main: 'images/lp01.webp',
         mainCols: [
-          ['images/works/lmc-col-1.jpg'],
-          ['images/works/lmc-col-2.jpg'],
-          ['images/works/lmc-col-3.jpg'],
+          ['images/works/lmc-col-1.webp'],
+          ['images/works/lmc-col-2.webp'],
+          ['images/works/lmc-col-3.webp'],
         ],
-        full: [{ src: 'images/work1B-pc.jpg', h: 21753 }],
+        full: [{ src: 'images/work1B-pc.webp', h: 21753 }],
         notes: [
           { x: .5, y: .04, side: 'R', text: 'FVでは実績の数字を金色のバッジで見せ、在宅で自由に働ける未来をひと目でイメージできるようにしました。' },
           { x: .1, y: .1, side: 'L', text: 'はじめに「LMCとは？」を説明し、聞き慣れない仕事でも内容がすぐ分かるように。写真と短い文章で、難しいイメージを和らげています。' },
@@ -453,13 +453,13 @@
         ],
       },
       5: {
-        main: 'images/lp03.jpg',
+        main: 'images/lp03.webp',
         mainCols: [
-          ['images/works/sss-col-1.jpg'],
-          ['images/works/sss-col-2.jpg'],
-          ['images/works/sss-col-3.jpg'],
+          ['images/works/sss-col-1.webp'],
+          ['images/works/sss-col-2.webp'],
+          ['images/works/sss-col-3.webp'],
         ],
-        full: [{ src: 'images/works/sss-full.jpg', h: 13707 }],
+        full: [{ src: 'images/works/sss-full.webp', h: 13707 }],
         notes: [
           { x: .85, y: .08, side: 'R', text: 'FVは講師の写真と実績のバッジで信頼感をつくり、すぐ下の帯で「労力半分で売上2倍」というメリットをストレートに伝えています。' },
           { x: .1, y: .155, side: 'L', text: '「通常15,000円→0円」の限定オファーを早めに提示。参加費の安さで、申し込みへの心理的なハードルを下げています。' },
@@ -472,15 +472,15 @@
         ],
       },
       2: {
-        main: 'images/lp02.jpg',
+        main: 'images/lp02.webp',
         mainCols: [
-          ['images/works/enzyme-col-1.jpg'],
-          ['images/works/enzyme-col-2a.jpg', 'images/works/enzyme-col-2b.jpg'],
-          ['images/works/enzyme-col-3.jpg'],
+          ['images/works/enzyme-col-1.webp'],
+          ['images/works/enzyme-col-2a.webp', 'images/works/enzyme-col-2b.webp'],
+          ['images/works/enzyme-col-3.webp'],
         ],
         full: [
-          { src: 'images/works/enzyme-top.jpg', h: 9814 },
-          { src: 'images/works/enzyme-bottom.jpg', h: 10298 },
+          { src: 'images/works/enzyme-top.webp', h: 9814 },
+          { src: 'images/works/enzyme-bottom.webp', h: 10298 },
         ],
         notes: [
           { x: .55, y: .035, side: 'R', text: 'ファーストビューは笑顔の女性とフルーツで、明るく前向きな印象に。「添加物不使用」「プロ仕様」「満足度93%」のバッジで、安心感と実績をひと目で伝えています。' },
@@ -495,19 +495,19 @@
         ],
       },
       3: {
-        main: 'images/hp01.jpg',
+        main: 'images/hp01.webp',
         mainCols: [
-          ['images/works/ccc-top-1.jpg', 'images/works/ccc-top-2.jpg'],
-          ['images/works/ccc-top-3.jpg', 'images/works/ccc-top-4.jpg'],
-          ['images/works/ccc-top-5.jpg', 'images/works/ccc-top-6.jpg'],
+          ['images/works/ccc-top-1.webp', 'images/works/ccc-top-2.webp'],
+          ['images/works/ccc-top-3.webp', 'images/works/ccc-top-4.webp'],
+          ['images/works/ccc-top-5.webp', 'images/works/ccc-top-6.webp'],
         ],
         full: [
-          { src: 'images/works/ccc-top-1.jpg', h: 2388 },
-          { src: 'images/works/ccc-top-2.jpg', h: 2583 },
-          { src: 'images/works/ccc-top-3.jpg', h: 2491 },
-          { src: 'images/works/ccc-top-4.jpg', h: 2319 },
-          { src: 'images/works/ccc-top-5.jpg', h: 1436 },
-          { src: 'images/works/ccc-top-6.jpg', h: 2793 },
+          { src: 'images/works/ccc-top-1.webp', h: 2388 },
+          { src: 'images/works/ccc-top-2.webp', h: 2583 },
+          { src: 'images/works/ccc-top-3.webp', h: 2491 },
+          { src: 'images/works/ccc-top-4.webp', h: 2319 },
+          { src: 'images/works/ccc-top-5.webp', h: 1436 },
+          { src: 'images/works/ccc-top-6.webp', h: 2793 },
         ],
         notes: [
           { x: .63, y: .065, side: 'R', text: '「28年の経験」をサブコピーで添え、専門性がひと目で伝わるようにしています。' },
@@ -520,14 +520,14 @@
         ],
       },
       19: {
-        main: 'images/works/hp-sample-main.jpg',
+        main: 'images/works/hp-sample-main.webp',
         // 縦長画像（幅1800基準の高さ）。fv は1枚目の上部に重ねる高画質FV
         full: [
-          { src: 'images/works/canning-top-1.jpg', h: 6360 },
-          { src: 'images/works/canning-top-2.jpg', h: 3190 },
-          { src: 'images/works/canning-top-3.jpg', h: 5882 },
+          { src: 'images/works/canning-top-1.webp', h: 6360 },
+          { src: 'images/works/canning-top-2.webp', h: 3190 },
+          { src: 'images/works/canning-top-3.webp', h: 5882 },
         ],
-        fv: { src: 'images/works/canning-fv.jpg', h: 1013 },
+        fv: { src: 'images/works/canning-fv.webp', h: 1013 },
         // 説明カード：x,y は縦長画像全体に対する位置（0〜1）、side はPCでの配置
         notes: [
           { x: .88, y: .046, side: 'R', text: '「累計20万人」「世界70カ国」「満足度96%」の実績を月桂樹のバッジにして写真に重ねました。ファーストビューで実績がひと目で伝わり、信頼感につながるよう目立たせています。' },
@@ -578,7 +578,7 @@
       info.classList.add('sc-info');
       info.querySelectorAll(':scope > .space-y-5 > div').forEach(d => d.classList.add('sc-block'));
       info.querySelector('.mt-10').style.justifyContent = 'center';
-      document.querySelector('.pt-16.max-w-4xl').classList.replace('max-w-4xl', 'max-w-6xl');
+      document.querySelector('.pt-28.max-w-4xl').classList.replace('max-w-4xl', 'max-w-6xl');
     } else {
       buildSlider([mainImg, ...extras]);
     }
