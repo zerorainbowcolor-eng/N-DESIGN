@@ -1947,7 +1947,7 @@
       spChars.forEach(function(c, k) {
         var p = Math.max(0, Math.min(1, (pos - k) / SW));
         c.style.opacity = p.toFixed(3);
-        c.style.filter = p < 1 && p > 0 ? 'blur(' + ((1 - p) * 8).toFixed(1) + 'px)' : 'none';
+        // スマホはぼかしを使わない（ぼかしの描画範囲で文字の影が切れ、縦線が出るため）
         c.style.transform = p < 1 ? 'translateX(' + ((1 - p) * -6).toFixed(1) + 'px)' : 'none';
       });
       ticking = false;
