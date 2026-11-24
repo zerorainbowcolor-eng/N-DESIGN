@@ -162,7 +162,19 @@
     }
 
     /* ===== 料金（PRICE） ===== */
+    .price-monitor { max-width: 1100px; margin: 0 auto 4.5rem; background: #fff; border: 2px solid #e5025a; border-radius: 20px; padding: clamp(1.75rem, 4vw, 3rem) clamp(1.25rem, 5vw, 3.5rem); text-align: center; box-shadow: 0 10px 30px rgba(229,2,90,0.08); }
+    .price-monitor-label { display: inline-block; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.14em; color: #fff; background: #e5025a; border-radius: 999px; padding: 0.3rem 0.9rem; }
+    .price-monitor-title { font-weight: 700; color: #001638; font-size: clamp(1.35rem, 2.4vw, 1.8rem); margin-top: 0.8rem; }
+    .price-monitor-body { color: #333; font-size: 0.95rem; line-height: 2; margin: 1rem auto 0; max-width: 46em; text-align: left; }
+    @media (min-width: 640px) { .price-monitor-body { text-align: center; } }
+    .price-monitor-body strong { color: #e5025a; font-weight: 700; font-size: 1.1em; }
+    .price-monitor-btn { margin-top: 1.75rem; }
+    .price-monitor-btn .btn-primary { min-height: 52px; }
+    @media (max-width: 639px) { .price-monitor-btn .btn-primary { white-space: nowrap; font-size: 0.9rem; padding-left: 1.4rem; padding-right: 1.1rem; } }
+    @media (prefers-reduced-motion: reduce) { .price-monitor[data-aos] { opacity: 1 !important; transform: none !important; transition: none !important; } }
     .price-intro { text-align: center; color: #555; font-size: 0.95rem; margin-bottom: 3.5rem; }
+    .price-budget-lead { font-size: 1rem; line-height: 2; color: #333; }
+    .price-budget-lead strong { color: #001638; font-weight: 700; }
     .price-block { background: #fff; border-radius: 20px; padding: clamp(1.5rem, 4vw, 3.5rem); max-width: 1100px; margin: 0 auto 3rem; }
     .price-cat { text-align: center; margin-bottom: 2rem; }
     .price-cat-en { font-family: 'Inter', sans-serif; font-weight: 700; letter-spacing: 0.12em; color: #e5025a; font-size: 0.85rem; text-transform: uppercase; }
@@ -202,6 +214,15 @@
     .price-direction-list { margin-top: 1rem; list-style: none; padding: 0; }
     .price-direction-list li { position: relative; padding-left: 1.6em; font-size: 0.9rem; line-height: 2.1; }
     .price-direction-list li::before { content: '✓'; position: absolute; left: 0; color: #fff; background: #001638; border-radius: 50%; width: 1.15em; height: 1.15em; font-size: 0.8em; line-height: 1.15em; text-align: center; top: 0.55em; }
+    .price-tool-note { font-size: 0.88rem; color: #555; line-height: 1.9; margin-bottom: 1rem; }
+    .price-table .pt-dual { display: block; white-space: nowrap; }
+    .price-table .pt-dual + .pt-dual { margin-top: 0.55rem; padding-top: 0.55rem; border-top: 1px dashed rgba(0,22,56,0.18); }
+    .price-table .pt-tool { display: block; font-family: 'Inter', sans-serif; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; color: #777; margin-bottom: 0.1rem; }
+    .price-graphic-list { list-style: none; padding: 0; margin: 0 auto; max-width: 560px; }
+    .price-graphic-list li { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: 1rem 1.2rem; background: #f3f1ee; border-radius: 8px; font-weight: 700; color: #001638; }
+    .price-graphic-list li + li { margin-top: 3px; }
+    .price-graphic-list .pg-price { font-family: 'Inter', 'Noto Sans JP', sans-serif; font-size: 1.35rem; white-space: nowrap; }
+    .price-graphic-list .pg-price small { font-size: 0.8rem; margin-left: 2px; }
     .price-notes { list-style: none; padding: 0; max-width: 1100px; margin: 0 auto; font-size: 0.78rem; color: #666; line-height: 1.9; }
     .price-cta { display: inline-block; background: #e5025a; color: #fff; font-weight: 700; padding: 1rem 2.6rem; border-radius: 999px; box-shadow: 0 6px 18px rgba(229,2,90,0.25); transition: transform 0.25s, box-shadow 0.25s; }
     .price-cta:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(229,2,90,0.35); }
@@ -287,6 +308,21 @@
 =================================== -->
 <div class="max-w-6xl mx-auto px-5 sm:px-8 pb-24">
 
+  <p class="price-intro price-budget-lead" data-aos="fade-up">掲載している料金は目安です。<strong>ご予算に応じた内容でのご提案も可能</strong>ですので、お気軽にご相談ください。</p>
+
+  <!-- ===== モニター価格のご案内 ===== -->
+  <div class="price-monitor" data-aos="fade-up">
+    <p class="price-monitor-label">MONITOR</p>
+    <h2 class="price-monitor-title">モニター価格のご案内</h2>
+    <p class="price-monitor-body">制作実績の掲載にご協力いただける方を対象に、通常料金から<strong>30〜50%オフ</strong>のモニター価格でお受けしています。割引率は制作内容によって異なりますので、お気軽にご相談ください。</p>
+    <div class="price-monitor-btn">
+      <a href="index.html#contact" class="btn-primary cta">
+        モニター価格について相談する
+        <span class="cta-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+  </div>
+
   <!-- ===== LP ===== -->
   <div class="price-block" data-aos="fade-up">
     <div class="price-cat">
@@ -300,6 +336,7 @@
       <p class="price-include-body">デザイン制作、デザインに合わせた有料素材、ライティング簡易サポート、実装、スマホ対応、納品時の操作サポート（ご希望の方）、ディレクション</p>
     </div>
 
+    <p class="price-tool-note">STUDIOとWordPressの2つの方法で制作できます。更新のしやすさを重視するならSTUDIO、ブログや機能の追加など拡張性を重視するならWordPressがおすすめです。</p>
     <div class="price-table-wrap">
       <table class="price-table price-table-2">
         <thead>
@@ -319,24 +356,24 @@
           <tr>
             <th class="pt-row" rowspan="2">制作料金</th>
             <th class="pt-sub">PC or スマホ</th>
-            <td class="pt-c1 pt-price">98,000<small>円</small></td>
-            <td class="pt-c2 pt-price">198,000<small>円</small></td>
+            <td class="pt-c1 pt-price"><span class="pt-dual"><span class="pt-tool">STUDIO</span>98,000<small>円</small></span><span class="pt-dual"><span class="pt-tool">WordPress</span>148,000<small>円</small></span></td>
+            <td class="pt-c2 pt-price"><span class="pt-dual"><span class="pt-tool">STUDIO</span>198,000<small>円</small></span><span class="pt-dual"><span class="pt-tool">WordPress</span>298,000<small>円</small></span></td>
           </tr>
           <tr>
             <th class="pt-sub">両デバイス対応</th>
-            <td class="pt-c1">＋20,000円</td>
-            <td class="pt-c2">＋50,000円</td>
+            <td class="pt-c1"><span class="pt-dual"><span class="pt-tool">STUDIO</span>＋20,000円</span><span class="pt-dual"><span class="pt-tool">WordPress</span>＋30,000円</span></td>
+            <td class="pt-c2"><span class="pt-dual"><span class="pt-tool">STUDIO</span>＋50,000円</span><span class="pt-dual"><span class="pt-tool">WordPress</span>＋75,000円</span></td>
           </tr>
           <tr>
             <th class="pt-row" rowspan="2">制作期間<span class="pt-note">※文章や写真をすべてご提出いただいてからの期間です</span></th>
             <th class="pt-sub">PC or スマホ</th>
-            <td class="pt-c1">約1週間〜1ヶ月</td>
-            <td class="pt-c2">約2週間〜1ヶ月</td>
+            <td class="pt-c1"><span class="pt-dual"><span class="pt-tool">STUDIO</span>約1週間〜1ヶ月</span><span class="pt-dual"><span class="pt-tool">WordPress</span>約10日〜1ヶ月半</span></td>
+            <td class="pt-c2"><span class="pt-dual"><span class="pt-tool">STUDIO</span>約2週間〜1ヶ月</span><span class="pt-dual"><span class="pt-tool">WordPress</span>約3週間〜1ヶ月半</span></td>
           </tr>
           <tr>
             <th class="pt-sub">両デバイス対応</th>
-            <td class="pt-c1">約2週間〜1ヶ月</td>
-            <td class="pt-c2">約3週間〜1ヶ月半</td>
+            <td class="pt-c1"><span class="pt-dual"><span class="pt-tool">STUDIO</span>約2週間〜1ヶ月</span><span class="pt-dual"><span class="pt-tool">WordPress</span>約3週間〜1ヶ月半</span></td>
+            <td class="pt-c2"><span class="pt-dual"><span class="pt-tool">STUDIO</span>約3週間〜1ヶ月半</span><span class="pt-dual"><span class="pt-tool">WordPress</span>約1ヶ月〜2ヶ月半</span></td>
           </tr>
         </tbody>
       </table>
@@ -367,6 +404,7 @@
       <p class="price-include-body">デザイン制作、デザインに合わせた有料素材、ライティング簡易サポート、実装、スマホ対応、納品時の操作サポート（ご希望の方）、ディレクション</p>
     </div>
 
+    <p class="price-tool-note">STUDIOとWordPressの2つの方法で制作できます。更新のしやすさを重視するならSTUDIO、ブログや機能の追加など拡張性を重視するならWordPressがおすすめです。</p>
     <div class="price-table-wrap">
       <table class="price-table price-table-3">
         <thead>
@@ -389,9 +427,9 @@
         <tbody>
           <tr>
             <th class="pt-row">制作料金</th>
-            <td class="pt-c1 pt-price">128,000<small>円〜</small></td>
-            <td class="pt-c2 pt-price">298,000<small>円〜</small></td>
-            <td class="pt-c3 pt-price">498,000<small>円〜</small></td>
+            <td class="pt-c1 pt-price"><span class="pt-dual"><span class="pt-tool">STUDIO</span>128,000<small>円〜</small></span><span class="pt-dual"><span class="pt-tool">WordPress</span>198,000<small>円〜</small></span></td>
+            <td class="pt-c2 pt-price"><span class="pt-dual"><span class="pt-tool">STUDIO</span>298,000<small>円〜</small></span><span class="pt-dual"><span class="pt-tool">WordPress</span>348,000<small>円〜</small></span></td>
+            <td class="pt-c3 pt-price"><span class="pt-dual"><span class="pt-tool">STUDIO</span>498,000<small>円〜</small></span><span class="pt-dual"><span class="pt-tool">WordPress</span>648,000<small>円〜</small></span></td>
           </tr>
           <tr>
             <th class="pt-row">内容</th>
@@ -401,25 +439,40 @@
           </tr>
           <tr>
             <th class="pt-row">制作期間<span class="pt-note">※文章や写真をすべてご提出いただいてからの期間です</span></th>
-            <td class="pt-c1">約1〜2ヶ月</td>
-            <td class="pt-c2">約2〜3ヶ月</td>
-            <td class="pt-c3">約2〜3ヶ月</td>
+            <td class="pt-c1"><span class="pt-dual"><span class="pt-tool">STUDIO</span>約1ヶ月〜1ヶ月半</span><span class="pt-dual"><span class="pt-tool">WordPress</span>約1ヶ月半〜2ヶ月</span></td>
+            <td class="pt-c2"><span class="pt-dual"><span class="pt-tool">STUDIO</span>約2ヶ月〜2ヶ月半</span><span class="pt-dual"><span class="pt-tool">WordPress</span>約2〜3ヶ月</span></td>
+            <td class="pt-c3"><span class="pt-dual"><span class="pt-tool">STUDIO</span>約2ヶ月〜2ヶ月半</span><span class="pt-dual"><span class="pt-tool">WordPress</span>約2〜3ヶ月</span></td>
           </tr>
           <tr>
             <th class="pt-row">使用ツール</th>
-            <td class="pt-c1">STUDIO</td>
-            <td class="pt-c2">STUDIO</td>
-            <td class="pt-c3">STUDIO</td>
+            <td class="pt-c1">STUDIO／WordPress</td>
+            <td class="pt-c2">STUDIO／WordPress</td>
+            <td class="pt-c3">STUDIO／WordPress</td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
 
+  <!-- ===== グラフィック（紙媒体） ===== -->
+  <div class="price-block" data-aos="fade-up">
+    <div class="price-cat">
+      <p class="price-cat-en">Graphic design</p>
+      <h3 class="price-cat-ja">グラフィックデザイン<span style="display:inline-block;">（紙媒体）</span></h3>
+      <p class="price-lead">チラシや名刺など、印刷物のデザインを制作いたします。</p>
+    </div>
+    <ul class="price-graphic-list">
+      <li><span>チラシ（片面）</span><span class="pg-price">24,800<small>円</small></span></li>
+      <li><span>名刺</span><span class="pg-price">14,800<small>円</small></span></li>
+    </ul>
+  </div>
+
   <ul class="price-notes" data-aos="fade-up">
     <li>※ 表示料金はすべて税込みです。</li>
     <li>※ 薬機法に関わる可能性のあるページは、事前に審査を受けた原稿をご用意ください。</li>
     <li>※ ご予算や内容に合わせて調整も可能です。まずはお気軽にご相談ください。</li>
+    <li>※ STUDIO・WordPressともに、サーバー・ドメイン代（STUDIOの場合は月額利用料を含む）はお客様のご負担となります。</li>
+    <li>※ 紙媒体の料金はデザイン料です。印刷代は別途となります。</li>
   </ul>
 
   <div class="text-center mt-10" data-aos="fade-up">

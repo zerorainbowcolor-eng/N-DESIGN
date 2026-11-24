@@ -57,6 +57,33 @@
       box-shadow: 0 4px 16px rgba(129,216,208,0.15);
     }
     .label { font-size: 0.875rem; font-weight: 700; color: #001638; margin-bottom: 0.25rem; }
+
+    /* ===== 実績ショーケース（HP制作用レイアウト） ===== */
+    .sc-head { text-align: center; margin-bottom: 2.5rem; }
+    .sc-cat { display:block; font-family:'Inter',sans-serif; font-size:.75rem; letter-spacing:.2em; color:#e5025a; font-weight:700; text-transform:uppercase; }
+    .sc-title { font-size:clamp(1.25rem, 3vw, 1.75rem); font-weight:700; letter-spacing:.08em; margin-top:.6rem; line-height:1.6; }
+    .sc-main { background:#f6f4ef; border-radius:16px; overflow:hidden; margin-bottom:4.5rem; }
+    .sc-main img { width:100%; height:auto; display:block; }
+    .sc-main--cols { aspect-ratio:16 / 10; display:flex; justify-content:center; gap:4%; padding:6% 5% 0; }
+    .sc-main--cols .sc-col { flex:0 0 26%; align-self:flex-start; box-shadow:0 6px 24px rgba(0,0,0,0.14); }
+    .sc-full-cap { text-align:center; font-size:.75rem; color:#999; letter-spacing:.1em; margin-bottom:1.25rem; }
+    .sc-full { position:relative; max-width:1100px; margin:0 auto 5rem; }
+    .sc-stack { position:relative; width:54%; margin:0 auto; box-shadow:0 10px 40px rgba(0,0,0,0.12); }
+    .sc-stack img { width:100%; height:auto; display:block; }
+    .sc-stack .sc-fv { position:absolute; top:0; left:0; width:100%; height:auto; object-fit:cover; }
+    .sc-svg { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; overflow:visible; }
+    .sc-line { fill:none; stroke:#aaa; stroke-width:1; }
+    .sc-dot { fill:#fff; stroke:#888; stroke-width:1.2; }
+    .sc-note { position:absolute; width:21%; background:#fff; box-shadow:0 4px 18px rgba(0,0,0,0.1); padding:1.1rem 1.2rem; font-size:.8rem; line-height:1.9; color:#555; margin:0; }
+    .sc-info { max-width:760px; margin:0 auto; border-top:1px solid #e5e5e5; padding-top:3rem; }
+    .sc-info .label { font-size:1rem; padding-left:.8rem; border-left:3px solid #e5025a; margin-bottom:.6rem; }
+    .sc-info .sc-block + .sc-block { margin-top:2rem; }
+    @media (max-width:639px){
+      .sc-main { border-radius:10px; margin-bottom:3rem; }
+      .sc-full { margin-bottom:3.5rem; }
+      .sc-stack { width:57%; margin:0; }
+      .sc-note { width:39%; font-size:10px; line-height:1.6; padding:.55rem .6rem; }
+    }
   </style>
 </head>
 
@@ -88,7 +115,18 @@
     <span id="breadcrumb-title">作品詳細</span>
   </p>
 
-  <div class="flex flex-col gap-10">
+  <!-- ショーケースレイアウト（showcase指定がある作品のみ表示） -->
+  <div id="showcase" style="display:none;">
+    <div class="sc-head">
+      <span id="sc-cat" class="sc-cat"></span>
+      <h1 id="sc-title" class="sc-title"></h1>
+    </div>
+    <div class="sc-main"><img id="sc-main-img" src="" alt="" /></div>
+    <p class="sc-full-cap">サイト全体のデザイン</p>
+    <div class="sc-full" id="sc-full"></div>
+  </div>
+
+  <div class="flex flex-col gap-10" id="detail-wrap">
 
     <!-- 左：画像スライダー -->
     <div class="w-full">
@@ -242,7 +280,7 @@
   const portfolioData = [
     { category: 'LP制作', title: 'LINEマーケティングコンサルタント養成講座 無料説明会LP', concept: '難しいイメージを払拭し、「自分にもできそう」というワクワク感と、在宅で自由に働ける未来のイメージを直感的に伝えるクリーンなデザイン。<br><br><span style="font-size:0.875rem; font-weight:700; color:#001638;">デザイン構成</span><br>カラー：信頼感と清潔感を与えるブルーを基調に、行動を促すオレンジをアクセントに採用。実績などの重要数字はゴールドで強調。<br>レイアウト：スマホ閲覧を意識した縦長構成。FVで実績をアピールして離脱を防ぎ、受講生の声や図解を交えてテンポよく解説。<br>CVR対策：ユーザーの熱量が高まるセクションの直後に、目立つCTAボタンを最適配置。', target: 'メイン：在宅ワークや副業、フリーランスを目指す未経験者（30代〜40代男女）\n悩み：「特別な資格やセンスがない」「何から始めていいか分からない」と一歩を踏み出せずにいる層。', tools: 'Photoshop' },
     { category: 'LP制作', title: '酵素ドリンク LP', concept: '酵素ドリンクに対してハードルを感じている層に向け、みずみずしいフルーツのビジュアルや日常に溶け込むライフスタイル写真を使用。ストイックで苦しいイメージを一新し、「美味しく、無理なく続けられる自分へのご褒美」としての楽しさと、無添加処方の安心感を両立させたデザイン。<br><br><span style="font-size:0.875rem; font-weight:700; color:#001638;">デザイン構成</span><br>カラー：自然由来の瑞々しさを伝えるアースグリーンを基調に、購買意欲を高めるフレッシュなオレンジをアクセントに採用。お悩みセクションには一転して黒背景を使い、視覚的なコントラストを生んでいます。<br>レイアウト：スマホでのスクロールを飽きさせない緩急のある構成。ファーストビューで「30%OFF・2,940円」というオファーを印象付けた後、お悩み共感→5つの選ばれる理由から、愛用者の声へと自然に納得させるストーリー設計。<br>CVR対策：手軽に試せる「定期縛りなし」のQ&Aで最後の不安を払拭し、熱量が高まるタイミングで鮮やかなグリーンの大きめのCTAボタンへ誘導。', target: 'メイン：美容や健康への意識が高く、手軽にインナーケアを取り入れたい20代〜40代の男女（主に女性）。\n悩み：「食生活の乱れや肌荒れ・むくみが気になる」「体が重いけれど、無理なダイエットやファスティングは続かない」と悩む多忙な層。', tools: 'Photoshop' },
-    { category: 'HP制作', title: 'CCC木村事務所様　コーポレートサイト【リニューアル】', intro: 'コンタクトセンターの品質改善を行う「CCC 木村オフィス」様よりご相談をいただき、ホームページのリニューアルを担当いたしました。', concept: '「大手にはない柔軟性」と「代表自らが直接コミットする安心感（属人性の強み）」を前面に出しつつ、プロフェッショナルな風格を両立させたデザイン。<br><br><span style="font-size:0.875rem; font-weight:700; color:#001638;">デザイン構成</span><br>カラー： 知性と信頼感を象徴するディープネイビーをベースにした配色。<br><br>レイアウト： 木村様の「顔が見える安心感」と「確かな実績・ノウハウ」を掛け合わせた構成。FVで専門性を明示した後、代表のプロフィールや想いを丁寧に語りつつ、提供サービスや課題解決プロセスを論理的に整理した、納得感のあるストーリー設計。<br><br>CVR対策： 「まずは壁打ちから相談したい」という心理的ハードルを下げるため、気軽な初回相談やお問い合わせへ繋げる導線をヘッダーと各セクションに配置。', target: 'メイン： 顧客エンゲージメントの向上や、コールセンターの品質・生産性に課題を抱える中小・ベンチャー企業の経営層やカスタマーサクセス責任者。\n悩み： 「大手のコンサルは費用が高く、誰が担当になるか分からず不安」「自社の状況に寄り添って、泥臭く一緒に現場を改善してくれるプロを探している」という層。', tools: 'Photoshop' },
+    { category: 'HP制作', title: 'CCC木村事務所様　コーポレートサイト【リニューアル】', intro: 'コンタクトセンターの品質改善を行う「CCC 木村オフィス」様よりご相談をいただき、ホームページのリニューアルを担当いたしました。', concept: '「大手にはない柔軟性」と「代表自らが直接コミットする安心感（属人性の強み）」を前面に出しつつ、プロフェッショナルな風格を両立させたデザイン。<br><br><span style="font-size:0.875rem; font-weight:700; color:#001638;">デザイン構成</span><br>カラー： 知性と信頼感を象徴するディープネイビーをベースにした配色。<br><br>レイアウト： 木村様の「顔が見える安心感」と「確かな実績・ノウハウ」を掛け合わせた構成。FVで専門性を明示した後、代表のプロフィールや想いを丁寧に語りつつ、提供サービスや課題解決プロセスを論理的に整理した、納得感のあるストーリー設計。<br><br>CVR対策： 「まずは壁打ちから相談したい」という心理的ハードルを下げるため、気軽な初回相談やお問い合わせへ繋げる導線をヘッダーと各セクションに配置。', target: 'メイン： 顧客エンゲージメントの向上や、コールセンターの品質・生産性に課題を抱える中小・ベンチャー企業の経営層やカスタマーサクセス責任者。\n悩み： 「大手のコンサルは費用が高く、誰が担当になるか分からず不安」「自社の状況に寄り添って、泥臭く一緒に現場を改善してくれるプロを探している」という層。', tools: 'WIX' },
     { category: 'LP制作', title: 'ランディングページ 02', concept: 'スマホファーストで設計し、スクロールに連動した演出でユーザーを自然にCTAへ誘導します。', target: 'スマートフォンユーザーの20〜40代', tools: 'Figma / Studio' },
     { category: 'LP制作', title: '整体・サロンオーナー向けセミナー LP', concept: '集客や売上低迷に悩むサロン経営者に向け、実績のある講師のビジュアルを押し出し信頼感を構築。「労力半分で売上2倍」という圧倒的なメリットをストレートに提示。<br><br><span style="font-size:0.875rem; font-weight:700; color:#001638;">デザイン構成</span><br>カラー：清潔感があり前向きな印象を与えるホワイトをベースに構築。文字やアクセントには鮮やかなオレンジを採用することで、参加者の挑戦を力強く応援し、一歩を踏み出すエネルギーを感じさせる配色に仕上げています。CTAボタンには、視線を惹きつける鮮やかなグリーンを使いコントラストを生んでいます。<br><br>レイアウト：ファーストビューで「参加費0円」の強力なオファーを印象付けた後、黒背景で悩みを浮き彫りに。そこから選ばれる3つの理由から受講生のリアルな声へと繋げ、納得感を持って申し込める王道のストーリー設計。<br><br>CVR対策：「通常15,000円→0円」の限定感で背中を押し、顔写真を多く載せることで信頼性を担保。熱量が高まるフッターで、立体感のある大きめの緑色CTAボタンへ誘導。', target: 'メイン：個人経営の整体院やリラクゼーションサロンのオーナー、今後独立・開業を目指す層。\n悩み：「技術はあるのに集客やリピートが増えない」「休みがなく体力的・精神的に限界だが、売上が伸び悩んでいる」。', tools: 'Photoshop' },
     { category: 'サムネイル', title: 'YouTube サムネイル 01', concept: 'クリック率を高めるために、インパクトのあるビジュアルとテキスト配置を徹底的に検証しました。', target: 'YouTube視聴者・新規チャンネル登録者', tools: 'Photoshop / Canva' },
@@ -258,7 +296,84 @@
     { category: 'バナー制作', title: 'レストラン スペシャルコースバナー', concept: '特別な夜の体験を求める大人に向けて、シェフ厳選のコース料理と予約限定特典の魅力を訴求したレストランプロモーションバナー。<br><br><span style="font-size:0.875rem; font-weight:700; color:#001638;">デザイン構成</span><br>ネイビーとゴールドを基調に、高級感と格調のある世界観を統一して表現した。4分割されたグリッドに料理・ワイン・夜景などの写真を配置し、コースの多彩な魅力を一度に伝えた。中央にはダイヤ形のネイビーパネルを配置し、「シェフ厳選のスペシャルコース」というメインコピーをゴールドの装飾とともに際立たせることで、視線を自然に集める構造にした。四隅のアラベスク風装飾枠が全体に統一感と上品さを加え、「予約限定特典付き」のローレルエンブレムが希少性と限定感を演出した。', target: '30代〜50代の男女。記念日や接待など、非日常の特別なシーンで上質な食体験を求める、グルメ意識の高い層を想定した。', tools: 'Photoshop' },
     { category: 'バナー制作', title: '抹茶ラテ 商品バナー', concept: '老舗茶寮の本格抹茶を使ったラテの品質と価格を訴求した、シンプルで素材の魅力が伝わる商品バナー。<br><br><span style="font-size:0.875rem; font-weight:700; color:#001638;">デザイン構成</span><br>鮮やかな抹茶グリーンを背景に、商品の色味と自然に調和させながら瑞々しさと鮮度感を表現した。中央に抹茶ラテのグラスを大きく配置し、グリーンとミルクの美しいグラデーションを視覚的に強調。左下には抹茶パウダーを盛った器を添え、素材の本物感を補強した。「老舗茶寮が贈る」というコピーをゴールドで縦組みにすることで、伝統と格式を品よく伝えた。上部と下部をグリーンと黒で二分割する構成が和モダンな雰囲気を生み出し、「600円」という価格表示を黒エリアに配置することで視認性と親しみやすさを両立させた。', target: '20代〜50代の男女。日常の中で本物志向の和スイーツ・ドリンクを楽しみたい、抹茶好き・日本茶文化に親しみのある層を想定した。', tools: 'Photoshop' },
     { category: 'バナー制作', title: '女子旅 プロモーションバナー', concept: '仲間との旅行で生まれる特別な思い出を前面に打ち出した、グループ旅行を後押しするプロモーションバナー。<br><br><span style="font-size:0.875rem; font-weight:700; color:#001638;">デザイン構成</span><br>ミントブルーを背景に、明るく親しみやすい雰囲気を統一して表現した。「仲間と一生の思い出を作ろう！」というメインコピーを六角形のふきだし形状で中央に大きく配置し、旅への期待感を高めた。周囲には飛行機・バス・紅葉・ラーメン・ビール・浴衣姿の女性・自撮りする友人グループなど、旅の多彩なシーンをちりばめることで、グループ旅行のワクワク感を視覚的に表現した。ポラロイド風の写真素材やガーランド・きらめきのイラストを散りばめることで、SNS映えを意識したポップでかわいらしい世界観に仕上げた。', target: '20代〜30代の女性グループ。友人や同僚と一緒に旅行を計画しており、観光・グルメ・温泉など多彩な体験を楽しみたいと考えている層を想定した。', tools: 'Photoshop' },
+    { category: 'HP制作', title: 'キャニング・アンド・アソシエイツ様　コーポレートサイト（トップページリニューアル）', concept: 'コーポレートサイトのトップページのリニューアルです。英語研修を「語学」ではなく、グローバルビジネスで成果を出すための「人材育成」として伝える、知的で信頼感のあるデザインに一新しました。研修を受けた先の「英語で自信を持って活躍する姿」が直感的に伝わり、企業の担当者が安心して相談できるサイトをめざしました。<br><br><span style="font-size:0.875rem; font-weight:700; color:#001638;">デザイン構成</span><br>カラー：落ち着いたチャコールグレーとアイボリーを基調にして、上質で信頼感のある雰囲気に。行動を促すCTAには赤を、受講者数や満足度などの実績はゴールドで強調しました。<br><br>レイアウト：<br>・FVには、研修を受けた人が自信を持って英語で話している場面の写真を採用し、受講後の姿＝ベネフィットが伝わるようにしました。<br>・「累計20万人」「世界70カ国」「満足度96%」の実績は月桂樹のバッジにしてFVの写真に重ね、ひと目で目立つようにしました。<br>・導入企業のスライダーを設置し、大手企業の導入実績を見せることで安心感を持ってもらえる構成にしました。<br><br>CVR対策：画面右下に「まずは無料相談してみる」の追従ボタンを設置し、どの位置まで読み進めてもすぐ申し込めるようにしました。あわせて「無料相談」と「資料ダウンロード」の2つの入口をFV・ページ中盤・最下部に配置し、検討段階に合わせて選べるようにしています。', target: 'メイン：グローバル人材の育成を担う、企業の人事・研修担当者や経営層。\n悩み：「英語研修をしているが成果が見えない」「海外進出は進むのに、対応できる人材が育っていない」と感じている層。\nサブ：英語でのプレゼンや交渉に不安があり、短期間で実務力を高めたいビジネスパーソン個人。', tools: 'Photoshop / Figma など' },
   ];
+
+  // 縦長画像＋説明カード
+  function buildFull(sc, title) {
+    const wrap = document.getElementById('sc-full');
+    const stack = document.createElement('div');
+    stack.className = 'sc-stack';
+    sc.full.forEach((f, i) => {
+      const img = document.createElement('img');
+      img.src = f.src;
+      img.width = 1800; img.height = f.h;
+      img.alt = i === 0 ? title + ' サイト全体' : '';
+      img.loading = i === 0 ? 'eager' : 'lazy';
+      img.decoding = 'async';
+      stack.appendChild(img);
+    });
+    if (sc.fv) {
+      const fv = document.createElement('img');
+      fv.src = sc.fv.src;
+      fv.alt = '';
+      fv.className = 'sc-fv';
+      fv.style.aspectRatio = '1800 / ' + sc.fv.h;
+      stack.appendChild(fv);
+    }
+    wrap.appendChild(stack);
+    if (!sc.notes) return;
+
+    const NS = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('class', 'sc-svg');
+    svg.setAttribute('aria-hidden', 'true');
+    wrap.appendChild(svg);
+    const cards = sc.notes.map(n => {
+      const c = document.createElement('p');
+      c.className = 'sc-note';
+      c.textContent = n.text;
+      wrap.appendChild(c);
+      return c;
+    });
+
+    function layout() {
+      const W = wrap.clientWidth;
+      const sp = window.innerWidth < 640;
+      const sL = stack.offsetLeft, sW = stack.offsetWidth, sH = stack.offsetHeight;
+      const lastBottom = { L: -Infinity, R: -Infinity };
+      svg.innerHTML = '';
+      sc.notes.forEach((n, i) => {
+        const c = cards[i];
+        const side = sp ? 'R' : n.side;
+        const px = sL + n.x * sW, py = n.y * sH;
+        const h = c.offsetHeight, cw = c.offsetWidth;
+        // 重なりを避けて下にずらす
+        const top = Math.max(py - h / 2, lastBottom[side] + (sp ? 8 : 12), 0);
+        lastBottom[side] = top + h;
+        const left = side === 'R' ? W - cw : 0;
+        c.style.top = top + 'px';
+        c.style.left = left + 'px';
+        const ex = side === 'R' ? left : left + cw;
+        const ey = Math.min(Math.max(py, top + 14), top + h - 14);
+        const line = document.createElementNS(NS, 'polyline');
+        // 線と点は画像の外だけ：点は画像のふち（該当部分と同じ高さ）に置く
+        const edge = side === 'R' ? sL + sW : sL;
+        const out = side === 'R' ? edge + 10 : edge - 10;
+        line.setAttribute('points', `${edge},${py} ${out},${py} ${ex},${ey}`);
+        line.setAttribute('class', 'sc-line');
+        svg.appendChild(line);
+        const dot = document.createElementNS(NS, 'circle');
+        dot.setAttribute('cx', edge); dot.setAttribute('cy', py); dot.setAttribute('r', sp ? 2.5 : 3.5);
+        dot.setAttribute('class', 'sc-dot');
+        svg.appendChild(dot);
+      });
+    }
+    layout();
+    window.addEventListener('resize', layout);
+    stack.querySelectorAll('img').forEach(img => img.addEventListener('load', layout));
+    if (document.fonts) document.fonts.ready.then(layout);
+  }
 
   const params = new URLSearchParams(window.location.search);
   const id = parseInt(params.get('id')) || 1;
@@ -293,7 +408,159 @@
     };
     const mainImg = bannerImages[id] || `images/portfolio${id}.jpg`;
     const extras  = extraImages[id] || [];
-    buildSlider([mainImg, ...extras]);
+
+    // ショーケース（メイン画像 → サイト全体）。画像は仮。後で差し替え
+    const showcase = {
+      1: {
+        main: 'images/lp01.jpg',
+        mainCols: [
+          ['images/works/lmc-col-1.jpg'],
+          ['images/works/lmc-col-2.jpg'],
+          ['images/works/lmc-col-3.jpg'],
+        ],
+        full: [{ src: 'images/work1B-pc.jpg', h: 21753 }],
+        notes: [
+          { x: .5, y: .04, side: 'R', text: 'FVでは実績の数字を金色のバッジで見せ、在宅で自由に働ける未来をひと目でイメージできるようにしました。' },
+          { x: .1, y: .1, side: 'L', text: 'はじめに「LMCとは？」を説明し、聞き慣れない仕事でも内容がすぐ分かるように。写真と短い文章で、難しいイメージを和らげています。' },
+          { x: .9, y: .2, side: 'R', text: '仕事の流れを写真付きの図解で紹介。「過程がとても面白い」と感じてもらい、ワクワク感を高めています。' },
+          { x: .1, y: .35, side: 'L', text: '「年齢や学歴、性別は一切関係ありません」と大きく伝え、未経験でも挑戦できる安心感をつくりました。' },
+          { x: .9, y: .47, side: 'R', text: 'LMCの魅力は写真と文章を交互に配置。スマホでもテンポよく読める縦長の構成にしています。' },
+          { x: .1, y: .55, side: 'L', text: '未経験から出ている成果を金色の月桂樹で強調。具体的な数字で信頼感を補強しています。' },
+          { x: .9, y: .63, side: 'R', text: '受講者の声は番号付きで顔写真と一緒に掲載。声の直後にオレンジのボタンを置き、熱量が高まったタイミングで申し込みへ誘導します。' },
+          { x: .1, y: .8, side: 'L', text: 'セミナーの流れを番号付きで説明し、当日の内容が具体的に分かるように。参加前の不安を減らしています。' },
+          { x: .9, y: .97, side: 'R', text: '最後に「オンライン開催」「参加無料」を目立たせ、もう一度申し込みボタンへつなげています。' },
+        ],
+      },
+      5: {
+        main: 'images/lp03.jpg',
+        mainCols: [
+          ['images/works/sss-col-1.jpg'],
+          ['images/works/sss-col-2.jpg'],
+          ['images/works/sss-col-3.jpg'],
+        ],
+        full: [{ src: 'images/works/sss-full.jpg', h: 13707 }],
+        notes: [
+          { x: .85, y: .08, side: 'R', text: 'FVは講師の写真と実績のバッジで信頼感をつくり、すぐ下の帯で「労力半分で売上2倍」というメリットをストレートに伝えています。' },
+          { x: .1, y: .155, side: 'L', text: '「通常15,000円→0円」の限定オファーを早めに提示。参加費の安さで、申し込みへの心理的なハードルを下げています。' },
+          { x: .9, y: .215, side: 'R', text: '黒背景でサロン経営者の悩みを浮き彫りに。チェックリスト形式で「自分のことだ」と共感してもらう流れにしました。' },
+          { x: .1, y: .32, side: 'L', text: '「1,000名以上を救ってきた実績」を、受講生の顔写真で囲んで見せました。たくさんの顔が並ぶことで、実績に説得力を持たせています。' },
+          { x: .9, y: .5, side: 'R', text: '選ばれる3つの理由は番号付きで、写真と文章を左右交互に配置。白とオレンジの配色で、前向きなエネルギーを感じさせます。' },
+          { x: .1, y: .65, side: 'L', text: 'ふきだしで受講後の理想の姿を並べ、「自分にピッタリの講座だ」と参加後の未来をイメージしてもらいます。' },
+          { x: .9, y: .8, side: 'R', text: '受講生の声は顔写真と年代付きで掲載し、リアルな変化を紹介。熱量を高めてから、最後の申し込みへつなげます。' },
+          { x: .1, y: .955, side: 'L', text: '最後にもう一度オファーを置き、立体感のある大きな緑色のボタンで申し込みへ誘導しています。' },
+        ],
+      },
+      2: {
+        main: 'images/lp02.jpg',
+        mainCols: [
+          ['images/works/enzyme-col-1.jpg'],
+          ['images/works/enzyme-col-2a.jpg', 'images/works/enzyme-col-2b.jpg'],
+          ['images/works/enzyme-col-3.jpg'],
+        ],
+        full: [
+          { src: 'images/works/enzyme-top.jpg', h: 9814 },
+          { src: 'images/works/enzyme-bottom.jpg', h: 10298 },
+        ],
+        notes: [
+          { x: .55, y: .035, side: 'R', text: 'ファーストビューは笑顔の女性とフルーツで、明るく前向きな印象に。「添加物不使用」「プロ仕様」「満足度93%」のバッジで、安心感と実績をひと目で伝えています。' },
+          { x: .1, y: .1, side: 'L', text: 'ファーストビュー直下に「初回限定30%OFF・2,940円」のオファーを配置。価格と購入ボタンを早めに見せ、離脱を防ぎます。' },
+          { x: .9, y: .19, side: 'R', text: 'お悩みセクションは黒背景に切り替え、ふきだしで悩みを並べました。前後の明るいパートとのコントラストで「自分のことだ」という共感を引き出します。' },
+          { x: .1, y: .31, side: 'L', text: '商品はフルーツと水しぶきのビジュアルで見せ、みずみずしさと自然由来のイメージを直感的に伝えています。' },
+          { x: .9, y: .48, side: 'R', text: '日常に溶け込むライフスタイル写真を散りばめ、「無理なく続けられる美容習慣」としての楽しさを表現しました。' },
+          { x: .1, y: .6, side: 'L', text: '選ばれる理由は「point 01〜05」と番号付きで、写真と短い見出しを交互に配置。スクロールしながらテンポよく読める構成です。' },
+          { x: .9, y: .75, side: 'R', text: '愛用者の声は顔写真と年代付きで掲載。リアルな体験談で、自分が続けている姿をイメージしてもらいます。' },
+          { x: .1, y: .855, side: 'L', text: '熱量が高まる声の直後に、もう一度オファーと購入ボタンを配置。読み終えたタイミングで迷わず申し込めます。' },
+          { x: .9, y: .93, side: 'R', text: 'よくある質問で「定期縛りなし」などを明記し、申し込み前の最後の不安を解消しています。' },
+        ],
+      },
+      3: {
+        main: 'images/hp01.jpg',
+        mainCols: [
+          ['images/works/ccc-top-1.jpg', 'images/works/ccc-top-2.jpg'],
+          ['images/works/ccc-top-3.jpg', 'images/works/ccc-top-4.jpg'],
+          ['images/works/ccc-top-5.jpg', 'images/works/ccc-top-6.jpg'],
+        ],
+        full: [
+          { src: 'images/works/ccc-top-1.jpg', h: 2388 },
+          { src: 'images/works/ccc-top-2.jpg', h: 2583 },
+          { src: 'images/works/ccc-top-3.jpg', h: 2491 },
+          { src: 'images/works/ccc-top-4.jpg', h: 2319 },
+          { src: 'images/works/ccc-top-5.jpg', h: 1436 },
+          { src: 'images/works/ccc-top-6.jpg', h: 2793 },
+        ],
+        notes: [
+          { x: .63, y: .065, side: 'R', text: '「28年の経験」をサブコピーで添え、専門性がひと目で伝わるようにしています。' },
+          { x: .1, y: .125, side: 'L', text: 'ミッションは、街並みとネットワークの写真を背景に3行で表現。業界全体を良くしたいという想いが伝わるよう、大きな文字でゆったり見せました。' },
+          { x: .9, y: .227, side: 'R', text: 'サービスは写真付きのカードで8種類を一覧に。各カードに「詳細はこちら」と「相談する」ボタンを置き、気になったサービスからすぐ相談できる導線にしました。' },
+          { x: .77, y: .514, side: 'R', text: '全カードに「初回無料相談」を明記し、スポットコンサルティングは「¥10,000より」と金額を表示。費用の不安を減らし、相談のハードルを下げています。' },
+          { x: .08, y: .628, side: 'L', text: '申し込みの流れは「無料相談」「基本契約」「スポット」「その他」の4つに分け、①〜④の手順で説明。依頼までの道のりを具体的にイメージできるようにしました。' },
+          { x: .1, y: .823, side: 'L', text: 'プロフィールでは代表の顔写真と経歴を年表形式で掲載。「顔が見える安心感」と、現場からセンター長まで歩んだ経験の確かさを伝えています。' },
+          { x: .8, y: .965, side: 'R', text: '実績・専門分野・保有資格を3列で整理し、国際認定のロゴも掲載。信頼できる根拠をひと目で確認できるようにしました。' },
+        ],
+      },
+      19: {
+        main: 'images/works/hp-sample-main.jpg',
+        // 縦長画像（幅1800基準の高さ）。fv は1枚目の上部に重ねる高画質FV
+        full: [
+          { src: 'images/works/canning-top-1.jpg', h: 6360 },
+          { src: 'images/works/canning-top-2.jpg', h: 3190 },
+          { src: 'images/works/canning-top-3.jpg', h: 5882 },
+        ],
+        fv: { src: 'images/works/canning-fv.jpg', h: 1013 },
+        // 説明カード：x,y は縦長画像全体に対する位置（0〜1）、side はPCでの配置
+        notes: [
+          { x: .88, y: .046, side: 'R', text: '「累計20万人」「世界70カ国」「満足度96%」の実績を月桂樹のバッジにして写真に重ねました。ファーストビューで実績がひと目で伝わり、信頼感につながるよう目立たせています。' },
+          { x: .09, y: .114, side: 'L', text: '導入事例はダーク背景のスライダーにして、ロゴ一覧とメリハリをつけました。写真と担当者の声をセットで見せ、具体的な成果が伝わる構成です。' },
+          { x: .91, y: .1685, side: 'R', text: '「企業向け／個人向け」を色分けしたラベルで、目的別の入口を用意。自分に合うサービスへ迷わずたどり着けるよう導線を整理しました。' },
+          { x: .16, y: .206, side: 'L', text: '読み手の悩みをチェックリスト形式で提示し、「自分のことだ」と共感してもらう流れに。暗めの背景写真で、続く解決パートとの対比を強めています。' },
+          { x: .095, y: .291, side: 'L', text: '強調したい数字や言葉は赤字・黄色マーカーで目立たせ、流し読みでも要点が伝わるようにしました。' },
+          { x: .91, y: .45, side: 'R', text: 'サービスは「法人・個人・経営層」をラベルの色で区別し、「こんな方におすすめ」を冒頭に配置。実施内容はタグで一覧化し、比較検討しやすくしました。' },
+          { x: .62, y: .642, side: 'R', text: 'お客様の声では満足度「96%」を大きく表示。写真付きのカードで実際の担当者の顔が見えるようにし、信頼性を高めました。' },
+          { x: .82, y: .914, side: 'R', text: 'ページの最後は無料相談・資料請求・メルマガ・電話の窓口をひとまとめに。検討段階に合わせて選べるよう、問い合わせの選択肢を広げました。' },
+        ],
+      },
+    };
+    const sc = showcase[id];
+    if (sc) {
+      document.getElementById('showcase').style.display = 'block';
+      document.getElementById('sc-cat').textContent = 'Category ' + data.category;
+      document.getElementById('sc-title').textContent = data.title;
+      const mainImgEl = document.getElementById('sc-main-img');
+      if (sc.mainCols) {
+        // 画面キャプチャを4列に並べたメインビジュアル
+        const box = mainImgEl.parentElement;
+        box.classList.add('sc-main--cols');
+        box.setAttribute('role', 'img');
+        box.setAttribute('aria-label', data.title + ' メイン画像');
+        box.innerHTML = '';
+        sc.mainCols.forEach(col => {
+          const c = document.createElement('div');
+          c.className = 'sc-col';
+          col.forEach(src => {
+            const img = document.createElement('img');
+            img.src = src; img.alt = ''; img.decoding = 'async';
+            c.appendChild(img);
+          });
+          box.appendChild(c);
+        });
+      } else {
+        mainImgEl.src = sc.main;
+        mainImgEl.alt = data.title + ' メイン画像';
+      }
+      buildFull(sc, data.title);
+      // スライダー・小見出しを隠し、下の情報を中央寄せのブロックに
+      const wrap = document.getElementById('detail-wrap');
+      wrap.firstElementChild.style.display = 'none';
+      document.getElementById('detail-category').style.display = 'none';
+      document.getElementById('detail-title').style.display = 'none';
+      const info = wrap.lastElementChild;
+      info.classList.add('sc-info');
+      info.querySelectorAll(':scope > .space-y-5 > div').forEach(d => d.classList.add('sc-block'));
+      info.querySelector('.mt-10').style.justifyContent = 'center';
+      document.querySelector('.pt-16.max-w-4xl').classList.replace('max-w-4xl', 'max-w-6xl');
+    } else {
+      buildSlider([mainImg, ...extras]);
+    }
   }
 </script>
 
