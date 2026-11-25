@@ -102,7 +102,7 @@
     @media (max-width: 767px) { .banner-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 52px; } }
     .banner-item {
       aspect-ratio: 1 / 1;
-      border-radius: 16px;
+      border-radius: 0;
       overflow: hidden;
       cursor: pointer;
       box-shadow: 0 8px 30px rgba(129,216,208,0.35), 0 4px 16px rgba(241,91,135,0.14);
@@ -209,7 +209,7 @@
     .fv-col-down { animation: fvStreamDown 65s linear infinite; }
     .fv-card {
       width: 100%; margin-bottom: 24px;
-      border-radius: 10px; overflow: hidden; background: #fff;
+      border-radius: 0; overflow: hidden; background: #fff;
       box-shadow: 0 6px 20px rgba(0,22,56,0.08);
     }
     .fv-card img { width: 100%; height: auto; display: block; }
@@ -241,7 +241,7 @@
       }
       .fv-hrow img {
         height: 150px; width: auto; display: block;
-        border-radius: 8px; box-shadow: 0 4px 14px rgba(0,22,56,0.12);
+        border-radius: 0; box-shadow: 0 4px 14px rgba(0,22,56,0.12);
       }
       @keyframes fvHScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
       @media (prefers-reduced-motion: reduce) { .fv-hrow { animation: none; } }
@@ -250,7 +250,7 @@
     /* ===== 制作の流れ ===== */
     .flow-card {
       background: #fff;
-      border-radius: 28px;
+      border-radius: 0;
       padding: 2.25rem 2.5rem;
       max-width: 1200px;
       margin-left: auto; margin-right: auto;
@@ -279,7 +279,7 @@
     .flow-arrow i {
       display: block; width: 24px; height: 24px;
       border-right: 6px solid #fff; border-bottom: 6px solid #fff;
-      border-radius: 0 0 4px 0;
+      border-radius: 0;
       transform: rotate(45deg);
       margin-top: -10px;
       animation: flowArrowBlink 1.6s ease-in-out infinite;
@@ -289,7 +289,7 @@
     @keyframes flowArrowBlink { 0%, 100% { opacity: .2; } 40% { opacity: 1; } }
     @media (prefers-reduced-motion: reduce) { .flow-arrow i { animation: none; opacity: 1; } }
     @media (max-width: 639px) {
-      .flow-card { padding: 1.5rem 1.25rem; border-radius: 20px; }
+      .flow-card { padding: 1.5rem 1.25rem; border-radius: 0; }
       .flow-num { font-size: 1.6rem; }
       .flow-title { font-size: 1.2rem; }
     }
@@ -324,7 +324,7 @@
       backdrop-filter: blur(7px);
       -webkit-backdrop-filter: blur(7px);
       background: rgba(223, 236, 247, 0.25);
-      border-radius: 24px;
+      border-radius: 0;
       padding: 2.5rem 1.25rem;
     }
     @media (min-width: 640px) {
@@ -439,7 +439,7 @@
       cursor: pointer;
     }
     .work-thumb {
-      border-radius: 22px;
+      border-radius: 0;
       overflow: hidden;
       aspect-ratio: 16 / 10;
       box-shadow: 0 10px 42px rgba(129,216,208,0.4), 0 6px 24px rgba(241,91,135,0.18);
@@ -498,7 +498,9 @@
     .concept-pin.is-chars #concept .ch { display: inline-block; white-space: pre; color: #8cb4ea; text-shadow: none; }
     /* PC：コンセプトの下端で固定し、スクロールで1文字ずつ表示（JSで高さとtopを設定） */
     @media (min-width: 768px) {
-      .concept-pin.is-pin #concept { position: sticky; padding-top: 88px; padding-bottom: 48px; min-height: 100vh; } /* 画面より低いと下に白が出るため最低1画面分 */ /* 固定時に1画面へ収まるよう余白を詰める */
+      .concept-pin.is-pin #concept { position: sticky; padding-top: 88px; padding-bottom: 88px; min-height: 100vh; } /* 画面より低いと下に白が出るため最低1画面分 */ /* 固定時に1画面へ収まるよう余白を詰める */
+      .concept-pin.is-pin #concept { display: flex; flex-direction: column; justify-content: center; } /* 画面より低いとき、見出し〜本文を縦中央に */
+      .concept-pin.is-pin #concept .concept-inner { width: 100%; }
       .concept-pin.is-pin #concept .concept-copy p + p { margin-top: 2em; }
       .concept-pin.is-pin #concept .cl { opacity: 1 !important; transform: none !important; filter: none !important; }
       .concept-pin.is-pin #concept .ch { display: inline-block; white-space: pre; color: #8cb4ea; text-shadow: none; }
@@ -535,7 +537,7 @@
     .concept-hole {
       position: absolute; left: 50%; top: 50%;
       width: 0; height: 0;
-      border-radius: 50%;
+      border-radius: 0;
       transform: translate(-50%, -50%);
       box-shadow: 0 0 0 300vmax rgba(0, 0, 0, 0.85); /* 穴の外側が黒 */
     }
@@ -584,7 +586,7 @@
     .concept-photos { opacity: 0; transition: opacity 0.8s ease 1.2s; }
     #concept.concept-visible .concept-photos { opacity: 1; }
     .concept-photos .cp {
-      border-radius: 14px;
+      border-radius: 0;
       box-shadow: 0 10px 30px rgba(0,22,56,0.18);
       object-fit: cover;
       display: block;
@@ -632,9 +634,9 @@
       font-weight: 400;
       text-align: center;
       color: #fff;
-      font-size: clamp(1rem, 1.6vw, 1.25rem);
+      font-size: clamp(1.1rem, 1.85vw, 1.45rem); /* 試し: 元 clamp(1rem, 1.6vw, 1.25rem) */
       letter-spacing: 0.06em;
-      line-height: 3;
+      line-height: 2.1; /* 試し: 元 3 */
     }
     .concept-copy p + p { margin-top: 3em; }
     /* 本文を1文ずつ左から拭き取るように表示（JSで .cl に分割） */
@@ -651,7 +653,7 @@
     /* 雲と重なっても白文字が読めるよう、目立たない暗い影 */
     #concept .concept-inner { text-shadow: 0 1px 2px rgba(0,30,90,0.28), 0 0 6px rgba(0,30,90,0.2); } /* 影をうすめに（元: 0.6 / 0.45 / 0.35） */
     @media (max-width: 639px) {
-      .concept-copy { line-height: 2.3; }
+      .concept-copy { line-height: 1.85; font-size: 1.08rem; } /* 試し: 元 line-height 2.3 */
       .concept-copy p + p { margin-top: 2em; }
     }
 
@@ -730,7 +732,7 @@
       line-height: 1.4;
       color: #fff;
       background: #e5025a;
-      border-radius: 4px;
+      border-radius: 0;
       vertical-align: middle;
     }
     .btn-primary {
@@ -773,6 +775,12 @@
     .btn-primary.cta { border: 2px solid #e5025a; }
     .btn-primary.cta::before { background: #fff; }
     .btn-primary.cta:hover { background: #e5025a; color: #e5025a; transform: none; box-shadow: 0 0 20px rgba(229, 2, 90, 0.4); }
+    /* 紺枠×水色（料金を見る） */
+    .btn-primary.cta.cta-navy { background: #dfecf7; color: #001638; border-color: #001638; box-shadow: none; }
+    .btn-primary.cta.cta-navy::before { background: #001638; }
+    .btn-primary.cta.cta-navy:hover { background: #dfecf7; color: #fff; box-shadow: 0 0 20px rgba(0, 22, 56, 0.25); }
+    .btn-primary.cta-navy .cta-arrow { background: #001638; color: #dfecf7; }
+    .btn-primary.cta.cta-navy:hover .cta-arrow { background: #fff; color: #001638; }
     /* LINE */
     .line-btn.cta { color: #06c755; background: #fff; border: 2px solid #06c755; border-radius: 50px; padding: 1rem 1.5rem; }
     .line-btn.cta::before { background: #06c755; }
@@ -795,15 +803,22 @@
               mask: url("images/メール.webp") center / contain no-repeat;
     }
 
+    /* プライバシーポリシー同意チェック */
+    .privacy-agree { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.85rem; }
+    .privacy-agree input { appearance: none; -webkit-appearance: none; width: 18px; height: 18px; margin: 0; border: 1.5px solid #001638; border-radius: 0; background: #fff; display: grid; place-content: center; cursor: pointer; flex-shrink: 0; }
+    .privacy-agree input::before { content: ""; width: 10px; height: 6px; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: translateY(-1px) rotate(-45deg); opacity: 0; }
+    .privacy-agree input:checked { background: #001638; }
+    .privacy-agree input:checked::before { opacity: 1; }
+    .privacy-agree input:focus-visible { outline: 2px solid #4D9FE8; outline-offset: 2px; }
     /* ===== CARDS ===== */
     .card {
       background: #fff;
       border: 1px solid #b2dcd8;
-      border-radius: 12px;
+      border-radius: 0;
       box-shadow: 0 4px 16px rgba(129,216,208,0.15);
       transition: transform 0.25s, box-shadow 0.25s;
     }
-    .card:hover { transform: translateY(-5px); box-shadow: 0 12px 32px rgba(129,216,208,0.3); }
+    /* .card のホバー時の浮き上がり・水色の影は廃止 */
 
     /* ===== 下部共通背景(強み〜お問い合わせ) ===== */
     .lower-bg-wrap {
@@ -812,7 +827,7 @@
       overflow: hidden;
       /* コンセプトとの境目の角を丸くする（上に少し重ねて角の外側に空を見せる） */
       z-index: 2;
-      border-radius: clamp(28px, 4vw, 56px) clamp(28px, 4vw, 56px) 0 0;
+      border-radius: 0;
       margin-top: calc(-1 * clamp(28px, 4vw, 56px));
     }
 
@@ -862,7 +877,7 @@
       width: max-content;
       animation: marquee 30s linear infinite;
     }
-    .marquee-track img { height: 200px; width: auto; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
+    .marquee-track img { height: 200px; width: auto; object-fit: cover; border-radius: 0; flex-shrink: 0; }
     @keyframes marquee {
       from { transform: translateX(0); }
       to   { transform: translateX(-50%); }
@@ -884,7 +899,7 @@
     #modal.open { display: flex; }
 
     /* ===== PORTFOLIO CARD ===== */
-    .p-card { cursor: pointer; overflow: hidden; border-radius: 12px; box-shadow: 0 4px 16px rgba(129,216,208,0.15); aspect-ratio: 1; width: calc(25% - 12px); min-width: 140px; }
+    .p-card { cursor: pointer; overflow: hidden; border-radius: 0; box-shadow: 0 4px 16px rgba(129,216,208,0.15); aspect-ratio: 1; width: calc(25% - 12px); min-width: 140px; }
     .p-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.35s; }
     .p-card:hover img { transform: scale(1.07); }
     .lphp-grid .p-card { width: calc(33.333% - 11px); }
@@ -898,6 +913,7 @@
     }
   </style>
   <link rel="stylesheet" href="css/tailwind.css?v=1" /><!-- Tailwind（書き出し済み）。ページ内の<style>より後に読み込む（CDNと同じ順） -->
+<link rel="stylesheet" href="css/sec-head-anim.css?v=2">
 </head>
 
 <body class="bg-white">
@@ -1089,7 +1105,7 @@
 <section id="concern" class="py-20 sm:py-28 relative overflow-hidden">
   <div class="relative wide-wrap mx-auto px-5 sm:px-8 text-center">
     <!-- 見出し -->
-    <div data-aos="fade-up">
+    <div>
       <div class="sec-head-wrap mb-10">
       <h2 class="sec-ja sec-head" style="color:#001638;">こんなお悩みはありませんか？<span class="sec-head-en" aria-hidden="true">CONCERNS</span></h2>
       </div>
@@ -1099,17 +1115,17 @@
     <div class="mb-10">
       <div class="grid md:grid-cols-3 gap-12 md:gap-8">
 
-        <div class="concern-item" data-aos="fade-up" data-aos-delay="100" style="border:none;">
+        <div class="concern-item" style="border:none;">
           <img src="images/悩む男性.webp" alt="" class="concern-illust" />
           <p class="text-[#001638] leading-relaxed font-medium concern-desc">LPやHPを作りたいが、<br /><span class="font-bold" style="color:#3ab8d0;">何から始めればいいかわからない</span>。</p>
         </div>
 
-        <div class="concern-item" data-aos="fade-up" data-aos-delay="200" style="border:none;">
+        <div class="concern-item" style="border:none;">
           <img src="images/忙しい女性.webp" alt="" class="concern-illust" />
           <p class="text-[#001638] leading-relaxed font-medium concern-desc">LPやHPを作りたいが、<br />日々の業務に追われて<span class="font-bold" style="color:#3ab8d0;">手が回らない</span>。</p>
         </div>
 
-        <div class="concern-item" data-aos="fade-up" data-aos-delay="300" style="border:none;">
+        <div class="concern-item" style="border:none;">
           <img src="images/悩む女性_red.webp" alt="" class="concern-illust" />
           <p class="text-[#001638] leading-relaxed font-medium concern-desc">制作会社に頼むと、<br /><span class="font-bold" style="color:#3ab8d0;">制作費や毎月の運用費が高い</span>。</p>
         </div>
@@ -1117,7 +1133,7 @@
       </div>
     </div>
 
-    <div class="text-center" data-aos="fade-up" data-aos-delay="200">
+    <div class="text-center">
       <div style="display:inline-block;">
         <p class="concern-cta-lead"><span class="slash-text">そんな方は、ぜひ一度ご相談ください</span></p>
         <a href="#contact" class="btn-primary cta" style="display:flex; width:100%; white-space:nowrap; font-size:clamp(0.85rem,3.5vw,1rem); --cta-scale:10;">
@@ -1135,24 +1151,24 @@
 =================================== -->
 <section id="strength" class="py-20 sm:py-28 relative">
   <div class="relative z-10 wide-wrap mx-auto px-5 sm:px-8">
-    <div class="sec-head-wrap mb-14" data-aos="fade-up">
+    <div class="sec-head-wrap mb-14">
       <h2 class="sec-ja sec-head">制作で大切にしていること<span class="sec-head-en" aria-hidden="true">POLICY</span></h2>
     </div>
 
     <div class="grid md:grid-cols-3 gap-8">
-      <div class="card p-8 strength-card" data-aos="fade-up" data-aos-delay="100" style="border:none;">
+      <div class="card p-8 strength-card" style="border:none;">
         <img src="images/A.webp" alt="" class="concern-illust" />
         <div class="text-xs font-bold tracking-[0.15em] uppercase mb-1 text-center md:text-left" style="color:#e5025a;">Policy 01</div>
         <h3 class="text-2xl font-bold mb-3 text-center md:text-left">「なんとなく」からのご相談でも大歓迎</h3>
         <p class="text-sm text-[#555] leading-loose">「こんな雰囲気にしたい」がまだ言葉になっていなくても大丈夫です。お話を伺いながら、参考サイトや色・言葉の好みを一緒に整理し、イメージを少しずつ形にしていきます。固まってから相談する必要はありません。</p>
       </div>
-      <div class="card p-8 strength-card" data-aos="fade-up" data-aos-delay="200" style="border:none;">
+      <div class="card p-8 strength-card" style="border:none;">
         <img src="images/policy02.webp" alt="" class="concern-illust" />
         <div class="text-xs font-bold tracking-[0.15em] uppercase mb-1 text-center md:text-left" style="color:#e5025a;">Policy 02</div>
         <h3 class="text-2xl font-bold mb-3 text-center md:text-left">ご希望に合わせたお見積もり</h3>
         <p class="text-sm text-[#555] leading-loose">決まったプランに当てはめるのではなく、ご予算とやりたいことを伺ってから内容を組み立てます。お見積もりは総額でご提示し、追加費用が発生する場合は事前に必ずお伝えします。あとから金額が膨らむ心配はありません。</p>
       </div>
-      <div class="card p-8 strength-card" data-aos="fade-up" data-aos-delay="300" style="border:none;">
+      <div class="card p-8 strength-card" style="border:none;">
         <img src="images/C.webp" alt="" class="concern-illust" />
         <div class="text-xs font-bold tracking-[0.15em] uppercase mb-1 text-center md:text-left" style="color:#e5025a;">Policy 03</div>
         <h3 class="text-2xl font-bold mb-3 text-center md:text-left">制作過程も見える進行報告</h3>
@@ -1160,13 +1176,13 @@
       </div>
     </div>
     <div class="strength-row2">
-      <div class="card p-8 strength-card" data-aos="fade-up" data-aos-delay="100" style="border:none;">
+      <div class="card p-8 strength-card" style="border:none;">
         <img src="images/policy04.webp" alt="" class="w-full object-contain mb-4" style="height:176px; object-position:center;" />
         <div class="text-xs font-bold tracking-[0.15em] uppercase mb-1 text-center md:text-left" style="color:#e5025a;">Policy 04</div>
         <h3 class="text-2xl font-bold mb-3 text-center md:text-left">「なぜ」まで添えたデザイン提案</h3>
         <p class="text-sm text-[#555] leading-loose">デザインをお渡しする際は、「なぜこの配置なのか」「なぜこの色なのか」という理由も一緒にお伝えします。良し悪しを判断しやすくなるだけでなく、社内での説明や修正のご指示にもそのまま使っていただけます。</p>
       </div>
-      <div class="card p-8 strength-card" data-aos="fade-up" data-aos-delay="200" style="border:none;">
+      <div class="card p-8 strength-card" style="border:none;">
         <img src="images/policy05.webp" alt="" class="w-full object-contain mb-4" style="height:176px; object-position:center;" />
         <div class="text-xs font-bold tracking-[0.15em] uppercase mb-1 text-center md:text-left" style="color:#e5025a;">Policy 05</div>
         <h3 class="text-2xl font-bold mb-3 text-center md:text-left">納品後は、お客様ご自身で自由に運用</h3>
@@ -1181,21 +1197,21 @@
 =================================== -->
 <section id="service" class="py-20 sm:py-28 relative">
   <div class="relative z-10 wide-wrap mx-auto px-5 sm:px-8">
-    <div class="sec-head-wrap mb-14" data-aos="fade-up">
+    <div class="sec-head-wrap mb-14">
       <h2 class="sec-ja sec-head">提供サービス<span class="sec-head-en" aria-hidden="true">SERVICES</span></h2>
     </div>
 
     <!-- LP・HP（大きめ・横並び） -->
-    <div class="grid sm:grid-cols-2 gap-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+    <div class="grid sm:grid-cols-2 gap-4 mb-4">
       <div class="card flex items-center gap-5" style="border:none; min-height:190px; padding:2rem;">
-        <span class="rounded-full shrink-0" style="background:#e5025a; width:10px; height:72px;"></span>
+        <span class="shrink-0" style="background:#e5025a; width:10px; height:72px;"></span>
         <div>
           <p class="font-bold text-[#001638]" style="font-size:1.5rem;">LP（ランディングページ）</p>
           <p class="text-sm text-[#555] mt-2 leading-relaxed">商品やサービスの魅力を1ページに凝縮し、問い合わせや申し込みにつなげる縦長のページです。「誰に・何を・どの順番で伝えるか」から設計し、読み進めるうちに自然と行動したくなる流れをつくります。</p>
         </div>
       </div>
       <div class="card flex items-center gap-5" style="border:none; min-height:190px; padding:2rem;">
-        <span class="rounded-full shrink-0" style="background:#e5025a; width:10px; height:72px;"></span>
+        <span class="shrink-0" style="background:#e5025a; width:10px; height:72px;"></span>
         <div>
           <p class="font-bold text-[#001638]" style="font-size:1.5rem;">HP（ホームページ）</p>
           <p class="text-sm text-[#555] mt-2 leading-relaxed">会社や個人事業主の方の「顔」となるコーポレートサイトです。事業内容や想いをわかりやすく整理し、伝わる設計で、見てもらうだけでなく問い合わせにつながるサイトに仕上げます。</p>
@@ -1204,44 +1220,44 @@
     </div>
 
     <!-- その他（青いバー） -->
-    <div class="grid sm:grid-cols-2 gap-4" data-aos="fade-up" data-aos-delay="150">
+    <div class="grid sm:grid-cols-2 gap-4">
       <div class="card p-6 flex items-center gap-4" style="border:none;">
-        <span class="w-2 h-10 rounded-full shrink-0" style="background:#2563eb;"></span>
+        <span class="w-2 h-10 shrink-0" style="background:#2563eb;"></span>
         <div>
           <p class="font-bold text-[#001638]">バナー</p>
           <p class="text-xs text-[#555]">SNS広告・Web広告用バナー制作</p>
         </div>
       </div>
       <div class="card p-6 flex items-center gap-4" style="border:none;">
-        <span class="w-2 h-10 rounded-full shrink-0" style="background:#2563eb;"></span>
+        <span class="w-2 h-10 shrink-0" style="background:#2563eb;"></span>
         <div>
           <p class="font-bold text-[#001638]">商品画像</p>
           <p class="text-xs text-[#555]">EC・SNS掲載向け商品ビジュアル制作</p>
         </div>
       </div>
       <div class="card p-6 flex items-center gap-4" style="border:none;">
-        <span class="w-2 h-10 rounded-full shrink-0" style="background:#2563eb;"></span>
+        <span class="w-2 h-10 shrink-0" style="background:#2563eb;"></span>
         <div>
           <p class="font-bold text-[#001638]">サムネイル画像</p>
           <p class="text-xs text-[#555]">YouTube・ブログ用サムネイル</p>
         </div>
       </div>
       <div class="card p-6 flex items-center gap-4" style="border:none;">
-        <span class="w-2 h-10 rounded-full shrink-0" style="background:#2563eb;"></span>
+        <span class="w-2 h-10 shrink-0" style="background:#2563eb;"></span>
         <div>
           <p class="font-bold text-[#001638]">名刺</p>
           <p class="text-xs text-[#555]">印象に残るビジネス名刺デザイン</p>
         </div>
       </div>
       <div class="card p-6 flex items-center gap-4" style="border:none;">
-        <span class="w-2 h-10 rounded-full shrink-0" style="background:#2563eb;"></span>
+        <span class="w-2 h-10 shrink-0" style="background:#2563eb;"></span>
         <div>
           <p class="font-bold text-[#001638]">LINEのリッチメニュー</p>
           <p class="text-xs text-[#555]">タップ率向上を意識したメニュー設計</p>
         </div>
       </div>
       <div class="card p-6 flex items-center gap-4" style="border:none;">
-        <span class="w-2 h-10 rounded-full shrink-0" style="background:#2563eb;"></span>
+        <span class="w-2 h-10 shrink-0" style="background:#2563eb;"></span>
         <div>
           <p class="font-bold text-[#001638]">チラシ</p>
           <p class="text-xs text-[#555]">イベント・店舗向けフライヤーデザイン</p>
@@ -1249,12 +1265,12 @@
       </div>
     </div>
 
-    <p class="text-center text-[#555] text-sm mt-8" data-aos="fade-up" data-aos-delay="200">
+    <p class="text-center text-[#555] text-sm mt-8">
       ※ 上記以外のご要望もお気軽にご相談ください。
     </p>
 
-    <div class="text-center mt-10" data-aos="fade-up">
-      <a href="price.html" class="btn-primary cta text-base shadow-lg" style="width:290px;">料金を見る<span class="cta-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+    <div class="text-center mt-10">
+      <a href="price.html" class="btn-primary cta cta-navy text-base shadow-lg" style="width:290px;">料金を見る<span class="cta-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
     </div>
   </div>
 </section>
@@ -1265,65 +1281,65 @@
 =================================== -->
 <section id="portfolio" class="py-20 sm:py-28 relative" data-bg-anim="net" data-bg-parallax="2" data-bg-color="214,160,30">
   <div class="relative z-10 wide-wrap mx-auto px-5 sm:px-8">
-    <div class="sec-head-wrap mb-14" data-aos="fade-up">
+    <div class="sec-head-wrap mb-14">
       <h2 class="sec-ja sec-head">制作事例<span class="sec-head-en" aria-hidden="true">WORKS</span></h2>
     </div>
 
     <div class="works-masonry">
-      <div class="work-item" data-aos="fade-up" data-aos-delay="50" onclick="location.href='portfolio-detail.html?id=19'">
+      <div class="work-item" onclick="location.href='portfolio-detail.html?id=19'">
         <div class="work-thumb"><img src="images/works/hp-sample-card.webp" alt="キャニング・アンド・アソシエイツ様　コーポレートサイト【トップページリニューアル】" loading="lazy" class="thumb-cover" /></div>
         <p class="work-tag">#HP制作</p>
         <h3 class="work-title">キャニング・アンド・アソシエイツ様　コーポレートサイト【トップページリニューアル】</h3>
       </div>
-      <div class="work-item" data-aos="fade-up" data-aos-delay="50" onclick="location.href='portfolio-detail.html?id=1'">
+      <div class="work-item" onclick="location.href='portfolio-detail.html?id=1'">
         <div class="work-thumb"><img src="images/lp01.webp" alt="LINEマーケティングコンサルタント養成講座 無料説明会LP" loading="lazy" class="thumb-cover" /></div>
         <p class="work-tag">#LP制作</p>
         <h3 class="work-title">LINEマーケティングコンサルタント養成講座 無料説明会LP</h3>
       </div>
-      <div class="work-item" data-aos="fade-up" data-aos-delay="100" onclick="location.href='portfolio-detail.html?id=3'">
+      <div class="work-item" onclick="location.href='portfolio-detail.html?id=3'">
         <div class="work-thumb"><img src="images/hp01.webp" alt="CCC木村事務所様　コーポレートサイト" loading="lazy" class="thumb-cover" /></div>
         <p class="work-tag">#HP制作</p>
         <h3 class="work-title">CCC木村事務所様　コーポレートサイト</h3>
       </div>
-      <div class="work-item" data-aos="fade-up" data-aos-delay="50" onclick="location.href='portfolio-detail.html?id=2'">
+      <div class="work-item" onclick="location.href='portfolio-detail.html?id=2'">
         <div class="work-thumb"><img src="images/lp02.webp" alt="酵素ドリンク Enzyme Clense LP" loading="lazy" class="thumb-cover" /></div>
         <p class="work-tag">#LP制作</p>
         <h3 class="work-title">酵素ドリンク Enzyme Clense LP</h3>
       </div>
-      <div class="work-item" data-aos="fade-up" data-aos-delay="50" onclick="location.href='portfolio-detail.html?id=5'">
+      <div class="work-item" onclick="location.href='portfolio-detail.html?id=5'">
         <div class="work-thumb"><img src="images/lp03.webp" alt="整体・サロンオーナー向けセミナー LP" loading="lazy" class="thumb-cover" /></div>
         <p class="work-tag">#LP制作</p>
         <h3 class="work-title">整体・サロンオーナー向けセミナー LP</h3>
       </div>
-      <div class="work-item" data-aos="fade-up" data-aos-delay="100" onclick="location.href='portfolio-detail.html?id=20'">
+      <div class="work-item" onclick="location.href='portfolio-detail.html?id=20'">
         <div class="work-thumb"><img src="images/works/novelie-card.webp?v=2" alt="NOVELIE 薬用シワ改善アイクリーム LP" loading="lazy" class="thumb-cover" /></div>
         <p class="work-tag">#LP制作</p>
         <h3 class="work-title">NOVELIE 薬用シワ改善アイクリーム LP</h3>
       </div>
     </div>
     <div class="banner-grid">
-      <div class="banner-item" data-aos="fade-up" data-aos-delay="50" onclick="location.href='portfolio-detail.html?id=11'">
+      <div class="banner-item" onclick="location.href='portfolio-detail.html?id=11'">
         <img src="images/banner/A.webp" alt="バナーデザイン 01" loading="lazy" />
       </div>
-      <div class="banner-item" data-aos="fade-up" data-aos-delay="100" onclick="location.href='portfolio-detail.html?id=12'">
+      <div class="banner-item" onclick="location.href='portfolio-detail.html?id=12'">
         <img src="images/banner/B.webp" alt="バナーデザイン 02" loading="lazy" />
       </div>
-      <div class="banner-item" data-aos="fade-up" data-aos-delay="150" onclick="location.href='portfolio-detail.html?id=13'">
+      <div class="banner-item" onclick="location.href='portfolio-detail.html?id=13'">
         <img src="images/banner/C.webp" alt="バナーデザイン 03" loading="lazy" />
       </div>
-      <div class="banner-item" data-aos="fade-up" data-aos-delay="200" onclick="location.href='portfolio-detail.html?id=14'">
+      <div class="banner-item" onclick="location.href='portfolio-detail.html?id=14'">
         <img src="images/banner/D.webp?v=2" alt="バナーデザイン 04" loading="lazy" />
       </div>
-      <div class="banner-item" data-aos="fade-up" data-aos-delay="50" onclick="location.href='portfolio-detail.html?id=15'">
+      <div class="banner-item" onclick="location.href='portfolio-detail.html?id=15'">
         <img src="images/banner/E.webp?v=2" alt="バナーデザイン 05" loading="lazy" />
       </div>
-      <div class="banner-item" data-aos="fade-up" data-aos-delay="100" onclick="location.href='portfolio-detail.html?id=16'">
+      <div class="banner-item" onclick="location.href='portfolio-detail.html?id=16'">
         <img src="images/banner/F.webp" alt="バナーデザイン 06" loading="lazy" />
       </div>
-      <div class="banner-item" data-aos="fade-up" data-aos-delay="150" onclick="location.href='portfolio-detail.html?id=17'">
+      <div class="banner-item" onclick="location.href='portfolio-detail.html?id=17'">
         <img src="images/banner/G.webp" alt="バナーデザイン 07" loading="lazy" />
       </div>
-      <div class="banner-item" data-aos="fade-up" data-aos-delay="200" onclick="location.href='portfolio-detail.html?id=18'">
+      <div class="banner-item" onclick="location.href='portfolio-detail.html?id=18'">
         <img src="images/banner/H.webp?v=2" alt="バナーデザイン 08" loading="lazy" />
       </div>
     </div>
@@ -1332,7 +1348,7 @@
 
 <!-- Portfolio Modal -->
 <div id="modal" class="fixed inset-0 z-50 items-center justify-center bg-black/70 p-4" onclick="closeModalOutside(event)">
-  <div id="modal-inner" class="bg-white rounded-2xl max-w-2xl w-full shadow-2xl relative overflow-hidden flex flex-col" style="max-height:90vh;">
+  <div id="modal-inner" class="bg-white max-w-2xl w-full shadow-2xl relative overflow-hidden flex flex-col" style="max-height:90vh;">
     <button onclick="closeModal()"
             class="absolute top-4 right-4 z-10 w-9 h-9 flex items-center justify-center bg-gray-100 hover:bg-tiffany hover:text-white rounded-full transition text-xl font-bold">
       ×
@@ -1343,7 +1359,7 @@
     </div>
     <!-- 下：テキスト -->
     <div class="px-6 pb-6 overflow-y-auto" style="margin-top:-20px;">
-      <span id="modal-category" class="text-xs text-tiffany font-bold tracking-[0.15em] uppercase bg-tiffany-light px-3 py-1 rounded-full"></span>
+      <span id="modal-category" class="text-xs text-tiffany font-bold tracking-[0.15em] uppercase bg-tiffany-light px-3 py-1"></span>
       <h3 id="modal-title" class="text-xl font-bold text-[#001638] mt-3 mb-4"></h3>
       <div class="space-y-3">
         <div>
@@ -1386,45 +1402,45 @@
 =================================== -->
 <section id="flow" class="py-20 sm:py-28 relative">
   <div class="relative z-10 wide-wrap mx-auto px-5 sm:px-8">
-    <div class="sec-head-wrap mb-14" data-aos="fade-up">
+    <div class="sec-head-wrap mb-14">
       <h2 class="sec-ja sec-head">制作の流れ<span class="sec-head-en" aria-hidden="true">FLOW</span></h2>
     </div>
     <div class="flow-list">
-      <div class="flow-card" data-aos="fade-up">
+      <div class="flow-card">
         <div class="flow-head"><span class="flow-num">01.</span><h3 class="flow-title">お問い合わせ</h3></div>
         <p class="flow-desc">まずはお気軽にお問い合わせフォームからご相談ください。</p>
       </div>
-      <div class="flow-card" data-aos="fade-up">
+      <div class="flow-card">
         <span class="flow-arrow" aria-hidden="true"><i></i><i></i></span>
         <div class="flow-head"><span class="flow-num">02.</span><h3 class="flow-title">お打ち合わせ</h3></div>
         <p class="flow-desc">オンライン（Zoom）で打ち合わせを行います。<br />目的やターゲット、方向性をすり合わせながら、具体的なイメージを整理していきます。</p>
       </div>
-      <div class="flow-card" data-aos="fade-up">
+      <div class="flow-card">
         <span class="flow-arrow" aria-hidden="true"><i></i><i></i></span>
         <div class="flow-head"><span class="flow-num">03.</span><h3 class="flow-title">お見積り・ご提案</h3></div>
         <p class="flow-desc">お打ち合わせ内容を整理し、お見積りと合わせてご提案します。<br />ご要望を踏まえたうえでの制作スケジュールもご提案いたします。</p>
       </div>
-      <div class="flow-card" data-aos="fade-up">
+      <div class="flow-card">
         <span class="flow-arrow" aria-hidden="true"><i></i><i></i></span>
         <div class="flow-head"><span class="flow-num">04.</span><h3 class="flow-title">ご契約</h3></div>
         <p class="flow-desc">ご提案内容にご納得いただけましたら、正式にご契約を行います。<br />着手金のご入金後、正式に制作を開始します。</p>
       </div>
-      <div class="flow-card" data-aos="fade-up">
+      <div class="flow-card">
         <span class="flow-arrow" aria-hidden="true"><i></i><i></i></span>
         <div class="flow-head"><span class="flow-num">05.</span><h3 class="flow-title">制作スタート</h3></div>
         <p class="flow-desc">リサーチや設計を行い、土台を固めたうえで制作に着手します。<br />要所で方向性にずれがないかご確認いただきながら、丁寧に進めていきます。</p>
       </div>
-      <div class="flow-card" data-aos="fade-up">
+      <div class="flow-card">
         <span class="flow-arrow" aria-hidden="true"><i></i><i></i></span>
         <div class="flow-head"><span class="flow-num">06.</span><h3 class="flow-title">修正・確認</h3></div>
         <p class="flow-desc">デザインや構成についてご確認いただき、必要に応じてブラッシュアップを行います。</p>
       </div>
-      <div class="flow-card" data-aos="fade-up">
+      <div class="flow-card">
         <span class="flow-arrow" aria-hidden="true"><i></i><i></i></span>
         <div class="flow-head"><span class="flow-num">07.</span><h3 class="flow-title">納品・ご請求</h3></div>
         <p class="flow-desc">最終確認完了後、制作物の納品を行います。<br />Webの場合はサイト公開、印刷物の場合はデータのお渡しや入稿完了をもって納品とします。</p>
       </div>
-      <div class="flow-card" data-aos="fade-up">
+      <div class="flow-card">
         <span class="flow-arrow" aria-hidden="true"><i></i><i></i></span>
         <div class="flow-head"><span class="flow-num">08.</span><h3 class="flow-title">運用・保守（オプション）</h3></div>
         <p class="flow-desc">納品後も必要に応じたサポートを行っています。<br />ご希望に応じて、運用のご相談も承りますので、お気軽にご相談ください。</p>
@@ -1444,10 +1460,10 @@
     </div>
   </div>
   <div class="relative z-10 max-w-3xl mx-auto msg-frost-panel text-center">
-    <div data-aos="fade-up">
+    <div>
       <h2 class="sec-ja mb-10">このサイトを訪れてくださったあなたへ</h2>
     </div>
-    <div data-aos="fade-up" data-aos-delay="100">
+    <div>
       <p class="text-[#001638] text-base sm:text-lg text-center" style="line-height:2.8;">
         このサイトを訪れてくださり、ありがとうございます。<br />
         事業に取り組むみなさまの魅力が、もっとお客様に届くように。<br class="hidden sm:inline" />そのお手伝いができればと、日々デザインに向き合っています。<br /><br />
@@ -1465,18 +1481,18 @@
 <section id="about" class="py-20 sm:py-28 relative">
   <img src="images/about-line.webp" alt="" aria-hidden="true" class="about-line" />
   <div class="relative z-10 wide-wrap mx-auto px-5 sm:px-8">
-    <div class="sec-head-wrap mb-14" data-aos="fade-up">
+    <div class="sec-head-wrap mb-14">
       <h2 class="sec-ja sec-head">自己紹介<span class="sec-head-en" aria-hidden="true">PROFILE</span></h2>
     </div>
 
     <div class="flex flex-col lg:flex-row gap-12 items-start">
       <!-- Text -->
-      <div class="flex-1" data-aos="fade-right">
+      <div class="flex-1">
         <div class="card p-8" style="border:none; background:#fff;">
           <!-- スマホ：写真が上・プロフィールが下 / PC：テキスト左・写真右 -->
 
           <!-- 写真（スマホのみ上に表示） -->
-          <div class="sm:hidden about-photo" style="width:100%; border-radius:12px; overflow:hidden; height:260px; margin-bottom:1.5rem;">
+          <div class="sm:hidden about-photo" style="width:100%; border-radius:0; overflow:hidden; height:260px; margin-bottom:1.5rem;">
             <img src="images/Photo2.webp"
                  onerror="this.src='https://placehold.co/400x260/e6f9f8/81D8D0?text=Photo'"
                  alt="永田亮" style="width:100%; height:100%; object-fit:cover; object-position:center top;" />
@@ -1512,7 +1528,7 @@
           </div>
             </div>
             <!-- 右: 写真(カード全高・PCのみ表示) -->
-            <div class="hidden sm:block about-photo" style="width:50%; flex-shrink:0; border-radius:12px; overflow:hidden;">
+            <div class="hidden sm:block about-photo" style="width:50%; flex-shrink:0; border-radius:0; overflow:hidden;">
               <img src="images/Photo2.webp"
                    onerror="this.src='https://placehold.co/600x900/e6f9f8/81D8D0?text=Photo'"
                    alt="永田亮" style="width:100%; height:100%; object-fit:cover; object-position:center top;" />
@@ -1532,13 +1548,13 @@
 =================================== -->
 <section id="contact" class="py-20 sm:py-28 relative" data-bg-anim="dotglobe">
   <div class="relative z-10 max-w-4xl mx-auto px-5 sm:px-8">
-    <div class="sec-head-wrap sec-head-center mb-12" data-aos="fade-up">
+    <div class="sec-head-wrap sec-head-center mb-12">
       <h2 class="sec-ja sec-head">お問い合わせ<span class="sec-head-en" aria-hidden="true">CONTACT</span></h2>
-      <p class="text-[#555] text-sm mt-3">まずはお気軽にお問い合わせください。無料でご相談を受け付けております。</p>
-      <p class="text-[#555] text-sm mt-2">ご予算が決まっていない段階でも、限られたご予算でも大丈夫です。ご予算に合わせて、できることをご提案します。</p>
+      <p class="text-[#555] text-sm" style="margin-top:2rem;">まずはお気軽にお問い合わせください。無料でご相談を受け付けております。</p>
+      <p class="text-[#555] text-sm mt-2">ご予算が決まっていない段階でも、限られたご予算でも大丈夫です。ご予算に合わせてご提案します。</p>
     </div>
 
-    <div class="flex flex-col sm:flex-row gap-4 mb-10" data-aos="fade-up" data-aos-delay="50">
+    <div class="flex flex-col sm:flex-row gap-4 mb-10">
       <div class="flex-1 card px-5 py-4 flex items-center gap-3">
         <svg class="w-5 h-5 text-tiffany shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -1557,24 +1573,23 @@
     </div>
 
     <form action="https://formspree.io/f/mzdqkegj" method="POST"
-          data-aos="fade-up" data-aos-delay="100"
           class="card p-8 space-y-5">
       <div>
         <label class="block text-sm font-bold text-[#001638] mb-1.5">お名前 <span class="req-badge">必須</span></label>
         <input type="text" name="name" required placeholder="例：山田 太郎"
-               class="w-full border border-tiffany-border rounded-xl px-4 py-3 text-sm outline-none focus:border-tiffany focus:ring-2 focus:ring-tiffany/20 transition" />
+               class="w-full border border-tiffany-border px-4 py-3 text-sm outline-none focus:border-tiffany focus:ring-2 focus:ring-tiffany/20 transition" />
       </div>
       <div>
         <label class="block text-sm font-bold text-[#001638] mb-1.5">メールアドレス <span class="req-badge">必須</span></label>
         <input type="email" name="email" required placeholder="例：example@email.com"
-               class="w-full border border-tiffany-border rounded-xl px-4 py-3 text-sm outline-none focus:border-tiffany focus:ring-2 focus:ring-tiffany/20 transition" />
+               class="w-full border border-tiffany-border px-4 py-3 text-sm outline-none focus:border-tiffany focus:ring-2 focus:ring-tiffany/20 transition" />
       </div>
       <div>
         <label class="block text-sm font-bold text-[#001638] mb-1.5">お問い合わせ内容 <span class="req-badge">必須</span></label>
         <textarea name="message" required rows="6" placeholder="お気軽にご記入ください"
-                  class="w-full border border-tiffany-border rounded-xl px-4 py-3 text-sm outline-none focus:border-tiffany focus:ring-2 focus:ring-tiffany/20 transition resize-none"></textarea>
+                  class="w-full border border-tiffany-border px-4 py-3 text-sm outline-none focus:border-tiffany focus:ring-2 focus:ring-tiffany/20 transition resize-none"></textarea>
       </div>
-      <p class="text-center text-xs text-[#555] mb-4"><a href="privacy.html" target="_blank" rel="noopener" class="underline hover:text-tiffany">プライバシーポリシー</a>に同意のうえ、送信してください。</p>
+      <p class="text-center text-xs text-[#555] mb-4"><label class="privacy-agree"><input type="checkbox" name="privacy_agree" value="同意する" required> <span><a href="privacy.html" target="_blank" rel="noopener" class="underline hover:text-tiffany">プライバシーポリシー</a>に同意する</span></label></p>
       <button type="submit" class="btn-primary cta w-full text-center" style="display:flex; --cta-scale:20;">問い合わせる<span class="cta-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
     </form>
   </div>
@@ -1926,14 +1941,17 @@
       var PIN_VH = 2.5; // 固定中にスクロールさせる量（画面の高さの何倍か）
       var GAP_VH = 0.5, RISE_VH = 1.0; // 全文字表示後に止まる間／お悩みエリアがせり上がる量
       var wrapEl = document.querySelector('.lower-bg-wrap');
-      var W = 6;        // 1文字がぼやけ→はっきりするまでに重なる文字数（なめらかさ）
+      var W = 1;        // 試し: 元 6。1文字がぼやけ→はっきりするまでに重なる文字数（なめらかさ）
       var pinLen = 0, ticking2 = false;
       function layout() {
         var vh = window.innerHeight, h = csec.offsetHeight;
         pinLen = Math.round(vh * PIN_VH);
         // 下端が画面下に来た位置で固定。ただし画面が低い場合も見出しがメニューに隠れないようにする
         var headOff = allLines[0].getBoundingClientRect().top - csec.getBoundingClientRect().top;
-        csec.style.top = Math.min(0, Math.max(vh - h, 76 - headOff)) + 'px';
+        // 見出し上端〜本文下端の中点が画面の縦中央に来る位置で固定（見出しはメニューに隠れない範囲で）
+        var copyEl = csec.querySelector('.concept-copy');
+        var copyOff = copyEl.getBoundingClientRect().bottom - csec.getBoundingClientRect().top;
+        csec.style.top = Math.min(0, Math.max(vh / 2 - (headOff + copyOff) / 2, 76 - headOff, vh - h)) + 'px';
         pin.style.height = (h + pinLen + Math.round(vh * (GAP_VH + RISE_VH))) + 'px'; // 文字表示＋読む間＋お悩みのせり上がり
         wrapEl.style.marginTop = -Math.round(vh * RISE_VH) + 'px';
       }
@@ -2120,5 +2138,6 @@
 </script>
 
 <script src="js/bg-anim.js" defer></script>
+<script src="js/sec-head-anim.js?v=1"></script>
 </body>
 </html>

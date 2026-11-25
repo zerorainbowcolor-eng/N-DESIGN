@@ -35,7 +35,7 @@
     .card {
       background: #fff;
       border: 1px solid #b2dcd8;
-      border-radius: 12px;
+      border-radius: 0;
       box-shadow: 0 4px 16px rgba(129,216,208,0.15);
     }
     .label { font-size: 0.875rem; font-weight: 700; color: #001638; margin-bottom: 0.25rem; }
@@ -44,7 +44,7 @@
     .sc-head { text-align: center; margin-bottom: 2.5rem; }
     .sc-cat { display:block; font-family:'Inter',sans-serif; font-size:.75rem; letter-spacing:.2em; color:#e5025a; font-weight:700; text-transform:uppercase; }
     .sc-title { font-size:clamp(1.25rem, 3vw, 1.75rem); font-weight:700; letter-spacing:.08em; margin-top:.6rem; line-height:1.6; }
-    .sc-main { background:#f6f4ef; border-radius:16px; overflow:hidden; margin-bottom:4.5rem; }
+    .sc-main { background:#f6f4ef; border-radius:0; overflow:hidden; margin-bottom:4.5rem; }
     .sc-main img { width:100%; height:auto; display:block; }
     .sc-main--cols { aspect-ratio:16 / 10; display:flex; justify-content:center; gap:4%; padding:6% 5% 0; }
     .sc-main--cols .sc-col { flex:0 0 26%; align-self:flex-start; box-shadow:0 6px 24px rgba(0,0,0,0.14); }
@@ -66,7 +66,7 @@
     .sc-info .label { font-size:1rem; padding-left:.8rem; border-left:3px solid #e5025a; margin-bottom:.6rem; }
     .sc-info .sc-block + .sc-block { margin-top:2rem; }
     @media (max-width:639px){
-      .sc-main { border-radius:10px; margin-bottom:3rem; }
+      .sc-main { border-radius:0; margin-bottom:3rem; }
       .sc-full { margin-bottom:3.5rem; }
       .sc-stack { width:57%; margin:0; }
       .sc-note { width:39%; font-size:10px; line-height:1.6; padding:.55rem .6rem; }
@@ -118,7 +118,7 @@
 
     <!-- 左：画像スライダー -->
     <div class="w-full">
-      <div class="relative overflow-hidden rounded-xl" id="slider-wrap">
+      <div class="relative overflow-hidden" id="slider-wrap">
         <!-- スライドトラック -->
         <div id="slider-track" class="flex transition-transform duration-400 ease-in-out" style="transition: transform 0.4s ease;">
           <!-- 画像はJSで挿入 -->
@@ -138,7 +138,7 @@
 
     <!-- 右：詳細 -->
     <div class="flex-1">
-      <span id="detail-category" class="text-xs text-tiffany font-bold tracking-[0.15em] uppercase bg-tiffany-light px-3 py-1 rounded-full"></span>
+      <span id="detail-category" class="text-xs text-tiffany font-bold tracking-[0.15em] uppercase bg-tiffany-light px-3 py-1"></span>
       <h1 id="detail-title" class="text-2xl font-bold text-[#001638] mt-3 mb-6 leading-snug"></h1>
 
       <div class="space-y-5">
@@ -222,7 +222,7 @@
         // スクロール促すラベル
         const label = document.createElement('div');
         label.style.cssText = 'position:sticky; bottom:8px; text-align:center; pointer-events:none;';
-        label.innerHTML = '<span style="background:rgba(0,0,0,0.6);color:#fff;font-size:0.7rem;padding:4px 10px;border-radius:20px;">↓ スクロールして見る</span>';
+        label.innerHTML = '<span style="background:rgba(0,0,0,0.6);color:#fff;font-size:0.7rem;padding:4px 10px;border-radius:0;">↓ スクロールして見る</span>';
         slide.appendChild(label);
       } else {
         // 通常画像スライド

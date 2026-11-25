@@ -1,0 +1,28 @@
+/* 見出し演出：紺の四角が左から伸びて文字を覆い、左→右へ拭き取られて文字が現れる。背景英字は左の画面外からスライドイン */
+.sh-ready .sec-ja.sec-head { -webkit-text-fill-color: transparent; }
+.sh-ready .sec-ja.sec-head .sec-head-en { -webkit-text-fill-color: currentColor; opacity: 0; translate: -100vw 0; }
+.sh-ready .sec-ja.sec-head::after {
+  content: ""; position: absolute; inset: -0.06em -0.1em; z-index: 2;
+  background: #001638; transform: scaleX(0); transform-origin: left center; pointer-events: none;
+}
+.sh-ready .sec-ja.sec-head.sh-in { animation: shText 1.1s linear forwards; }
+.sh-ready .sec-ja.sec-head.sh-in::after { animation: shBox 1.1s cubic-bezier(0.77, 0, 0.175, 1) forwards; }
+.sh-ready .sec-ja.sec-head.sh-in .sec-head-en { animation: shEn 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+@keyframes shBox {
+  0%     { transform: scaleX(0); transform-origin: left center; }
+  45%    { transform: scaleX(1); transform-origin: left center; }
+  45.01% { transform: scaleX(1); transform-origin: right center; }
+  100%   { transform: scaleX(0); transform-origin: right center; }
+}
+@keyframes shText { 0%, 45% { -webkit-text-fill-color: transparent; } 45.01%, 100% { -webkit-text-fill-color: currentColor; } }
+@keyframes shEn { from { opacity: 0; translate: -100vw 0; } to { opacity: 1; translate: 0 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .sh-ready .sec-ja.sec-head { -webkit-text-fill-color: currentColor; }
+  .sh-ready .sec-ja.sec-head .sec-head-en { opacity: 1; translate: none; }
+  .sh-ready .sec-ja.sec-head::after { content: none; }
+}
+/* お問い合わせ：英字はその場で左→右に拭き取るように現れる */
+.sh-ready #contact .sec-ja.sec-head .sec-head-en { translate: none; opacity: 1; clip-path: inset(0 100% 0 0); }
+.sh-ready #contact .sec-ja.sec-head.sh-in .sec-head-en { animation: shEnWipe 1.1s cubic-bezier(0.77, 0, 0.175, 1) forwards; }
+@keyframes shEnWipe { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+@media (prefers-reduced-motion: reduce) { .sh-ready #contact .sec-ja.sec-head .sec-head-en { clip-path: none; } }
