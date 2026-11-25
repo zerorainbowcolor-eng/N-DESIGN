@@ -15,26 +15,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            tiffany: '#81D8D0',
-            'tiffany-dark': '#5fc4bb',
-            'tiffany-light': '#e6f9f8',
-            'tiffany-border': '#b2dcd8',
-          },
-          fontFamily: {
-            sans: ['Noto Sans JP', 'Inter', 'sans-serif'],
-          },
-        },
-      },
-    }
-  </script>
 
   <style>
     html { scroll-behavior: smooth; }
@@ -214,6 +196,7 @@
       #mobile-menu.open { display: block !important; }
     }
   </style>
+  <link rel="stylesheet" href="css/tailwind.css?v=1" /><!-- Tailwind（書き出し済み）。ページ内の<style>より後に読み込む（CDNと同じ順） -->
 </head>
 
 <body style="background: #dfecf7;">
