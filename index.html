@@ -639,6 +639,9 @@
       line-height: 2.1; /* 試し: 元 3 */
     }
     .concept-copy p + p { margin-top: 3em; }
+    /* 本文ブロックは中央に置き、行頭（左端）をそろえる */
+    #concept .concept-copy { width: fit-content; max-width: 100%; margin-left: auto; margin-right: auto; text-align: left; }
+    #concept .concept-copy .cl { margin-left: 0; margin-right: 0; }
     /* 本文を1文ずつ左から拭き取るように表示（JSで .cl に分割） */
     .concept-copy .cl, .concept-head .cl {
       display: block;
@@ -810,6 +813,23 @@
     .privacy-agree input:checked { background: #001638; }
     .privacy-agree input:checked::before { opacity: 1; }
     .privacy-agree input:focus-visible { outline: 2px solid #4D9FE8; outline-offset: 2px; }
+    /* ===== お客様の声 ===== */
+    .voice-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    @media (max-width: 1023px) { .voice-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 639px) { .voice-grid { grid-template-columns: 1fr; } }
+    .voice-card {
+      background: #fff; display: flex; flex-direction: column;
+      clip-path: polygon(0 0, calc(100% - 36px) 0, 100% 36px, 100% 100%, 0 100%); /* 右上を斜めに切り落とす */
+    }
+    .voice-photo { position: relative; aspect-ratio: 1; background: #c5d6e8; display: grid; place-items: center; overflow: hidden; }
+    .voice-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+    .voice-photo span { font-family: 'Inter', sans-serif; font-weight: 800; font-size: clamp(2.6rem, 5vw, 3.6rem); color: #001638; opacity: 0.35; letter-spacing: 0.04em; }
+    .voice-body { padding: 1.4rem 1.4rem 1.6rem; display: flex; flex-direction: column; flex: 1; }
+    .voice-name { color: #001638; font-weight: 700; font-size: 1.1rem; }
+    .voice-co { display: inline-block; align-self: flex-start; margin-top: 0.4rem; background: #e3ebf4; color: #001638; font-size: 0.72rem; padding: 0.2rem 0.6rem; }
+    .voice-text { border-top: 1px solid #d5dbe3; margin-top: 1rem; padding-top: 1rem; color: #333; font-size: 0.88rem; line-height: 2; }
+    .voice-text em { font-style: normal; font-weight: 700; color: #2f55b5; }
+
     /* ===== CARDS ===== */
     .card {
       background: #fff;
@@ -1395,6 +1415,52 @@
     <!-- 画像が縦に並ぶ -->
   </div>
 </div>
+
+
+<!-- ===================================
+     お客様の声
+=================================== -->
+<section id="voice" class="py-20 sm:py-28 relative">
+  <div class="relative z-10 max-w-6xl mx-auto px-5 sm:px-8">
+    <div class="sec-head-wrap mb-14">
+      <h2 class="sec-ja sec-head">お客様の声<span class="sec-head-en" aria-hidden="true">VOICE</span></h2>
+    </div>
+    <div class="voice-grid">
+      <article class="voice-card">
+        <div class="voice-photo"><img src="images/voice/voice-kimura.webp?v=2" alt="木村 敬 様" onerror="this.remove()"><span aria-hidden="true">K</span></div>
+        <div class="voice-body">
+          <p class="voice-name">木村 敬 様</p>
+          <p class="voice-co">CCC Kimura Office 代表</p>
+          <p class="voice-text">ホームページリニューアルをご相談しました。こちらの抽象的なイメージもしっかり受け止め、想いを形にしていただきました。<em>刷新後、お仕事が急増しました！</em>心から信頼できるビジネスパートナーです。</p>
+        </div>
+      </article>
+      <article class="voice-card">
+        <div class="voice-photo"><img src="images/voice/voice-yokoyama.webp" alt="横山 功 様" onerror="this.remove()"><span aria-hidden="true">Y</span></div>
+        <div class="voice-body">
+          <p class="voice-name">横山 功 様</p>
+          <p class="voice-co">キャニング・アンド・アソシエイツ株式会社</p>
+          <p class="voice-text">コミュニケーションが取りやすく、<em>返答もスピーディー</em>。ご提案いただいた内容にも満足しています。</p>
+        </div>
+      </article>
+      <article class="voice-card">
+        <div class="voice-photo"><img src="images/voice/voice-hatano.webp" alt="籏野 幸子 様" onerror="this.remove()"><span aria-hidden="true">H</span></div>
+        <div class="voice-body">
+          <p class="voice-name">籏野 幸子 様</p>
+          <p class="voice-co">占い鑑定士</p>
+          <p class="voice-text">丁寧にヒアリングしてくださり、<em>文句無しの対応</em>をしていただきました。大変お世話になりました。これからもよろしくお願いします。</p>
+        </div>
+      </article>
+      <article class="voice-card">
+        <div class="voice-photo"><img src="images/voice/voice-kn.webp" alt="K.N 様" onerror="this.remove()"><span aria-hidden="true">K.N</span></div>
+        <div class="voice-body">
+          <p class="voice-name">K.N 様</p>
+          <p class="voice-co">ライブ配信者</p>
+          <p class="voice-text">修正に丁寧に向き合っていただき、<em>新しいアイデアのご提案</em>もいただきました。</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
 
 
 <!-- ===================================
