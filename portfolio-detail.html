@@ -66,6 +66,11 @@
     .sc-main img { width:100%; height:auto; display:block; }
     .sc-main--cols { aspect-ratio:16 / 10; display:flex; justify-content:center; gap:4%; padding:6% 5% 0; }
     .sc-main--cols .sc-col { flex:0 0 26%; align-self:flex-start; box-shadow:0 6px 24px rgba(0,0,0,0.14); }
+    .sc-main--fit { background:#eef2f8 url(images/works/sc-bg.webp?v=3) center / cover no-repeat; } /* 白〜淡い青のサテン調背景 */
+    .sc-main--fit .sc-col { overflow:hidden; position:relative; }
+    .sc-col-stack { position:relative; }
+    .sc-col-stack img { width:100%; height:auto; display:block; }
+    .sc-col-stack .sc-fv { position:absolute; top:0; left:0; }
     .sc-full-cap { text-align:center; font-size:.75rem; color:#999; letter-spacing:.1em; margin-bottom:1.25rem; }
     .sc-full { position:relative; max-width:1100px; margin:0 auto 5rem; }
     .sc-stack { position:relative; width:54%; margin:0 auto; box-shadow:0 10px 40px rgba(0,0,0,0.12); }
@@ -414,11 +419,7 @@
     const showcase = {
       20: {
         main: 'images/works/novelie-card.webp',
-        mainCols: [
-          ['images/works/novelie-col-1.webp'],
-          ['images/works/novelie-col-2.webp'],
-          ['images/works/novelie-col-3.webp'],
-        ],
+        fitCols: true, // メイン画像：LP全体を3〜4列に分けて全部収める
         full: [{ src: 'images/works/novelie-full.webp', h: 18770 }],
         notes: [
           { x: .75, y: .045, side: 'R', text: 'FVは「目元に新習慣。」の縦書きコピーと女性の写真で、上品で清潔感のある世界観に。人気成分の配合をゴールドの丸いバッジで見せています。' },
@@ -434,11 +435,7 @@
       },
       1: {
         main: 'images/lp01.webp',
-        mainCols: [
-          ['images/works/lmc-col-1.webp'],
-          ['images/works/lmc-col-2.webp'],
-          ['images/works/lmc-col-3.webp'],
-        ],
+        fitCols: true,
         full: [{ src: 'images/work1B-pc.webp', h: 21753 }],
         notes: [
           { x: .5, y: .04, side: 'R', text: 'FVでは実績の数字を金色のバッジで見せ、在宅で自由に働ける未来をひと目でイメージできるようにしました。' },
@@ -454,11 +451,7 @@
       },
       5: {
         main: 'images/lp03.webp',
-        mainCols: [
-          ['images/works/sss-col-1.webp'],
-          ['images/works/sss-col-2.webp'],
-          ['images/works/sss-col-3.webp'],
-        ],
+        fitCols: true,
         full: [{ src: 'images/works/sss-full.webp', h: 13707 }],
         notes: [
           { x: .85, y: .08, side: 'R', text: 'FVは講師の写真と実績のバッジで信頼感をつくり、すぐ下の帯で「労力半分で売上2倍」というメリットをストレートに伝えています。' },
@@ -473,11 +466,7 @@
       },
       2: {
         main: 'images/lp02.webp',
-        mainCols: [
-          ['images/works/enzyme-col-1.webp'],
-          ['images/works/enzyme-col-2a.webp', 'images/works/enzyme-col-2b.webp'],
-          ['images/works/enzyme-col-3.webp'],
-        ],
+        fitCols: true,
         full: [
           { src: 'images/works/enzyme-top.webp', h: 9814 },
           { src: 'images/works/enzyme-bottom.webp', h: 10298 },
@@ -497,11 +486,7 @@
       3: {
         titleBreak: '様',
         main: 'images/hp01.webp',
-        mainCols: [
-          ['images/works/ccc-top-1.webp', 'images/works/ccc-top-2.webp'],
-          ['images/works/ccc-top-3.webp', 'images/works/ccc-top-4.webp'],
-          ['images/works/ccc-top-5.webp', 'images/works/ccc-top-6.webp'],
-        ],
+        fitCols: true,
         full: [
           { src: 'images/works/ccc-top-1.webp', h: 2388 },
           { src: 'images/works/ccc-top-2.webp', h: 2583 },
@@ -523,6 +508,7 @@
       19: {
         titleBreak: '様',
         main: 'images/works/hp-sample-main.webp',
+        fitCols: true,
         // 縦長画像（幅1800基準の高さ）。fv は1枚目の上部に重ねる高画質FV
         full: [
           { src: 'images/works/canning-top-1.webp', h: 6360 },
@@ -546,7 +532,7 @@
     const sc = showcase[id];
     if (sc) {
       document.getElementById('showcase').style.display = 'block';
-      document.getElementById('sc-cat').textContent = 'Category ' + data.category;
+      document.getElementById('sc-cat').textContent = data.category;
       const scTitle = document.getElementById('sc-title');
       if (sc.titleBreak && data.title.includes(sc.titleBreak)) {
         // 指定した文字のあとで改行する（例：「〜様」のあと）
@@ -556,7 +542,46 @@
         scTitle.textContent = data.title;
       }
       const mainImgEl = document.getElementById('sc-main-img');
-      if (sc.mainCols) {
+      if (sc.fitCols) {
+        // LP全体（full＋FV）を縦にN等分し、左の列から上→下の続きとして並べる。
+        // 枠（16:10、上6%・下5%の余白）に縦が収まる範囲で、列が一番太くなる列数（4か3）を選ぶ
+        const box = mainImgEl.parentElement;
+        box.classList.add('sc-main--cols', 'sc-main--fit');
+        box.setAttribute('role', 'img');
+        box.setAttribute('aria-label', data.title + ' メイン画像（ページ全体）');
+        box.innerHTML = '';
+        const totalH = sc.full.reduce((s, f) => s + f.h, 0), r = totalH / 1800; // 縦÷横
+        // 列数：長いLPは4列、短いLPは3列。列は横幅いっぱいに並べ、枠の高さは「列の高さの95%」に合わせる
+        // （列の下5%ほどが枠の下からはみ出し、その分は枠で切る）
+        const gap = 3, N = r > 6 ? 4 : 3;
+        const colW = N === 4 ? 22 : 28;                          // 内側の幅(枠の90%)=100としたときの列幅
+        const colH = colW * r / N * 0.9;                         // 列の高さ（枠の幅=100基準）
+        box.style.aspectRatio = '100 / ' + (6 + colH * 0.95);   // 上余白6%＋列の95%
+        box.style.gap = gap + '%';
+        for (let k = 0; k < N; k++) {
+          const c = document.createElement('div');
+          c.className = 'sc-col';
+          c.style.flex = '0 0 ' + colW + '%';
+          c.style.aspectRatio = '1800 / ' + (totalH / N);
+          const st = document.createElement('div');
+          st.className = 'sc-col-stack';
+          st.style.transform = 'translateY(' + (-100 * k / N) + '%)';
+          sc.full.forEach(f => {
+            const img = document.createElement('img');
+            img.src = f.src; img.alt = ''; img.decoding = 'async';
+            img.width = 1800; img.height = f.h;
+            st.appendChild(img);
+          });
+          if (sc.fv) {
+            const fv = document.createElement('img');
+            fv.src = sc.fv.src; fv.alt = ''; fv.className = 'sc-fv';
+            fv.style.aspectRatio = '1800 / ' + sc.fv.h;
+            st.appendChild(fv);
+          }
+          c.appendChild(st);
+          box.appendChild(c);
+        }
+      } else if (sc.mainCols) {
         // 画面キャプチャを4列に並べたメインビジュアル
         const box = mainImgEl.parentElement;
         box.classList.add('sc-main--cols');
