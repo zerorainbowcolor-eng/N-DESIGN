@@ -186,6 +186,15 @@
     .concern-desc { font-size: 1.375rem; line-height: 1.6; }
     /* お悩み：枠なし。イラストの下に中央揃えの文章 */
     .concern-item { text-align: center; }
+    /* PC：3枚のイラストを左右端（お客様の声のカード端）にそろえる */
+    @media (min-width: 768px) {
+      #concern .grid.md\:grid-cols-3 { grid-template-columns: repeat(3, auto); justify-content: space-between; }
+      #concern .concern-item .concern-illust { width: auto; max-width: 100%; height: 200px; }
+      #concern .concern-item:first-child { text-align: left; }
+      #concern .concern-item:first-child .concern-illust { margin-left: 0; }
+      #concern .concern-item:last-child { text-align: right; }
+      #concern .concern-item:last-child .concern-illust { margin-right: 0; }
+    }
     .concern-illust { display: block; width: 100%; height: 220px; object-fit: contain; margin: 0 auto 1.5rem; }
     .concern-item .concern-desc { font-size: 1.1rem; line-height: 1.9; font-weight: 500; }
     @media (max-width: 767px) { .concern-illust { height: 190px; margin-bottom: 1.1rem; } .concern-item .concern-desc { font-size: 1.05rem; } }
@@ -838,10 +847,8 @@
       background: #fff; display: flex; flex-direction: column;
     }
     .voice-photo { position: relative; background: #fff; display: grid; place-items: center; padding: 1.6rem 0 0; } /* 正方形エリアをやめて上下の余白を詰める */
-    .voice-photo img, .voice-photo span { grid-area: 1 / 1; width: 62%; aspect-ratio: 1; border-radius: 50%; } /* 四角エリアの中に丸く配置 */
+    .voice-photo img { grid-area: 1 / 1; width: 62%; aspect-ratio: 1; border-radius: 50%; } /* 四角エリアの中に丸く配置 */
     .voice-photo img { object-fit: cover; z-index: 1; }
-    .voice-photo span { display: grid; place-items: center; background: #dfe8f2; }
-    .voice-photo span { font-family: 'Inter', sans-serif; font-weight: 800; font-size: clamp(2.6rem, 5vw, 3.6rem); color: #001638; opacity: 0.35; letter-spacing: 0.04em; }
     .voice-body { padding: 1.1rem 1.4rem 1.6rem; display: flex; flex-direction: column; flex: 1; }
     .voice-name { color: #001638; font-weight: 700; font-size: 1.1rem; }
     .voice-co { display: inline-block; align-self: flex-start; margin-top: 0.4rem; background: #e3ebf4; color: #001638; font-size: 0.72rem; padding: 0.2rem 0.6rem; }
@@ -1146,7 +1153,7 @@
      お悩み（青グラデーション）
 =================================== -->
 <section id="concern" class="py-20 sm:py-28 relative overflow-hidden">
-  <div class="relative wide-wrap mx-auto px-5 sm:px-8 text-center">
+  <div class="relative max-w-6xl mx-auto px-5 sm:px-8 text-center">
     <!-- 見出し -->
     <div>
       <div class="sec-head-wrap mb-10">
@@ -1193,7 +1200,7 @@
      3つの強み（偶数：tiffany-light）
 =================================== -->
 <section id="strength" class="py-20 sm:py-28 relative">
-  <div class="relative z-10 wide-wrap mx-auto px-5 sm:px-8">
+  <div class="relative z-10 max-w-6xl mx-auto px-5 sm:px-8">
     <div class="sec-head-wrap mb-14">
       <h2 class="sec-ja sec-head">制作で大切にしていること<span class="sec-head-en" aria-hidden="true">POLICY</span></h2>
     </div>
@@ -1239,7 +1246,7 @@
      サービス（奇数：白）
 =================================== -->
 <section id="service" class="py-20 sm:py-28 relative">
-  <div class="relative z-10 wide-wrap mx-auto px-5 sm:px-8">
+  <div class="relative z-10 max-w-6xl mx-auto px-5 sm:px-8">
     <div class="sec-head-wrap mb-14">
       <h2 class="sec-ja sec-head">提供サービス<span class="sec-head-en" aria-hidden="true">SERVICES</span></h2>
     </div>
@@ -1323,7 +1330,7 @@
      ポートフォリオ（偶数：tiffany-light）
 =================================== -->
 <section id="portfolio" class="py-20 sm:py-28 relative" data-bg-anim="net" data-bg-parallax="2" data-bg-color="214,160,30">
-  <div class="relative z-10 wide-wrap mx-auto px-5 sm:px-8">
+  <div class="relative z-10 max-w-6xl mx-auto px-5 sm:px-8">
     <div class="sec-head-wrap mb-14">
       <h2 class="sec-ja sec-head">制作事例<span class="sec-head-en" aria-hidden="true">WORKS</span></h2>
     </div>
@@ -1450,7 +1457,7 @@
     </div>
     <div class="voice-grid">
       <article class="voice-card">
-        <div class="voice-photo"><img src="images/voice/voice-kimura.webp?v=2" alt="木村 敬 様" onerror="this.remove()"><span aria-hidden="true">K</span></div>
+        <div class="voice-photo"><img src="images/voice/voice-kimura.webp?v=2" alt="木村 敬 様" onerror="this.remove()"></div>
         <div class="voice-body">
           <p class="voice-name">木村 敬 様</p>
           <p class="voice-co">CCC Kimura Office 代表</p>
@@ -1458,7 +1465,7 @@
         </div>
       </article>
       <article class="voice-card">
-        <div class="voice-photo"><img src="images/voice/voice-yokoyama.webp" alt="横山 功 様" onerror="this.remove()"><span aria-hidden="true">Y</span></div>
+        <div class="voice-photo"><img src="images/voice/voice-yokoyama.webp" alt="横山 功 様" onerror="this.remove()"></div>
         <div class="voice-body">
           <p class="voice-name">横山 功 様</p>
           <p class="voice-co">キャニング・アンド・アソシエイツ株式会社</p>
@@ -1466,7 +1473,7 @@
         </div>
       </article>
       <article class="voice-card">
-        <div class="voice-photo"><img src="images/voice/voice-hatano.webp" alt="籏野 幸子 様" onerror="this.remove()"><span aria-hidden="true">H</span></div>
+        <div class="voice-photo"><img src="images/voice/voice-hatano.webp" alt="籏野 幸子 様" onerror="this.remove()"></div>
         <div class="voice-body">
           <p class="voice-name">籏野 幸子 様</p>
           <p class="voice-co">占い鑑定士</p>
@@ -1474,7 +1481,7 @@
         </div>
       </article>
       <article class="voice-card">
-        <div class="voice-photo"><img src="images/voice/voice-kn.webp" alt="K.N 様" onerror="this.remove()"><span aria-hidden="true">K.N</span></div>
+        <div class="voice-photo"><img src="images/voice/voice-kn.webp" alt="K.N 様" onerror="this.remove()"></div>
         <div class="voice-body">
           <p class="voice-name">K.N 様</p>
           <p class="voice-co">ライブ配信者</p>
@@ -1490,7 +1497,7 @@
      制作の流れ
 =================================== -->
 <section id="flow" class="py-20 sm:py-28 relative">
-  <div class="relative z-10 wide-wrap mx-auto px-5 sm:px-8">
+  <div class="relative z-10 max-w-6xl mx-auto px-5 sm:px-8">
     <div class="sec-head-wrap mb-14">
       <h2 class="sec-ja sec-head">制作の流れ<span class="sec-head-en" aria-hidden="true">FLOW</span></h2>
     </div>
@@ -1569,7 +1576,7 @@
 =================================== -->
 <section id="about" class="py-20 sm:py-28 relative">
   <img src="images/about-line.webp" alt="" aria-hidden="true" class="about-line" />
-  <div class="relative z-10 wide-wrap mx-auto px-5 sm:px-8">
+  <div class="relative z-10 max-w-6xl mx-auto px-5 sm:px-8">
     <div class="sec-head-wrap mb-14">
       <h2 class="sec-ja sec-head">自己紹介<span class="sec-head-en" aria-hidden="true">PROFILE</span></h2>
     </div>
