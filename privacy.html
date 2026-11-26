@@ -129,6 +129,12 @@
     .line-btn .cta-arrow { background: #06c755; color: #fff; }
     .line-btn.cta:hover .cta-arrow { background: #fff; color: #06c755; }
     /* メールアイコン（文字色と一緒に変わるようマスクで表示） */
+    /* 紺枠×水色（料金を見ると同じ） */
+    .btn-primary.cta.cta-navy { background: #dfecf7; color: #001638; border-color: #001638; box-shadow: none; }
+    .btn-primary.cta.cta-navy::before { background: #001638; }
+    .btn-primary.cta.cta-navy:hover { background: #dfecf7; color: #fff; box-shadow: 0 0 20px rgba(0, 22, 56, 0.25); }
+    .btn-primary.cta-navy .cta-arrow { background: #001638; color: #dfecf7; }
+    .btn-primary.cta.cta-navy:hover .cta-arrow { background: #fff; color: #001638; }
     .cta-mail {
       display: inline-block; flex-shrink: 0; width: 26px; height: 18px; background-color: currentColor;
       -webkit-mask: url("images/メール.webp") center / contain no-repeat;
@@ -349,7 +355,7 @@
 
   <!-- お問い合わせへ戻る -->
   <div class="text-center" style="margin-top:3rem;" data-aos="fade-up">
-    <a href="index.html#contact" class="btn-primary cta">
+    <a href="index.html#contact" class="btn-primary cta cta-navy">
       <span class="cta-mail" aria-hidden="true"></span>
       お問い合わせに戻る
       <span class="cta-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
