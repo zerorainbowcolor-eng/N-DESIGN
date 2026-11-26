@@ -147,6 +147,7 @@
     @media (max-width: 639px) { .profile-grid { grid-template-columns: 1fr; } #about .profile-value { white-space: normal; } #about .profile-label { width: 6.5em; white-space: nowrap; } #about .profile-grid .profile-item:nth-child(even) { margin-left: 0; } }
     .profile-item { display: flex; align-items: baseline; gap: 0.5rem; }
     .profile-grid .profile-item:nth-child(even) { margin-left: 12px; }
+    @media (min-width: 640px) { .profile-grid .profile-item:nth-child(odd) .profile-label { width: 5em; } } /* 左列は項目名が短いので余白を右列にそろえる */
     .profile-label {
       flex-shrink: 0;
       width: 6.5em;
@@ -156,6 +157,17 @@
       font-size: 1.05rem; /* text-sm(0.875rem)の1.2倍 */
     }
     .profile-value { color: #555; font-size: 1.05rem; line-height: 1.6; white-space: nowrap; }
+    /* 狭い画面で右列がはみ出さないよう、折り返しを許可し、幅が足りないときは1列に */
+    .profile-grid > .profile-item { min-width: 0; }
+    #about .profile-value { white-space: normal; overflow-wrap: anywhere; }
+    /* 640px以上：左列＝生年月日・出身・血液型、右列＝MBTI・動物占い・好きな食べ物（縦方向に流す） */
+    @media (min-width: 640px) {
+      .profile-grid { grid-template-columns: auto 1fr; grid-template-rows: repeat(3, auto); grid-auto-flow: column; }
+      .profile-grid .profile-item:nth-child(even) { margin-left: 0; }
+      .profile-grid .profile-item:nth-child(-n+3) .profile-label { width: 5em; }
+      .profile-grid .profile-item:nth-child(n+4) { margin-left: 12px; }
+      .profile-grid .profile-item:nth-child(n+4) .profile-label { width: 6.5em; }
+    }
 
     /* ===== 強み 下段2枚(中央寄せ) ===== */
     .strength-row2 {
@@ -594,9 +606,10 @@
     /* PC(広い画面): 左に縦2枚・右に1枚を絶対配置 */
     @media (min-width: 1440px) {
       .concept-photos .cp { position: absolute; z-index: 5; }
-      .cp-l1 { left: 3%;  top: 20%; width: clamp(189px, 14vw, 273px); filter: blur(2px); opacity: 0.9; }
-      .cp-l2 { left: -2%; top: 68%; width: clamp(356px, 26.4vw, 515px); }
-      .cp-r1 { right: 3.5%; top: 62%; transform: translateY(-50%); width: clamp(300px, 22vw, 420px); }
+      /* 本文の文字を大きくしたため、写真を小さく・外側へ寄せて本文と重ならないようにする */
+      .cp-l1 { left: 2%;  top: 18%; width: clamp(150px, 10vw, 230px); filter: blur(2px); opacity: 0.9; }
+      .cp-l2 { left: -1%; top: 70%; width: clamp(220px, 15vw, 340px); }
+      .cp-r1 { right: 1.5%; top: 62%; transform: translateY(-50%); width: clamp(200px, 13.5vw, 310px); }
     }
     /* タブレット〜中くらいのPC: 写真を小さくして左右に配置し、本文の幅を狭めて重ならないようにする */
     @media (min-width: 768px) and (max-width: 1439px) {
@@ -871,6 +884,11 @@
     #about .card { box-shadow: none; border: none; }
     #about .card:hover { transform: none; box-shadow: none; }
     .about-photo { position: relative; }
+    /* 1200px未満は写真を上・文章を下の縦並びに（顔が切れないように） */
+    @media (max-width: 1199px) {
+      #about .about-photo-sp { display: block; height: clamp(260px, 48vw, 460px) !important; }
+      #about .about-photo-pc { display: none; }
+    }
     .about-photo::after {
       content: '';
       position: absolute; inset: 0;
@@ -1563,13 +1581,13 @@
           <!-- スマホ：写真が上・プロフィールが下 / PC：テキスト左・写真右 -->
 
           <!-- 写真（スマホのみ上に表示） -->
-          <div class="sm:hidden about-photo" style="width:100%; border-radius:0; overflow:hidden; height:260px; margin-bottom:1.5rem;">
+          <div class="sm:hidden about-photo about-photo-sp" style="width:100%; border-radius:0; overflow:hidden; height:260px; margin-bottom:1.5rem;">
             <img src="images/Photo2.webp"
                  onerror="this.src='https://placehold.co/400x260/e6f9f8/81D8D0?text=Photo'"
                  alt="永田亮" style="width:100%; height:100%; object-fit:cover; object-position:center top;" />
           </div>
 
-          <div class="about-split" style="display:flex; gap:2rem; align-items:stretch;">
+          <div class="about-split" style="display:flex; flex-direction:row-reverse; gap:2rem; align-items:stretch;"><!-- PC：写真を左・文章を右 -->
             <!-- 左: 全テキスト -->
             <div style="flex:1; min-width:0;">
               <p class="text-xs font-semibold tracking-[0.2em] uppercase mb-1" style="color:#e5025a;">Ryo Nagata</p>
@@ -1599,7 +1617,7 @@
           </div>
             </div>
             <!-- 右: 写真(カード全高・PCのみ表示) -->
-            <div class="hidden sm:block about-photo" style="width:50%; flex-shrink:0; border-radius:0; overflow:hidden;">
+            <div class="hidden sm:block about-photo about-photo-pc" style="width:50%; flex-shrink:0; border-radius:0; overflow:hidden;">
               <img src="images/Photo2.webp"
                    onerror="this.src='https://placehold.co/600x900/e6f9f8/81D8D0?text=Photo'"
                    alt="永田亮" style="width:100%; height:100%; object-fit:cover; object-position:center top;" />
@@ -2111,6 +2129,7 @@
       // お悩みエリアがせり上がるにつれて、コンセプトをぼかす
       var wrapTop = lowerWrap ? lowerWrap.getBoundingClientRect().top : vh;
       var q = Math.max(0, Math.min(1, (vh - wrapTop) / vh));
+      if (window.innerWidth < 768) q = 0; // スマホは下にスクロールしてもぼかさない
       sec.style.filter = q > 0 ? 'blur(' + (q * 14).toFixed(1) + 'px)' : '';
       ticking = false;
     }
