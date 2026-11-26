@@ -157,6 +157,7 @@
       font-size: 1.05rem; /* text-sm(0.875rem)の1.2倍 */
     }
     .profile-value { color: #555; font-size: 1.05rem; line-height: 1.6; white-space: nowrap; }
+    @media (max-width: 1439px) { .profile-value .pv-sub { display: block; } } /* 狭い画面では（）を改行して2行に */
     /* 狭い画面で右列がはみ出さないよう、折り返しを許可し、幅が足りないときは1列に */
     .profile-grid > .profile-item { min-width: 0; }
     #about .profile-value { white-space: normal; overflow-wrap: anywhere; }
@@ -895,6 +896,23 @@
       #about .about-photo-sp { display: block; height: clamp(260px, 48vw, 460px) !important; }
       #about .about-photo-pc { display: none; }
     }
+    /* 1200px以上：写真は画面の左端から、白い帯は写真の中央から画面の右端まで（寸法はJSで --bl / --br を設定） */
+    @media (min-width: 1200px) {
+      #about .card { position: relative; background: transparent !important; overflow: visible; padding-top: 3.5rem; padding-bottom: 3.5rem; }
+      #about .card::before {
+        content: ""; position: absolute; top: 0; bottom: 0; z-index: 0;
+        left: calc((40% - var(--bl, 0px)) / 2); right: calc(-1 * var(--br, 0px));
+        background: #fff;
+      }
+      #about .about-split { position: relative; z-index: 1; }
+      #about .about-photo-pc {
+        position: absolute; z-index: 2; top: 0; bottom: 0;
+        left: calc(-2rem - var(--bl, 0px));
+        width: calc(40% + 2rem + var(--bl, 0px)) !important;
+      }
+      #about .about-split > div:not(.about-photo-pc) { margin-left: calc(40% + 2.5rem); }
+      #about .profile-value { overflow-wrap: normal; word-break: keep-all; }
+    }
     .about-photo::after {
       content: '';
       position: absolute; inset: 0;
@@ -1600,7 +1618,7 @@
               <h3 class="font-medium mb-4" style="font-size:41px;">永田 亮</h3>
               <div class="profile-grid" style="margin-top:22px;">
                 <div class="profile-item"><span class="profile-label">生年月日</span><span class="profile-value">1991年7月30日</span></div>
-                <div class="profile-item"><span class="profile-label">出身</span><span class="profile-value">静岡県（現在：東京在住）</span></div>
+                <div class="profile-item"><span class="profile-label">出身</span><span class="profile-value">静岡県<span class="pv-sub">（現在：東京在住）</span></span></div>
                 <div class="profile-item"><span class="profile-label">血液型</span><span class="profile-value">B型</span></div>
                 <div class="profile-item"><span class="profile-label">MBTI</span><span class="profile-value">仲介者（INFP）</span></div>
                 <div class="profile-item"><span class="profile-label">動物占い</span><span class="profile-value">華やかな子鹿</span></div>
@@ -2250,6 +2268,19 @@
   window.addEventListener('load', set); window.addEventListener('resize', set);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(set);
   set();
+})();
+</script>
+<script>
+// 自己紹介（PC）：写真を画面左端まで、白い帯を画面右端まで広げるための寸法
+(function () {
+  var card = document.querySelector('#about .card');
+  if (!card) return;
+  function set() {
+    var r = card.getBoundingClientRect(), w = document.documentElement.clientWidth;
+    card.style.setProperty('--bl', Math.round(r.left) + 'px');
+    card.style.setProperty('--br', Math.round(w - r.right) + 'px');
+  }
+  set(); window.addEventListener('resize', set); window.addEventListener('load', set);
 })();
 </script>
 </body>
