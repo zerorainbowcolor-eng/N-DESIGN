@@ -196,6 +196,9 @@
       #concern .grid.md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); justify-content: stretch; } /* 同じ幅の3列 */
       #concern .concern-item { width: auto; text-align: left; } /* 文章は列幅いっぱい・左揃え */
       #concern .concern-item .concern-illust { width: auto; max-width: 100%; height: clamp(150px, 20vw, 240px); margin: 0 auto 1.5rem; } /* イラストは列の中央 */
+      /* 左の男性・右の女性は人物が画像の右寄りに描かれているため、見た目の中心が文章の中心に来るよう少し左へ */
+      #concern .concern-item:first-child .concern-illust { transform: translateX(-6%); }
+      #concern .concern-item:last-child .concern-illust { transform: translateX(-10%); }
       #concern .concern-item .concern-desc { width: fit-content; max-width: 100%; margin-left: auto; margin-right: auto; } /* 文章のかたまりを列の中央に（中は左揃え）→ イラストが文章の真上に */
       /* 英字 CONCERNS の右端は右のイラストの右端にそろえる（JSで left を設定） */
     }
