@@ -93,6 +93,10 @@
     /* ===== HERO ===== */
     .hero-overlay { background: rgba(0,0,0,0.45); }
     /* ===== バナー 正方形グリッド ===== */
+    /* 制作事例の小見出し */
+    .works-sub { color: #001638; font-weight: 700; font-size: clamp(1.15rem, 1.8vw, 1.45rem); letter-spacing: 0.04em; margin-bottom: 1.5rem; padding-left: 0.75rem; border-left: 4px solid #001638; line-height: 1.3; }
+    .works-sub--graphic { margin-top: 4.5rem; }
+    #portfolio .works-sub--graphic + .banner-grid { margin-top: 0; }
     .banner-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -1352,6 +1356,7 @@
       <h2 class="sec-ja sec-head">制作事例<span class="sec-head-en" aria-hidden="true">WORKS</span></h2>
     </div>
 
+    <h3 class="works-sub">ホームページ・LP</h3>
     <div class="works-masonry">
       <div class="work-item" onclick="location.href='portfolio-detail.html?id=19'">
         <div class="work-thumb"><img src="images/works/hp-sample-card.webp" alt="キャニング・アンド・アソシエイツ様　コーポレートサイト【トップページリニューアル】" loading="lazy" class="thumb-cover" /></div>
@@ -1384,6 +1389,7 @@
         <h3 class="work-title">NOVELIE 薬用シワ改善アイクリーム LP</h3>
       </div>
     </div>
+    <h3 class="works-sub works-sub--graphic">グラフィックデザイン</h3>
     <div class="banner-grid">
       <div class="banner-item" onclick="location.href='portfolio-detail.html?id=11'">
         <img src="images/banner/A.webp" alt="バナーデザイン 01" loading="lazy" />
